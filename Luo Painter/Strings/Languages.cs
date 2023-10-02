@@ -1,65 +1,78 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Globalization;
+using Windows.Globalization;
+using Windows.UI.Xaml;
 
-namespace Luo_Painter.Strings
+namespace Luo_Painter.Elements
 {
-    public sealed class Languages : IEnumerable<string>
+    public sealed class CultureInfoCollection : List<CultureInfo>
     {
-        public int Count => 13;
-        
-        public int this[string value]
+        //@Static
+        public static bool IsRightToLeft => System.Globalization.CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft;
+        public static FlowDirection FlowDirection => CultureInfoCollection.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
+
+        readonly List<string> Languages;
+        //readonly List<string> Languages = new List<string>
+        //{
+        //    "ar",
+        //     "de",
+        //     "en-US",
+        //     "es",
+        //     "fr",
+        //     "it",
+        //     "ja",
+        //     "ko",
+        //     "nl",
+        //     "pt",
+        //     "ru",
+        //     "zh-Hans-CN",
+        //};
+
+        public int Index
         {
             get
             {
-                switch (value)
-                {
-                    case "ar": return 1;
-                    case "de": return 2;
-                    case "en-US": return 3;
-                    case "es": return 4;
-                    case "fr": return 5;
-                    case "it": return 6;
-                    case "ja": return 7;
-                    case "ko": return 8;
-                    case "nl": return 9;
-                    case "pt": return 10;
-                    case "ru": return 11;
-                    case "zh-CN": return 12;
-                    default: return 0;
-                }
-            }
-        }
-        public string this[int index]
-        {
-            get
-            {
-                switch (index)
-                {
-                    case 1: return "ar";
-                    case 2: return "de";
-                    case 3: return "en-US";
-                    case 4: return "es";
-                    case 5: return "fr";
-                    case 6: return "it";
-                    case 7: return "ja";
-                    case 8: return "ko";
-                    case 9: return "nl";
-                    case 10: return "pt";
-                    case 11: return "ru";
-                    case 12: return "zh-CN";
-                    default: return string.Empty;
-                }
+                string language = ApplicationLanguages.PrimaryLanguageOverride;
+                if (this.Languages.Contains(language))
+                    return this.Languages.IndexOf(language) + 1;
+                else
+                    return 0;
             }
         }
 
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-        public IEnumerator<string> GetEnumerator()
+        public CultureInfoCollection()
         {
-            for (int i = 0; i < 13; i++)
+            this.Languages = new List<string>(ApplicationLanguages.ManifestLanguages);
+            this.Languages.Sort();
+
+            base.Add(new CultureInfo(string.Empty));
+            foreach (string item in this.Languages)
             {
-                yield return this[i];
+                base.Add(new CultureInfo(item));
             }
         }
 
+        public static void SetLanguageEmpty()
+        {
+            if (ApplicationLanguages.PrimaryLanguageOverride == string.Empty) return;
+            ApplicationLanguages.PrimaryLanguageOverride = string.Empty;
+        }
+
+        public static void SetLanguage(string language)
+        {
+            if (ApplicationLanguages.PrimaryLanguageOverride == language) return;
+            ApplicationLanguages.PrimaryLanguageOverride = language;
+
+            if (string.IsNullOrEmpty(language)) return;
+
+            if (Window.Current.Content is FrameworkElement frameworkElement)
+            {
+                if (frameworkElement.Language != language)
+                {
+                    frameworkElement.Language = language;
+                }
+            }
+        }
     }
+
 }

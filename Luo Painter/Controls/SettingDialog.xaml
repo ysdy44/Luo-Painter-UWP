@@ -14,8 +14,16 @@
     >
 
     <FrameworkElement.Resources>
-        <!--DataTemplate-->
-        <DataTemplate x:Key="LanguageTemplate" x:DataType="globalization:CultureInfo">
+        <!--Template-->
+        <DataTemplate x:Name="LanguageUseSystemSettingTemplate">
+            <StackPanel Spacing="10" Orientation="Horizontal">
+                <SymbolIcon Symbol="Globe"/>
+                <TextBlock Text="{strings:UI Type=Language_UseSystemSetting}">
+                    <!--Use system setting-->
+                </TextBlock>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Name="LanguageTemplate" x:DataType="globalization:CultureInfo">
             <TextBlock>   
                 <Run Text="{Binding NativeName, Mode=OneTime}"/>           
                 <Run/>        
@@ -53,23 +61,8 @@
         <!--Language-->
         <TextBlock x:Name="TB4" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
                    Text="{strings:UI Type=Language}"/>
-        <ComboBox x:Name="LanguageComboBox">
-            <StackPanel Spacing="10" Orientation="Horizontal">
-                <SymbolIcon Symbol="Globe"/>
-                <TextBlock x:Name="TB6" Text="{strings:UI Type=Language_UseSystemSetting}"/>
-            </StackPanel>
-            <ComboBoxItem Content="{x:Bind CultureInfoConverter(1)}" ContentTemplate="{StaticResource LanguageTemplate}"/>
-            <ComboBoxItem Content="{x:Bind CultureInfoConverter(2)}" ContentTemplate="{StaticResource LanguageTemplate}"/>
-            <ComboBoxItem Content="{x:Bind CultureInfoConverter(3)}" ContentTemplate="{StaticResource LanguageTemplate}"/>
-            <ComboBoxItem Content="{x:Bind CultureInfoConverter(4)}" ContentTemplate="{StaticResource LanguageTemplate}"/>
-            <ComboBoxItem Content="{x:Bind CultureInfoConverter(5)}" ContentTemplate="{StaticResource LanguageTemplate}"/>
-            <ComboBoxItem Content="{x:Bind CultureInfoConverter(6)}" ContentTemplate="{StaticResource LanguageTemplate}"/>
-            <ComboBoxItem Content="{x:Bind CultureInfoConverter(7)}" ContentTemplate="{StaticResource LanguageTemplate}"/>
-            <ComboBoxItem Content="{x:Bind CultureInfoConverter(8)}" ContentTemplate="{StaticResource LanguageTemplate}"/>
-            <ComboBoxItem Content="{x:Bind CultureInfoConverter(9)}" ContentTemplate="{StaticResource LanguageTemplate}"/>
-            <ComboBoxItem Content="{x:Bind CultureInfoConverter(10)}" ContentTemplate="{StaticResource LanguageTemplate}"/>
-            <ComboBoxItem Content="{x:Bind CultureInfoConverter(11)}" ContentTemplate="{StaticResource LanguageTemplate}"/>
-            <ComboBoxItem Content="{x:Bind CultureInfoConverter(12)}" ContentTemplate="{StaticResource LanguageTemplate}"/>
+        <ComboBox x:Name="LanguageComboBox" >
+            <!--ItemsSource-->
         </ComboBox>
 
         <HyperlinkButton x:Name="LanguageTipButton">

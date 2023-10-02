@@ -1,8 +1,8 @@
-﻿using Luo_Painter.Models;
-using Luo_Painter.Strings;
+﻿using Luo_Painter.Elements;
+using Luo_Painter.Models;
 using System;
 using System.Globalization;
-using Windows.Globalization;
+using System.Linq;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -14,60 +14,18 @@ namespace Luo_Painter.Controls
 
         // Setting
         readonly ApplicationDataContainer LocalSettings = ApplicationData.Current.LocalSettings;
-
-        //@Converter
-        private CultureInfo CultureInfoConverter(int value) => new CultureInfo(this.Lang[value]);
-        readonly Languages Lang = new Languages();
-
-        private string PrimaryLanguageOverride
+        readonly CultureInfoCollection Cultures = new CultureInfoCollection();
+        readonly ComboBoxItem[] Languages;
+        private ComboBoxItem LanguageSelect(CultureInfo item) => new ComboBoxItem
         {
-            get
-            {
-                if (ApplicationData.Current.LocalSettings.Values.ContainsKey("Language"))
-                {
-                    if (ApplicationData.Current.LocalSettings.Values["Language"] is string item)
-                    {
-                        return item;
-                    }
-                }
-                return ApplicationLanguages.PrimaryLanguageOverride;
-            }
-            set
-            {
-                if (string.IsNullOrEmpty(value))
-                {
-                    ApplicationData.Current.LocalSettings.Values["Language"] = string.Empty;
-
-                    if (ApplicationLanguages.PrimaryLanguageOverride == string.Empty) return;
-                    ApplicationLanguages.PrimaryLanguageOverride = string.Empty;
-
-                    if (Window.Current.Content is FrameworkElement frameworkElement)
-                    {
-                        frameworkElement.Language = CultureInfo.CurrentCulture.Name;
-                    }
-                }
-                else
-                {
-                    ApplicationData.Current.LocalSettings.Values["Language"] = value;
-
-                    if (ApplicationLanguages.PrimaryLanguageOverride == value) return;
-                    ApplicationLanguages.PrimaryLanguageOverride = value;
-
-                    if (Window.Current.Content is FrameworkElement frameworkElement)
-                    {
-                        if (frameworkElement.Language == value) return;
-                        frameworkElement.Language = value;
-                    }
-                }
-            }
-        }
+            ContentTemplate = string.IsNullOrEmpty(item.Name) ? this.LanguageUseSystemSettingTemplate : this.LanguageTemplate,
+            Content = item
+        };
 
         public SettingDialog()
         {
             this.InitializeComponent();
-
-            string lang = this.PrimaryLanguageOverride;
-            this.LanguageComboBox.SelectedIndex = this.Lang[lang];
+            this.Languages = this.Cultures.Select(this.LanguageSelect).ToArray();
             switch (this.GetTheme())
             {
                 case ElementTheme.Light: this.ThemeComboBox.SelectedIndex = 0; break;
@@ -85,10 +43,14 @@ namespace Luo_Painter.Controls
                 }
             };
 
+            this.LanguageComboBox.ItemsSource = this.Languages;
+            this.LanguageComboBox.SelectedIndex = this.Cultures.Index;
             this.LanguageComboBox.SelectionChanged += (s, e) =>
             {
-                int index = this.LanguageComboBox.SelectedIndex;
-                this.PrimaryLanguageOverride = this.Lang[index];
+                if (this.LanguageComboBox.SelectedItem is ComboBoxItem item && item.Content is CultureInfo info)
+                    CultureInfoCollection.SetLanguage(info.Name);
+                else
+                    CultureInfoCollection.SetLanguageEmpty();
 
                 this.TB0.Text = App.Resource.GetString(UIType.Theme.ToString());
                 this.TB1.Text = App.Resource.GetString(UIType.Theme_Light.ToString());
@@ -97,7 +59,7 @@ namespace Luo_Painter.Controls
 
                 this.TB4.Text = App.Resource.GetString(UIType.Language.ToString());
                 this.TB5.Text = App.Resource.GetString(UIType.Language_Tip.ToString());
-                this.TB6.Text = App.Resource.GetString(UIType.Language_UseSystemSetting.ToString());
+                base.PrimaryButtonText = App.Resource.GetString(UIType.Back.ToString());
 
                 this.TB7.Text = App.Resource.GetString(UIType.LocalFolder.ToString());
                 this.TB8.Text = App.Resource.GetString(UIType.LocalFolder_Open.ToString());
