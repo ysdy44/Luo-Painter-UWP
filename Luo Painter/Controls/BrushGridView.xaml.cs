@@ -1,7 +1,4 @@
-﻿using Luo_Painter.Brushes;
-using Luo_Painter.Strings;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Luo_Painter.UI;
 
 namespace Luo_Painter.Controls
 {

@@ -2,7 +2,7 @@
 using Luo_Painter.Brushes;
 using Windows.UI.Xaml.Controls;
 
-namespace Luo_Painter
+namespace Luo_Painter.UI
 {
     public class XamlListView : ListView
     {

@@ -1,10 +1,9 @@
-﻿<luo_painter:XamlGridView
+﻿<ui:XamlGridView
     x:Class="Luo_Painter.Controls.SizeListView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:luo_painter="using:Luo_Painter"
     xmlns:local="using:Luo_Painter.Controls"
     xmlns:strings="using:Luo_Painter.Strings"
     xmlns:ui="using:Luo_Painter.UI"
@@ -125,4 +124,4 @@
     <ui:PaintSize Size="4000" Text= "4000" Number="40000" Preview="40.1779599673203"/>
     <ui:PaintSize Size="5000" Text= "5000" Number="50000" Preview="48.3481196078431"/>
 
-</luo_painter:XamlGridView>
+</ui:XamlGridView>

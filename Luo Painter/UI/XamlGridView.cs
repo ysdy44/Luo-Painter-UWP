@@ -1,6 +1,6 @@
 ﻿using Windows.UI.Xaml.Controls;
 
-namespace Luo_Painter
+namespace Luo_Painter.UI
 {
     // 1. It is a UserControl.xaml that contains a ListView.
     // <UserControl>
