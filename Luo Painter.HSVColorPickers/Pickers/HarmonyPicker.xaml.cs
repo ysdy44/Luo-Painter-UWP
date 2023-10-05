@@ -111,7 +111,17 @@ namespace Luo_Painter.HSVColorPickers
             };
             this.SliderRectangle.ManipulationDelta += (_, e) =>
             {
-                this.Slider += e.Delta.Translation.X;
+                switch (base.FlowDirection)
+                {
+                    case FlowDirection.LeftToRight:
+                        this.Slider += e.Delta.Translation.X;
+                        break;
+                    case FlowDirection.RightToLeft:
+                        this.Slider -= e.Delta.Translation.X;
+                        break;
+                    default:
+                        break;
+                }
                 this.Zoom();
             };
             this.SliderRectangle.ManipulationCompleted += (_, e) =>
