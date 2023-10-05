@@ -3,7 +3,7 @@ using Microsoft.Graphics.Canvas.Effects;
 using System;
 using Windows.UI.Xaml;
 
-namespace Luo_Painter
+namespace Luo_Painter.UI
 {
     public sealed class MorphologyNumberSlider : NumberSlider
     {

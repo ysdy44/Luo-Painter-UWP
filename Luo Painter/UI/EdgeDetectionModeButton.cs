@@ -2,7 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls.Primitives;
 
-namespace Luo_Painter
+namespace Luo_Painter.UI
 {
     public sealed class EdgeDetectionModeButton : ToggleButton
     {

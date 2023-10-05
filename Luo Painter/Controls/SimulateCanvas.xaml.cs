@@ -1,10 +1,10 @@
-﻿using FanKit.Transformers;
-using Luo_Painter.Elements;
+﻿using Luo_Painter.Elements;
+using Luo_Painter.UI;
+using System;
 using System.Numerics;
 using Windows.Foundation;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml;
-using System;
+using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Controls
 {
