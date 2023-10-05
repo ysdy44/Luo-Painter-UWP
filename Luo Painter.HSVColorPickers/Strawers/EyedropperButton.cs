@@ -37,7 +37,17 @@ namespace Luo_Painter.HSVColorPickers
             {
                 if (this.Eyedropper is null) return;
 
-                this.StartingStraw.X += e.Delta.Translation.X;
+                switch (base.FlowDirection)
+                {
+                    case FlowDirection.LeftToRight:
+                        this.StartingStraw.X += e.Delta.Translation.X;
+                        break;
+                    case FlowDirection.RightToLeft:
+                        this.StartingStraw.X -= e.Delta.Translation.X;
+                        break;
+                    default:
+                        break;
+                }
                 this.StartingStraw.Y += e.Delta.Translation.Y;
 
                 switch (this.Eyedropper.Visibility)

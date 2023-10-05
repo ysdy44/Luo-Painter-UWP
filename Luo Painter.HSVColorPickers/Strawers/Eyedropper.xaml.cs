@@ -105,8 +105,23 @@ namespace Luo_Painter.HSVColorPickers
 
             if (this.Pixels == null) return;
 
-            int x = System.Math.Clamp((int)(point.X / base.ActualWidth * this.RenderTargetBitmap.PixelWidth), 0, this.RenderTargetBitmap.PixelWidth);
-            int y = System.Math.Clamp((int)(point.Y / base.ActualHeight * this.RenderTargetBitmap.PixelHeight), 0, this.RenderTargetBitmap.PixelHeight);
+            double scaleX = point.X / base.ActualWidth; // 0~1
+            double scaleY = point.Y / base.ActualHeight; // 0~1
+
+            switch (base.FlowDirection)
+            {
+                case FlowDirection.LeftToRight:
+                    //scaleX = scaleX;
+                    break;
+                case FlowDirection.RightToLeft:
+                    scaleX = 1 - scaleX;
+                    break;
+                default:
+                    break;
+            }
+
+            int x = System.Math.Clamp((int)(scaleX * this.RenderTargetBitmap.PixelWidth), 0, this.RenderTargetBitmap.PixelWidth);
+            int y = System.Math.Clamp((int)(scaleY * this.RenderTargetBitmap.PixelHeight), 0, this.RenderTargetBitmap.PixelHeight);
 
             int offset = 4 * (x + y * this.RenderTargetBitmap.PixelWidth);
             if (offset + 4 >= this.Pixels.Length) return;
