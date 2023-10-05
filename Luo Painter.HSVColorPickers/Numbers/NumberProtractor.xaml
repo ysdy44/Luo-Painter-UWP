@@ -11,6 +11,7 @@
     IsFocusEngagementEnabled="True"
     Width="162" 
     Height="162"
+    Background="Transparent"
     >
 
     <Canvas Width="162" Height="162">

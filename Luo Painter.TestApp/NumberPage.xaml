@@ -42,5 +42,8 @@
             </Slider.Header>
         </hsvColorPickers:NumberSlider>
 
+        <!--Protractor-->
+        <hsvColorPickers:NumberProtractor x:Name="NumberProtractor"/>
+        
     </StackPanel>
 </Page>

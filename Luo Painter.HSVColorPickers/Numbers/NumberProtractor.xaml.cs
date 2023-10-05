@@ -50,7 +50,17 @@ namespace Luo_Painter.HSVColorPickers
             };
             this.Ellipse.ManipulationDelta += (_, e) =>
             {
-                this.Wheel.X += e.Delta.Translation.X;
+                switch (base.FlowDirection)
+                {
+                    case FlowDirection.LeftToRight:
+                        this.Wheel.X += e.Delta.Translation.X;
+                        break;
+                    case FlowDirection.RightToLeft:
+                        this.Wheel.X -= e.Delta.Translation.X;
+                        break;
+                    default:
+                        break;
+                }
                 this.Wheel.Y -= e.Delta.Translation.Y;
 
                 this.SetAngle((float)WheelTemplateSettings.Atan2(this.Wheel));

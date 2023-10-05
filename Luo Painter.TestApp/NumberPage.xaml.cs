@@ -17,6 +17,7 @@ namespace Luo_Painter.TestApp
         {
             this.NumberButton.Click += (s, e) => this.NumberShowAt(this.NumberButton);
             this.NumberSlider.Click += (s, e) => this.NumberShowAt(this.NumberSlider);
+            this.NumberProtractor.Click += (s, e) => this.NumberShowAt(this.NumberProtractor);
         }
 
         private void NumberShowAt(INumberBase number)
@@ -39,6 +40,9 @@ namespace Luo_Painter.TestApp
 
                 // Set Value
                 this.NumberSlider.Value = e;
+
+                // Set Number
+                this.NumberProtractor.SetNumber(e);
 
                 // To String
                 this.TextBlock.Text = this.NumberPicker.ToString();
