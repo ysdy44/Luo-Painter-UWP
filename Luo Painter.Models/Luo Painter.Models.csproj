@@ -142,6 +142,7 @@
     <Compile Include="ProjectObservableCollection\ProjectObservableCollection.OrderBy.cs" />
     <Compile Include="Projects\ProjectBase.cs" />
     <Compile Include="Projects\ProjectParameter.cs" />
+    <Compile Include="Projects\ProjectParameterType.cs" />
     <Compile Include="Projects\ProjectType.cs" />
     <Compile Include="Project\Project.cs" />
     <Compile Include="Project\Project.Export.cs" />
