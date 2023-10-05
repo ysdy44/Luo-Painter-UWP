@@ -133,7 +133,17 @@ namespace Luo_Painter.Controls
             {
                 e.Handled = true;
 
-                this.Point.X = this.MarbleX.Move(this.Point.X, e.Delta.Translation.X, e.IsInertial, 30, base.ActualWidth - 30);
+                switch (base.FlowDirection)
+                {
+                    case FlowDirection.LeftToRight:
+                        this.Point.X = this.MarbleX.Move(this.Point.X, e.Delta.Translation.X, e.IsInertial, 30, base.ActualWidth - 30);
+                        break;
+                    case FlowDirection.RightToLeft:
+                        this.Point.X = this.MarbleX.Move(this.Point.X, -e.Delta.Translation.X, e.IsInertial, 30, base.ActualWidth - 30);
+                        break;
+                    default:
+                        break;
+                }
                 this.Point.Y = this.MarbleY.Move(this.Point.Y, e.Delta.Translation.Y, e.IsInertial, 30, base.ActualHeight - 30);
                 this.Vector.X = (float)this.Point.X;
                 this.Vector.Y = (float)this.Point.Y;

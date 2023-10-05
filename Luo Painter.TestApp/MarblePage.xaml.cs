@@ -20,7 +20,17 @@ namespace Luo_Painter.TestApp
             this.MarbleBorder.ManipulationDelta += (s, e) =>
             {
                 int radius = this.ToggleButton.IsChecked == true ? 30 : 100;
-                this.TranslateTransform.X = -100 + this.MarbleX.Move(this.TranslateTransform.X + 100, e.Delta.Translation.X, e.IsInertial, radius, base.ActualWidth - radius);
+                switch (base.FlowDirection)
+                {
+                    case Windows.UI.Xaml.FlowDirection.LeftToRight:
+                        this.TranslateTransform.X = -100 + this.MarbleX.Move(this.TranslateTransform.X + 100, e.Delta.Translation.X, e.IsInertial, radius, base.ActualWidth - radius);
+                        break;
+                    case Windows.UI.Xaml.FlowDirection.RightToLeft:
+                        this.TranslateTransform.X = -100 + this.MarbleX.Move(this.TranslateTransform.X + 100, -e.Delta.Translation.X, e.IsInertial, radius, base.ActualWidth - radius);
+                        break;
+                    default:
+                        break;
+                }
                 this.TranslateTransform.Y = -100 + this.MarbleY.Move(this.TranslateTransform.Y + 100, e.Delta.Translation.Y, e.IsInertial, radius, base.ActualHeight - radius);
             };
         }

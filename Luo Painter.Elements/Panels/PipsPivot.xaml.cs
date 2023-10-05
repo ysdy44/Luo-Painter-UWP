@@ -80,7 +80,17 @@ namespace Luo_Painter.Elements
             {
                 if (this.Inertia is false)
                 {
-                    this.TranslateTransform.X += e.Delta.Translation.X;
+                    switch (base.FlowDirection)
+                    {
+                        case FlowDirection.LeftToRight:
+                            this.TranslateTransform.X += e.Delta.Translation.X;
+                            break;
+                        case FlowDirection.RightToLeft:
+                            this.TranslateTransform.X -= e.Delta.Translation.X;
+                            break;
+                        default:
+                            break;
+                    }
                     return;
                 }
 
