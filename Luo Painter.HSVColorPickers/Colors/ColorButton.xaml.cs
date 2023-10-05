@@ -2,30 +2,9 @@
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
 
 namespace Luo_Painter.HSVColorPickers
 {
-    public interface IColorBase
-    {
-        /// <summary> <see cref="FlyoutBase.Target"/> </summary>
-        FrameworkElement PlacementTarget { get; }
-
-        Color Color { get; }
-        void SetColor(Color color);
-        void SetColor(Vector4 colorHdr);
-    }
-
-    public interface IColorHdrBase
-    {
-        /// <summary> <see cref="FlyoutBase.Target"/> </summary>
-        FrameworkElement PlacementTarget { get; }
-
-        Vector4 ColorHdr { get; }
-        void SetColorHdr(Vector4 colorHdr);
-        void SetColorHdr(Color color);
-    }
-
     public sealed partial class ColorButtonBase : Button, IColorHdrBase, IColorBase
     {
         //@Content

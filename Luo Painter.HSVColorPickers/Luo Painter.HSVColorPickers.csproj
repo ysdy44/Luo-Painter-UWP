@@ -120,20 +120,29 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="CanvasImageSource.cs" />
-    <Compile Include="ColorButton.xaml.cs">
+    <Compile Include="Colors\ColorButton.xaml.cs">
       <DependentUpon>ColorButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Colors\IColorBase.cs" />
+    <Compile Include="Colors\IColorHdrBase.cs" />
     <Compile Include="ColorType.cs" />
     <Compile Include="HarmonyMode.cs" />
     <Compile Include="HSVExtensions.cs" />
-    <Compile Include="IColorPicker.cs" />
+    <Compile Include="ImageSources\AlphaImageSource.cs" />
+    <Compile Include="ImageSources\CanvasImageSourceBase.cs" />
+    <Compile Include="ImageSources\GrayAndWhiteImageSource.cs" />
+    <Compile Include="ImageSources\OpacityImageSource.cs" />
+    <Compile Include="ImageSources\WheelImageSource.cs" />
     <Compile Include="Matrix5x4Extensions\Matrix5x4Extension.cs" />
     <Compile Include="Matrix5x4Extensions\Matrix5x4Extension.Fx.cs" />
     <Compile Include="Matrix5x4Extensions\Matrix5x4Extension.HSB.cs" />
+    <Compile Include="Numbers\INumberBase.cs" />
+    <Compile Include="Numbers\INumberPickerBase.cs" />
+    <Compile Include="Numbers\NumberButton.cs" />
     <Compile Include="Numbers\NumberButton.xaml.cs">
       <DependentUpon>NumberButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Numbers\NumberChangedHandler.cs" />
     <Compile Include="Numbers\NumberPicker.xaml.cs">
       <DependentUpon>NumberPicker.xaml</DependentUpon>
     </Compile>
@@ -153,6 +162,8 @@
     <Compile Include="Pickers\HuePicker.xaml.cs">
       <DependentUpon>HuePicker.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pickers\IColorPicker.cs" />
+    <Compile Include="Pickers\IColorPickerBase.cs" />
     <Compile Include="Pickers\RectcolorPicker.xaml.cs">
       <DependentUpon>RectcolorPicker.xaml</DependentUpon>
     </Compile>
@@ -176,6 +187,7 @@
       <DependentUpon>GradientStopSelectorWithUI.xaml</DependentUpon>
     </Compile>
     <Compile Include="Selectors\TSelector.cs" />
+    <Compile Include="Strawers\ClickEyedropper.cs" />
     <Compile Include="Strawers\Eyedropper.xaml.cs">
       <DependentUpon>Eyedropper.xaml</DependentUpon>
     </Compile>
@@ -195,7 +207,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="ColorButton.xaml">
+    <Page Include="Colors\ColorButton.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
