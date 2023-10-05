@@ -322,7 +322,7 @@
                         <EntranceThemeTransition FromHorizontalOffset="25" FromVerticalOffset="0"/>
                     </TransitionCollection>
                 </ContentControl.ContentTransitions>
-                <SymbolIcon Symbol="Back"/>
+                <SymbolIcon Symbol="{x:Bind BackSymbolConverter(FlowDirection), Mode=OneWay}"/>
             </Button>
 
         </Grid>

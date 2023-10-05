@@ -2170,7 +2170,7 @@
                     <ToolTipService.ToolTip>
                         <ToolTip Content="{strings:UI Type=Back}" Placement="Bottom" Style="{StaticResource AppToolTipStyle}"/>
                     </ToolTipService.ToolTip>
-                    <SymbolIcon Symbol="Back"/>
+                    <SymbolIcon Symbol="{x:Bind BackSymbolConverter(FlowDirection), Mode=OneWay}"/>
                 </Button>
                 <TextBlock
                     x:Name="TitleTextBlock"

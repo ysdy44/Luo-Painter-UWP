@@ -13,6 +13,20 @@ namespace Luo_Painter
         //@String
         FlowDirection Direction => CultureInfoCollection.FlowDirection;
 
+        //@Converter
+        private Symbol BackSymbolConverter(FlowDirection value)
+        {
+            switch (value)
+            {
+                case FlowDirection.LeftToRight:
+                    return Symbol.Back;
+                case FlowDirection.RightToLeft:
+                    return Symbol.Forward;
+                default:
+                    return default;
+            }
+        }
+
         public bool Disabler
         {
             get => App.SourcePageType != SourcePageType.StylePage;

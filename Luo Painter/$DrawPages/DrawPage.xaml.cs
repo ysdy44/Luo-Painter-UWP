@@ -33,6 +33,18 @@ namespace Luo_Painter
         //@Converter
         private Vector2 ToPosition(Vector2 point) => Vector2.Transform(this.CanvasVirtualControl.Dpi.ConvertDipsToPixels(point), this.Transformer.GetInverseMatrix());
         private Vector2 ToPoint(Vector2 position) => this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(Vector2.Transform(position, this.Transformer.GetMatrix()));
+        private Symbol BackSymbolConverter(FlowDirection value)
+        {
+            switch (value)
+            {
+                case FlowDirection.LeftToRight:
+                    return Symbol.Back;
+                case FlowDirection.RightToLeft:
+                    return Symbol.Forward;
+                default:
+                    return default;
+            }
+        }
 
 
         readonly InverseProportionRange SizeRange = new InverseProportionRange(12, 1, 400, 100000);
