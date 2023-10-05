@@ -50,7 +50,17 @@ namespace Luo_Painter.Elements
             };
             base.ManipulationDelta += (s, e) =>
             {
-                this.X += e.Delta.Translation.X;
+                switch (base.FlowDirection)
+                {
+                    case Windows.UI.Xaml.FlowDirection.LeftToRight:
+                        this.X += e.Delta.Translation.X;
+                        break;
+                    case Windows.UI.Xaml.FlowDirection.RightToLeft:
+                        this.X -= e.Delta.Translation.X;
+                        break;
+                    default:
+                        break;
+                }
                 this.Y += e.Delta.Translation.Y;
 
                 this.TranslateTransform.X = System.Math.Clamp(this.X, -this.Unit, this.Unit);

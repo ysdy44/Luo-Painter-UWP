@@ -9,8 +9,6 @@
     IsTabStop="True"
     CornerRadius="2"
     BorderThickness="1"
-    BorderBrush="{ThemeResource AppBarBorderThemeBrush}"
-    Background="{ThemeResource AppBarBackgroundThemeBrush}"
     Width="{x:Bind Unit5}" 
     Height="{x:Bind Unit5}"
     d:DesignWidth="100"
