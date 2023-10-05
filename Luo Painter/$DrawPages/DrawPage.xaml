@@ -1995,7 +1995,7 @@
                         <UIElement.KeyboardAccelerators>
                             <KeyboardAccelerator Modifiers="Control" Key="Z"/>
                         </UIElement.KeyboardAccelerators>
-                        <SymbolIcon Symbol="Undo"/>
+                        <SymbolIcon Symbol="{x:Bind UndoSymbolConverter(FlowDirection), Mode=OneWay}"/>
                     </Button>
                     <Button x:Name="RedoButton" Width="70" Height="50" Foreground="{ThemeResource AppForeground}" Background="{ThemeResource AppBackgroundMediumDark}" Style="{StaticResource TextBlockButtonStyle}"
                             CommandParameter="{strings:OptionType Type=Redo}" 
@@ -2006,7 +2006,7 @@
                         <UIElement.KeyboardAccelerators>
                             <KeyboardAccelerator Modifiers="Control" Key="Y"/>
                         </UIElement.KeyboardAccelerators>
-                        <SymbolIcon Symbol="Redo"/>
+                        <SymbolIcon Symbol="{x:Bind RedoSymbolConverter(FlowDirection), Mode=OneWay}"/>
                     </Button>
                     <controls:ColorButton x:Name="ColorButton" Eyedropper="{x:Bind Eyedropper}" ClickEyedropper="{x:Bind ClickEyedropper}">
                         <Control.BorderBrush>

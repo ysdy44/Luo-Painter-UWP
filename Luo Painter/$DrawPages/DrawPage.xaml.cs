@@ -45,6 +45,30 @@ namespace Luo_Painter
                     return default;
             }
         }
+        private Symbol UndoSymbolConverter(FlowDirection value)
+        {
+            switch (value)
+            {
+                case FlowDirection.LeftToRight:
+                    return Symbol.Undo;
+                case FlowDirection.RightToLeft:
+                    return Symbol.Redo;
+                default:
+                    return default;
+            }
+        }
+        private Symbol RedoSymbolConverter(FlowDirection value)
+        {
+            switch (value)
+            {
+                case FlowDirection.LeftToRight:
+                    return Symbol.Redo;
+                case FlowDirection.RightToLeft:
+                    return Symbol.Undo;
+                default:
+                    return default;
+            }
+        }
 
 
         readonly InverseProportionRange SizeRange = new InverseProportionRange(12, 1, 400, 100000);
