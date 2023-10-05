@@ -77,7 +77,17 @@ namespace Luo_Painter.HSVColorPickers
             {
                 this.Ring = this.RingSize.CircleSize.Offset(e.Position);
 
-                this.Ring.X += e.Delta.Translation.X;
+                switch (base.FlowDirection)
+                {
+                    case FlowDirection.LeftToRight:
+                        this.Ring.X += e.Delta.Translation.X;
+                        break;
+                    case FlowDirection.RightToLeft:
+                        this.Ring.X -= e.Delta.Translation.X;
+                        break;
+                    default:
+                        break;
+                }
                 this.Ring.Y += e.Delta.Translation.Y;
                 this.Move();
             };

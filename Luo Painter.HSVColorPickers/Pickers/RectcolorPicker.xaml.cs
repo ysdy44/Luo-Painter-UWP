@@ -70,7 +70,17 @@ namespace Luo_Painter.HSVColorPickers
             };
             this.RectangleRectangle.ManipulationDelta += (_, e) =>
             {
-                this.Rectangle.X += e.Delta.Translation.X;
+                switch (base.FlowDirection)
+                {
+                    case FlowDirection.LeftToRight:
+                        this.Rectangle.X += e.Delta.Translation.X;
+                        break;
+                    case FlowDirection.RightToLeft:
+                        this.Rectangle.X -= e.Delta.Translation.X;
+                        break;
+                    default:
+                        break;
+                }
                 this.Rectangle.Y += e.Delta.Translation.Y;
                 this.Move();
 
@@ -102,7 +112,17 @@ namespace Luo_Painter.HSVColorPickers
             };
             this.WheelPath.ManipulationDelta += (_, e) =>
             {
-                this.Wheel.X += e.Delta.Translation.X;
+                switch (base.FlowDirection)
+                {
+                    case FlowDirection.LeftToRight:
+                        this.Wheel.X += e.Delta.Translation.X;
+                        break;
+                    case FlowDirection.RightToLeft:
+                        this.Wheel.X -= e.Delta.Translation.X;
+                        break;
+                    default:
+                        break;
+                }
                 this.Wheel.Y += e.Delta.Translation.Y;
                 this.Zoom();
 

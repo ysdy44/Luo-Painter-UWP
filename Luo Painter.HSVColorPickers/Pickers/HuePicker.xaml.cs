@@ -67,7 +67,17 @@ namespace Luo_Painter.HSVColorPickers
             };
             this.BoxRectangle.ManipulationDelta += (_, e) =>
             {
-                this.Box.X += e.Delta.Translation.X;
+                switch (base.FlowDirection)
+                {
+                    case FlowDirection.LeftToRight:
+                        this.Box.X += e.Delta.Translation.X;
+                        break;
+                    case FlowDirection.RightToLeft:
+                        this.Box.X -= e.Delta.Translation.X;
+                        break;
+                    default:
+                        break;
+                }
                 this.Box.Y += e.Delta.Translation.Y;
                 this.Move();
             };
@@ -91,7 +101,17 @@ namespace Luo_Painter.HSVColorPickers
             };
             this.SliderRectangle.ManipulationDelta += (_, e) =>
             {
-                this.Slider += e.Delta.Translation.X;
+                switch (base.FlowDirection)
+                {
+                    case FlowDirection.LeftToRight:
+                        this.Slider += e.Delta.Translation.X;
+                        break;
+                    case FlowDirection.RightToLeft:
+                        this.Slider -= e.Delta.Translation.X;
+                        break;
+                    default:
+                        break;
+                }
                 this.Zoom();
             };
             this.SliderRectangle.ManipulationCompleted += (_, e) =>

@@ -70,7 +70,17 @@ namespace Luo_Painter.HSVColorPickers
             };
             this.TrianglePath.ManipulationDelta += (_, e) =>
             {
-                this.Triangle.X += e.Delta.Translation.X;
+                switch (base.FlowDirection)
+                {
+                    case FlowDirection.LeftToRight:
+                        this.Triangle.X += e.Delta.Translation.X;
+                        break;
+                    case FlowDirection.RightToLeft:
+                        this.Triangle.X -= e.Delta.Translation.X;
+                        break;
+                    default:
+                        break;
+                }
                 this.Triangle.Y += e.Delta.Translation.Y;
                 this.Move();
 
