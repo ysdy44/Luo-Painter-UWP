@@ -9,6 +9,32 @@ using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter.HSVColorPickers
 {
+    public interface INumberPickerBase
+    {
+        //@Delegate
+        event NumberChangedHandler ValueChanging;
+        event NumberChangedHandler ValueChanged;
+
+        bool IsNegative { get; }
+        string Absnumber { get; }
+
+        double Minimum { get; }
+        double Maximum { get; }
+
+        string Unit { get; }
+
+        // UI
+        void Close();
+        void Open();
+
+        void Construct(INumberBase number);
+
+        bool IsZero();
+        bool InRange();
+        double ToValue();
+        string ToString();
+    }
+
     public interface INumberBase
     {
         /// <summary> <see cref="RangeBase.Value"/> </summary>
@@ -30,7 +56,7 @@ namespace Luo_Painter.HSVColorPickers
     //@Delegate
     public delegate void NumberChangedHandler(object sender, double number);
 
-    public sealed partial class NumberPicker : UserControl
+    public sealed partial class NumberPicker : UserControl, INumberPickerBase
     {
         //@Delegate
         public event NumberChangedHandler ValueChanging = null;
