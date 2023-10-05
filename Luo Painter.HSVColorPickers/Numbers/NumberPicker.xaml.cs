@@ -20,6 +20,9 @@ namespace Luo_Painter.HSVColorPickers
 
         string Unit { get; }
 
+        // UI
+        FlowDirection FlowDirection { get; }
+
         /// <summary> <see cref="FlyoutBase.Target"/> </summary>
         FrameworkElement PlacementTarget { get; }
     }
@@ -239,6 +242,7 @@ namespace Luo_Painter.HSVColorPickers
 
             // Popup
             Point transform = number.PlacementTarget.TransformToVisual(Window.Current.Content).TransformPoint(default);
+            this.Popup.FlowDirection = number.FlowDirection;
             this.Popup.HorizontalOffset = transform.X;
             this.Popup.VerticalOffset = transform.Y;
             this.Popup.Width = this.Border.Width = number.PlacementTarget.ActualWidth;
