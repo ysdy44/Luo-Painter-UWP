@@ -47,8 +47,8 @@ namespace Luo_Painter.TestApp
 
         private async Task CreateResourcesAsync()
         {
-            this.generalCodeBytes = await ShaderType.GeneralBrush.LoadAsync();
-            this.sparyGunCodeBytes = await ShaderType.SprayGun.LoadAsync();
+            this.generalCodeBytes = await new ShaderUri(ShaderType.GeneralBrush).LoadAsync();
+            this.sparyGunCodeBytes = await new ShaderUri(ShaderType.SprayGun).LoadAsync();
             brushRender = new CanvasRenderTarget(canvasControl, new Size(1000, 1000));
         }
 

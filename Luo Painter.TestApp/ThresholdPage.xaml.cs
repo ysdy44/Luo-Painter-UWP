@@ -103,7 +103,7 @@ namespace Luo_Painter.TestApp
 
         private async Task CreateResourcesAsync()
         {
-            this.ThresholdShaderCodeBytes = await ShaderType.Threshold.LoadAsync();
+            this.ThresholdShaderCodeBytes = await new ShaderUri(ShaderType.Threshold).LoadAsync();
         }
 
         public async Task<StorageFile> PickSingleImageFileAsync(PickerLocationId location)

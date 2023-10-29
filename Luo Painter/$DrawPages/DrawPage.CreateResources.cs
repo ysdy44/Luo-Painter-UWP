@@ -102,26 +102,26 @@ namespace Luo_Painter
 
         private async Task CreateResourcesAsync()
         {
-            this.LiquefactionShaderCodeBytes = await ShaderType.Liquefaction.LoadAsync();
-            this.FreeTransformShaderCodeBytes = await ShaderType.FreeTransform.LoadAsync();
-            this.GradientMappingShaderCodeBytes = await ShaderType.GradientMapping.LoadAsync();
-            this.RippleEffectShaderCodeBytes = await ShaderType.RippleEffect.LoadAsync();
-            this.ThresholdShaderCodeBytes = await ShaderType.Threshold.LoadAsync();
-            this.DifferenceShaderCodeBytes = await ShaderType.Difference.LoadAsync();
-            this.LalphaMaskShaderCodeBytes = await ShaderType.LalphaMask.LoadAsync();
-            this.RalphaMaskShaderCodeBytes = await ShaderType.RalphaMask.LoadAsync();
-            this.DisplacementLiquefactionShaderCodeBytes = await ShaderType.DisplacementLiquefaction.LoadAsync();
-            this.LalphaMaskEffectShaderCodeBytes = await ShaderType.LalphaMaskEffect.LoadAsync();
-            this.RalphaMaskEffectShaderCodeBytes = await ShaderType.RalphaMaskEffect.LoadAsync();
+            this.LiquefactionShaderCodeBytes = await new ShaderUri(ShaderType.Liquefaction).LoadAsync();
+            this.FreeTransformShaderCodeBytes = await new ShaderUri(ShaderType.FreeTransform).LoadAsync();
+            this.GradientMappingShaderCodeBytes = await new ShaderUri(ShaderType.GradientMapping).LoadAsync();
+            this.RippleEffectShaderCodeBytes = await new ShaderUri(ShaderType.RippleEffect).LoadAsync();
+            this.ThresholdShaderCodeBytes = await new ShaderUri(ShaderType.Threshold).LoadAsync();
+            this.DifferenceShaderCodeBytes = await new ShaderUri(ShaderType.Difference).LoadAsync();
+            this.LalphaMaskShaderCodeBytes = await new ShaderUri(ShaderType.LalphaMask).LoadAsync();
+            this.RalphaMaskShaderCodeBytes = await new ShaderUri(ShaderType.RalphaMask).LoadAsync();
+            this.DisplacementLiquefactionShaderCodeBytes = await new ShaderUri(ShaderType.DisplacementLiquefaction).LoadAsync();
+            this.LalphaMaskEffectShaderCodeBytes = await new ShaderUri(ShaderType.LalphaMaskEffect).LoadAsync();
+            this.RalphaMaskEffectShaderCodeBytes = await new ShaderUri(ShaderType.RalphaMaskEffect).LoadAsync();
 
             // Brush
-            this.BrushEdgeHardnessShaderCodeBytes = await ShaderType.BrushEdgeHardness.LoadAsync();
-            this.BrushEdgeHardnessWithTextureShaderCodeBytes = await ShaderType.BrushEdgeHardnessWithTexture.LoadAsync();
+            this.BrushEdgeHardnessShaderCodeBytes = await new ShaderUri(ShaderType.BrushEdgeHardness).LoadAsync();
+            this.BrushEdgeHardnessWithTextureShaderCodeBytes = await new ShaderUri(ShaderType.BrushEdgeHardnessWithTexture).LoadAsync();
         }
 
         private async Task CreateDottedLineResourcesAsync()
         {
-            this.DottedLineTransformShaderCodeBytes = await ShaderType.DottedLineTransform.LoadAsync();
+            this.DottedLineTransformShaderCodeBytes = await new ShaderUri(ShaderType.DottedLineTransform).LoadAsync();
         }
 
         public async void AddAsync(IEnumerable<IStorageFile> items)

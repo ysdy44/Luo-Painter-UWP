@@ -26,11 +26,11 @@ namespace Luo_Painter
 
         private async Task CreateResourcesAsync()
         {
-            this.LiquefactionShaderCodeBytes = await ShaderType.Liquefaction.LoadAsync();
+            this.LiquefactionShaderCodeBytes = await new ShaderUri(ShaderType.Liquefaction).LoadAsync();
 
             // Brush
-            this.BrushEdgeHardnessShaderCodeBytes = await ShaderType.BrushEdgeHardness.LoadAsync();
-            this.BrushEdgeHardnessWithTextureShaderCodeBytes = await ShaderType.BrushEdgeHardnessWithTexture.LoadAsync();
+            this.BrushEdgeHardnessShaderCodeBytes = await new ShaderUri(ShaderType.BrushEdgeHardness).LoadAsync();
+            this.BrushEdgeHardnessWithTextureShaderCodeBytes = await new ShaderUri(ShaderType.BrushEdgeHardnessWithTexture).LoadAsync();
         }
 
     }

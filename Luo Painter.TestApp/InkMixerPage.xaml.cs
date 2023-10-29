@@ -172,7 +172,7 @@ namespace Luo_Painter.TestApp
         private async Task CreateResourcesAsync()
         {
             // Brush
-            this.BrushEdgeHardnessShaderCodeBytes = await ShaderType.BrushEdgeHardness.LoadAsync();
+            this.BrushEdgeHardnessShaderCodeBytes = await new ShaderUri(ShaderType.BrushEdgeHardness).LoadAsync();
         }
 
         private void ConstructOperator()

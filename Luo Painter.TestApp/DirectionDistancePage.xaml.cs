@@ -120,7 +120,7 @@ namespace Luo_Painter.TestApp
         }
         private async void InitCanvas()
         {
-            blackOrWhiteCode = await ShaderType.BlackOrWhite.LoadAsync();
+            blackOrWhiteCode = await new ShaderUri(ShaderType.BlackOrWhite).LoadAsync();
             GetThresholdse();
             originalCanvas.Draw += (s, e) =>
             {
@@ -517,7 +517,7 @@ namespace Luo_Painter.TestApp
                 return;
             if (blackOrWhiteCode is null)
             {
-                blackOrWhiteCode = await ShaderType.BlackOrWhite.LoadAsync();
+                blackOrWhiteCode = await new ShaderUri(ShaderType.BlackOrWhite).LoadAsync();
 
             }
             PixelShaderEffect pse = new PixelShaderEffect(blackOrWhiteCode)

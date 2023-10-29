@@ -7,17 +7,21 @@ using Windows.Storage.Streams;
 
 namespace Luo_Painter.Shaders
 {
-    public static class ShaderExtensions
+    public sealed class ShaderUri : Uri
     {
-
-        public static async Task<byte[]> LoadAsync(this ShaderType type)
+        public ShaderUri(ShaderType type) : base(ShaderUri.GetPath(type))
         {
-            StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(new Uri(type.GetPath()));
+        }
+
+        public async Task<byte[]> LoadAsync()
+        {
+            StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(this);
             IBuffer buffer = await FileIO.ReadBufferAsync(file);
             return buffer.ToArray();
         }
 
-        private static string GetPath(this ShaderType type)
+        //@Static
+        public static string GetPath(ShaderType type)
         {
             switch (type)
             {
@@ -48,6 +52,5 @@ namespace Luo_Painter.Shaders
                 default: throw new NullReferenceException($"The shader for {type} is null.");
             }
         }
-
     }
 }

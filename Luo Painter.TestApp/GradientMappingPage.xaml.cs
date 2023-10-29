@@ -154,7 +154,7 @@ namespace Luo_Painter.TestApp
 
         private async Task CreateResourcesAsync()
         {
-            this.ShaderCodeBytes = await ShaderType.GradientMapping.LoadAsync();
+            this.ShaderCodeBytes = await new ShaderUri(ShaderType.GradientMapping).LoadAsync();
         }
 
         private void ResetGradientMapping(ICanvasResourceCreator resourceCreator)

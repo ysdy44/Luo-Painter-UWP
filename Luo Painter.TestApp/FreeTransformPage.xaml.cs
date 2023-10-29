@@ -169,7 +169,7 @@ namespace Luo_Painter.TestApp
 
         private async Task CreateResourcesAsync()
         {
-            this.ShaderCodeBytes = await ShaderType.FreeTransform.LoadAsync();
+            this.ShaderCodeBytes = await new ShaderUri(ShaderType.FreeTransform).LoadAsync();
         }
 
         private void ConstructOperator()

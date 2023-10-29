@@ -52,10 +52,10 @@ namespace Luo_Painter.TestApp
         async Task LoadShaderCode()
         {
  
-            filmicCode = await ShaderType.FilmicEffect.LoadAsync();
-            luminanceHeatmapCode = await ShaderType.LuminanceHeatmapEffect.LoadAsync();
-            reinhardCode = await ShaderType.ReinhardEffect.LoadAsync();
-            sdrOverlayCode = await ShaderType.SdrOverlayEffect.LoadAsync();
+            filmicCode = await new ShaderUri(ShaderType.FilmicEffect).LoadAsync();
+            luminanceHeatmapCode = await new ShaderUri(ShaderType.LuminanceHeatmapEffect).LoadAsync();
+            reinhardCode = await new ShaderUri(ShaderType.ReinhardEffect).LoadAsync();
+            sdrOverlayCode = await new ShaderUri(ShaderType.SdrOverlayEffect).LoadAsync();
         }
 
         public void InitCanvasOprate()

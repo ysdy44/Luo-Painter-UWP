@@ -106,7 +106,7 @@ namespace Luo_Painter.TestApp
 
         private async Task CreateResourcesAsync()
         {
-            this.ShaderCodeBytes = await ShaderType.DottedLineTransform.LoadAsync();
+            this.ShaderCodeBytes = await new ShaderUri(ShaderType.DottedLineTransform).LoadAsync();
         }
 
         public void ConstructOperator()

@@ -145,8 +145,8 @@ namespace Luo_Painter.TestApp
 
         private async Task CreateResourcesAsync()
         {
-            this.RippleEffectShaderCodeBytes = await ShaderType.RippleEffect.LoadAsync();
-            this.DifferenceShaderCodeBytes = await ShaderType.Difference.LoadAsync();
+            this.RippleEffectShaderCodeBytes = await new ShaderUri(ShaderType.RippleEffect).LoadAsync();
+            this.DifferenceShaderCodeBytes = await new ShaderUri(ShaderType.Difference).LoadAsync();
         }
 
         private void ConstructOperator()

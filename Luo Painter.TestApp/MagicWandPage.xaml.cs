@@ -65,8 +65,8 @@ namespace Luo_Painter.TestApp
         async void Init()
         {
 
-            dottedLineCode = await ShaderType.DottedLine.LoadAsync();
-            colorMatchCode = await ShaderType.ColorMatch.LoadAsync();
+            dottedLineCode = await new ShaderUri(ShaderType.DottedLine).LoadAsync();
+            colorMatchCode = await new ShaderUri(ShaderType.ColorMatch).LoadAsync();
             this.Unloaded += (s, e) =>
             {
                 effectCanvas = null;

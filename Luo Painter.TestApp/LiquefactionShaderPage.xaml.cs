@@ -131,7 +131,7 @@ namespace Luo_Painter.TestApp
 
         private async Task CreateResourcesAsync()
         {
-            this.ShaderCodeBytes = await ShaderType.Liquefaction.LoadAsync();
+            this.ShaderCodeBytes = await new ShaderUri(ShaderType.Liquefaction).LoadAsync();
         }
 
         private void ConstructOperator()
