@@ -132,10 +132,10 @@ namespace Luo_Painter.Controls
 
                 // Texture
                 this.RotateButton.IsOn = presenter.Rotate;
-                this.ShapeImage.UriSource = string.IsNullOrEmpty(presenter.Shape) ? null : new System.Uri(presenter.Shape.GetTexture());
+                this.ShapeImage.UriSource = string.IsNullOrEmpty(presenter.Shape) ? null : new BrushTextureUri(presenter.Shape);
                 this.RecolorShapeButton.IsOn = this.ShapeImage.ShowAsMonochrome = presenter.RecolorShape;
 
-                this.GrainImage.UriSource = string.IsNullOrEmpty(presenter.Grain) ? null : new System.Uri(presenter.Grain.GetTexture());
+                this.GrainImage.UriSource = string.IsNullOrEmpty(presenter.Grain) ? null : new BrushTextureUri(presenter.Grain);
                 this.RecolorGrainButton.IsOn = this.GrainImage.ShowAsMonochrome = presenter.RecolorGrain;
 
                 for (int i = 0; i < this.BlendModes.Length; i++)

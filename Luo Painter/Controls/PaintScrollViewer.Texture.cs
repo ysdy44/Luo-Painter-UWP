@@ -39,7 +39,7 @@ namespace Luo_Painter.Controls
                         if (string.IsNullOrEmpty(path)) break;
 
                         // Select Texture
-                        this.ShapeImage.UriSource = new System.Uri(path.GetTexture());
+                        this.ShapeImage.UriSource = new BrushTextureUri(path);
                         this.InkPresenter.ConstructShape(path, await CanvasBitmap.LoadAsync(this.CanvasDevice, path.GetTextureSource()));
                         this.InkType = this.InkPresenter.GetType();
                         this.TryInk();
@@ -109,7 +109,7 @@ namespace Luo_Painter.Controls
                         if (string.IsNullOrEmpty(path)) break;
 
                         // Select Texture
-                        this.GrainImage.UriSource = new System.Uri(path.GetTexture());
+                        this.GrainImage.UriSource = new BrushTextureUri(path);
                         this.InkPresenter.ConstructGrain(path, await CanvasBitmap.LoadAsync(this.CanvasDevice, path.GetTextureSource()));
                         this.InkType = this.InkPresenter.GetType();
                         this.TryInk();

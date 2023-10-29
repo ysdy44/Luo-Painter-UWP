@@ -1,5 +1,14 @@
-﻿namespace Luo_Painter.Brushes
+﻿using System;
+
+namespace Luo_Painter.Brushes
 {
+    public sealed class BrushTextureUri : Uri
+    {
+        public BrushTextureUri(string name) : base($@"ms-appx:///Luo Painter.Brushes/Textures/{name}Texture.png")
+        {
+        }
+    }
+
     public static class BrushExtensions
     {
         public static string GetTile(this uint tile) => $"ms-appx:///Luo Painter.Brushes/Tiles/{tile}.jpg";
