@@ -26,7 +26,7 @@ namespace Luo_Painter.TestApp
     {
         protected override void OnTypeChanged(BlendEffectMode value)
         {
-            base.Resources.Source = new Uri(value.GetResource());
+            base.Resources.Source = new BlendResourceUri(value);
             base.Content = new StackPanel
             {
                 Spacing = 12,
