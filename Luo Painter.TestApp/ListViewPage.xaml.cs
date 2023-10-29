@@ -12,7 +12,7 @@ namespace Luo_Painter.TestApp
     {
         protected override void OnTypeChanged(OptionType value)
         {
-            base.Resources.Source = new Uri(value.GetResource());
+            base.Resources.Source = new OptionResourceUri(value);
             base.Template = value.GetTemplate(base.Resources);
             base.Content = value;
             ToolTipService.SetToolTip(this, new ToolTip

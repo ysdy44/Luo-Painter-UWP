@@ -30,7 +30,7 @@ namespace Luo_Painter.Strings
             {
                 Content = this.Type
             };
-            icon.Resources.Source = new Uri(this.Type.GetResource());
+            icon.Resources.Source = new OptionResourceUri(this.Type);
             icon.Template = this.Type.GetTemplate(icon.Resources);
             return icon;
         }
@@ -48,7 +48,7 @@ namespace Luo_Painter.Strings
                 Width = 32,
                 HorizontalAlignment = HorizontalAlignment.Right
             };
-            icon.Resources.Source = new Uri(this.Type.GetResource());
+            icon.Resources.Source = new OptionResourceUri(this.Type);
             icon.Template = this.Type.GetTemplate(icon.Resources);
 
             return new Grid

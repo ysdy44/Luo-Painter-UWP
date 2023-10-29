@@ -45,7 +45,7 @@ namespace Luo_Painter.UI
 
             if (value.ExistIcon())
             {
-                base.Resources.Source = new Uri(value.GetResource());
+                base.Resources.Source = new OptionResourceUri(value);
                 base.Tag = new ContentControl
                 {
                     HorizontalAlignment = HorizontalAlignment.Center,

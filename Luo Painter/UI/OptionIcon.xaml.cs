@@ -37,7 +37,7 @@ namespace Luo_Painter.UI
 
         private void Update(OptionType value)
         {
-            base.Resources.Source = new Uri(value.GetResource());
+            base.Resources.Source = new OptionResourceUri(value);
             base.Template = value.GetTemplate(base.Resources);
         }
     }

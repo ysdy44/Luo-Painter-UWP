@@ -40,7 +40,7 @@ namespace Luo_Painter.UI
             if (value.ExistThumbnail())
             {
                 this.TextBlock.Text = value.GetString();
-                this.BitmapImage.UriSource = new Uri(value.GetThumbnail());
+                this.BitmapImage.UriSource = new OptionThumbnailUri(value);
             }
         }
     }
