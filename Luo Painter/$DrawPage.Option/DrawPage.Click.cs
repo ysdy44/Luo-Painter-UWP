@@ -289,32 +289,30 @@ namespace Luo_Painter
                     break;
 
                 case OptionType.Undo:
-                    if (this.History.CanUndo is false) break;
-
-                    // History
+                    if (this.History.CanUndo)
                     {
+                        // History
                         bool result = this.History.Undo(this.Undo);
                         if (result is false) break;
+
+                        this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                        this.RaiseHistoryCanExecuteChanged();
+                        this.ToastTip.Tip(TipType.Undo.GetString(), $"{this.History.Index} / {this.History.Count}");
                     }
-
-                    this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                    this.RaiseHistoryCanExecuteChanged();
-                    this.ToastTip.Tip(TipType.Undo.GetString(), $"{this.History.Index} / {this.History.Count}");
                     break;
                 case OptionType.Redo:
-                    if (this.History.CanRedo is false) break;
-
-                    // History
+                    if (this.History.CanRedo != false)
                     {
+                        // History
                         bool result = this.History.Redo(this.Redo);
                         if (result is false) break;
+
+                        this.CanvasVirtualControl.Invalidate(); // Invalidate
+
+                        this.RaiseHistoryCanExecuteChanged();
+                        this.ToastTip.Tip(TipType.Redo.GetString(), $"{this.History.Index} / {this.History.Count}");
                     }
-
-                    this.CanvasVirtualControl.Invalidate(); // Invalidate
-
-                    this.RaiseHistoryCanExecuteChanged();
-                    this.ToastTip.Tip(TipType.Redo.GetString(), $"{this.History.Index} / {this.History.Count}");
                     break;
 
                 // Layout

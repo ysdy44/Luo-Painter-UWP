@@ -9,7 +9,7 @@
   <Identity
     Name="43956ysdy44.LuoPainter"
     Publisher="CN=9DF2B1A6-C2CE-481C-9997-A3B93DA91100"
-    Version="1.0.3.0" />
+    Version="1.2.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="cc09f942-c05a-4ff5-9e2b-ce4866c63aa5" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
