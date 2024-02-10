@@ -15,7 +15,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.TestApp
 {
-    public sealed partial class BitmapTransformerPage : Page
+    public sealed partial class TransformPage : Page
     {
         readonly CanvasDevice Device = new CanvasDevice();
         BitmapLayer BitmapLayer;
@@ -30,7 +30,7 @@ namespace Luo_Painter.TestApp
         Vector2 StartingPosition;
         Transformer StartingTransformer;
 
-        public BitmapTransformerPage()
+        public TransformPage()
         {
             this.InitializeComponent();
             this.ConstructBitmapTransformer();
