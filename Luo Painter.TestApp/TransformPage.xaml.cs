@@ -47,7 +47,7 @@ namespace Luo_Painter.TestApp
                 if (file is null) return;
 
                 bool? result = await this.AddAsync(file);
-                if (result is null) return; 
+                if (result is null) return;
                 if (result is false) return;
 
                 this.Transformer = new Transformer(512, 512, Vector2.Zero);

@@ -63,7 +63,7 @@
                     Add
                 </AppBarButton.Label>
             </AppBarButton>
-            
+
             <AppBarButton x:Name="ResetButton">
                 <UIElement.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="None" Key="R"/>

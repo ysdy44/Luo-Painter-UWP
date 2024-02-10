@@ -269,9 +269,6 @@
     <Compile Include="LayerPage.xaml.cs">
       <DependentUpon>LayerPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BitmapTransformerPage.xaml.cs">
-      <DependentUpon>BitmapTransformerPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="LiquefactionShaderPage.xaml.cs">
       <DependentUpon>LiquefactionShaderPage.xaml</DependentUpon>
     </Compile>
@@ -338,6 +335,9 @@
     </Compile>
     <Compile Include="ToastPage.xaml.cs">
       <DependentUpon>ToastPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TransformPage.xaml.cs">
+      <DependentUpon>TransformPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="WriteableBitmapSourcePage.xaml.cs">
       <DependentUpon>WriteableBitmapSourcePage.xaml</DependentUpon>
@@ -563,10 +563,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="BitmapTransformerPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="LiquefactionShaderPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -654,6 +650,10 @@
     <Page Include="ToastPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TransformPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WriteableBitmapSourcePage.xaml">
       <Generator>MSBuild:Compile</Generator>
