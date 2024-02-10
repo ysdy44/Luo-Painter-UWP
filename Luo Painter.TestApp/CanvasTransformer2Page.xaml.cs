@@ -1,5 +1,6 @@
 ﻿using FanKit.Transformers;
 using Luo_Painter.Elements;
+using Luo_Painter.HSVColorPickers;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using System;
@@ -11,18 +12,6 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.TestApp
 {
-    internal struct Transform
-    {
-        public bool IsMove;
-        public TransformerMode Mode;
-
-        public Matrix3x2 Matrix;
-        public TransformerBorder Border;
-
-        public Transformer StartingTransformer;
-        public Transformer Transformer;
-    }
-
     public sealed partial class CanvasTransformer2Page : Page
     {
 
@@ -43,7 +32,7 @@ namespace Luo_Painter.TestApp
         Vector2 StartingPoint;
         Vector2 Point;
 
-        Transform Transform;
+        TransformMatrix Transform;
 
         public CanvasTransformer2Page()
         {
@@ -96,8 +85,12 @@ namespace Luo_Painter.TestApp
         private async Task CreateResourcesAsync(ICanvasResourceCreator sender)
         {
             this.Bitmap = await CanvasBitmap.LoadAsync(sender, "Assets\\Square150x150Logo.scale-200.png");
-            this.Transform.Transformer = new Transformer(this.Bitmap.SizeInPixels.Width, this.Bitmap.SizeInPixels.Height, Vector2.Zero);
-            this.Transform.Border = new TransformerBorder(this.Bitmap.SizeInPixels.Width, this.Bitmap.SizeInPixels.Height);
+            this.Transform = new TransformMatrix
+            {
+                Matrix = Matrix3x2.Identity,
+                Border = new TransformerBorder(512, 512),
+                Transformer = new Transformer(this.Bitmap.SizeInPixels.Width, this.Bitmap.SizeInPixels.Height, Vector2.Zero)
+            };
         }
 
         private void ConstructOperator()
@@ -125,14 +118,14 @@ namespace Luo_Painter.TestApp
                 if (this.Transform.IsMove)
                 {
                     this.Transform.Transformer = this.Transform.StartingTransformer + (this.Position - this.StartingPosition);
-                    this.Transform.Matrix = FanKit.Transformers.Transformer.FindHomography(this.Transform.Border, this.Transform.Transformer);
+                    this.Transform.UpdateMatrix();
 
                     this.CanvasControl.Invalidate(); // Invalidate
                 }
                 else if (this.Transform.Mode != default)
                 {
                     this.Transform.Transformer = FanKit.Transformers.Transformer.Controller(this.Transform.Mode, this.StartingPosition, this.Position, this.Transform.StartingTransformer, this.IsRatio, this.IsCenter);
-                    this.Transform.Matrix = FanKit.Transformers.Transformer.FindHomography(this.Transform.Border, this.Transform.Transformer);
+                    this.Transform.UpdateMatrix();
 
                     this.CanvasControl.Invalidate(); // Invalidate
                 }

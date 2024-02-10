@@ -1,5 +1,6 @@
 ﻿using FanKit.Transformers;
 using Luo_Painter.Elements;
+using Luo_Painter.HSVColorPickers;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Microsoft.Graphics.Canvas;
@@ -20,9 +21,12 @@ namespace Luo_Painter.TestApp
         readonly CanvasDevice Device = new CanvasDevice();
         BitmapLayer BitmapLayer;
 
-        TransformerRect TransformerRect = new TransformerRect(512, 512, Vector2.Zero);
-        Transformer Transformer = new Transformer(512, 512, Vector2.Zero);
-        TransformerMode Mode = TransformerMode.None;
+        TransformMatrix Transform = new TransformMatrix
+        {
+            Matrix = Matrix3x2.Identity,
+            Border = new TransformerBorder(512, 512),
+            Transformer = new Transformer(512, 512, Vector2.Zero)
+        };
 
         Vector2 Point; // DPIs
         Vector2 Position; // Pixels
@@ -50,7 +54,12 @@ namespace Luo_Painter.TestApp
                 if (result is null) return;
                 if (result is false) return;
 
-                this.Transformer = new Transformer(512, 512, Vector2.Zero);
+                this.Transform = new TransformMatrix
+                {
+                    Matrix = Matrix3x2.Identity,
+                    Border = new TransformerBorder(512, 512),
+                    Transformer = new Transformer(512, 512, Vector2.Zero)
+                };
 
                 this.CanvasControl.Invalidate(); // Invalidate
                 this.ToolCanvasControl.Invalidate(); // Invalidate
@@ -60,7 +69,12 @@ namespace Luo_Painter.TestApp
             };
             this.ResetButton.Click += (s, e) =>
             {
-                this.Transformer = new Transformer(512, 512, Vector2.Zero);
+                this.Transform = new TransformMatrix
+                {
+                    Matrix = Matrix3x2.Identity,
+                    Border = new TransformerBorder(512, 512),
+                    Transformer = new Transformer(512, 512, Vector2.Zero)
+                };
 
                 this.CanvasControl.Invalidate(); // Invalidate
                 this.ToolCanvasControl.Invalidate(); // Invalidate
@@ -86,12 +100,11 @@ namespace Luo_Painter.TestApp
 
                 args.DrawingSession.FillRectangle(0, 0, 512, 512, Colors.White);
 
-                Matrix3x2 matrix = FanKit.Transformers.Transformer.FindHomography(this.TransformerRect, this.Transformer);
                 args.DrawingSession.DrawImage(new Transform2DEffect
                 {
                     BorderMode = EffectBorderMode.Hard,
                     InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
-                    TransformMatrix = matrix,
+                    TransformMatrix = this.Transform.Matrix,
                     Source = this.BitmapLayer[BitmapType.Source]
                 });
 
@@ -107,7 +120,7 @@ namespace Luo_Painter.TestApp
                 args.DrawingSession.Units = CanvasUnits.Dips; /// <see cref="DPIExtensions">
 
                 Matrix3x2 matrix = sender.Dpi.ConvertPixelsToDips();
-                args.DrawingSession.DrawBoundNodes(this.Transformer, matrix);
+                args.DrawingSession.DrawBoundNodes(this.Transform.Transformer, matrix);
 
                 // args.DrawingSession.DrawNode(this.PositionDIPs);
             };
@@ -172,14 +185,14 @@ namespace Luo_Painter.TestApp
                 this.Position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
 
                 Matrix3x2 matrix = this.CanvasControl.Dpi.ConvertPixelsToDips();
-                this.Mode = Transformer.ContainsNodeMode(this.Point, this.Transformer, matrix);
-                this.TextBlock.Text = this.Mode.ToString();
+                this.Transform.Mode = Transformer.ContainsNodeMode(this.Point, this.Transform.Transformer, matrix);
+                this.TextBlock.Text = this.Transform.Mode.ToString();
 
                 //bool fillContainsPoint = this.Transformer.FillContainsPoint(this.PositionPixels);
                 //this.TextBlock.Text = fillContainsPoint.ToString();
 
                 this.StartingPosition = this.Position;
-                this.StartingTransformer = this.Transformer;
+                this.StartingTransformer = this.Transform.Transformer;
 
                 this.CanvasControl.Invalidate(); // Invalidate
                 this.ToolCanvasControl.Invalidate(); // Invalidate
@@ -193,7 +206,8 @@ namespace Luo_Painter.TestApp
                 this.Position = position;
                 this.Point = point;
 
-                this.Transformer = Transformer.Controller(this.Mode, this.StartingPosition, this.Position, this.StartingTransformer);
+                this.Transform.Transformer = Transformer.Controller(this.Transform.Mode, this.StartingPosition, this.Position, this.StartingTransformer);
+                this.Transform.UpdateMatrix();
 
                 this.CanvasControl.Invalidate(); // Invalidate
                 this.ToolCanvasControl.Invalidate(); // Invalidate

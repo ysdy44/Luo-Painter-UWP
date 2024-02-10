@@ -1,5 +1,6 @@
 ﻿using FanKit.Transformers;
 using Luo_Painter.Elements;
+using Luo_Painter.HSVColorPickers;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Shaders;
@@ -20,10 +21,13 @@ namespace Luo_Painter.TestApp
     {
         readonly CanvasDevice Device = new CanvasDevice();
         BitmapLayer BitmapLayer;
-        TransformerMode Mode = TransformerMode.None;
 
-        TransformerRect TransformerRect = new TransformerRect(512, 512, Vector2.Zero);
-        Transformer Transformer = new Transformer(512, 512, Vector2.Zero);
+        TransformMatrix3D FreeTransform = new TransformMatrix3D
+        {
+            Matrix = Matrix3x2.Identity,
+            Border = new TransformerBorder(512, 512),
+            Transformer = new Transformer(512, 512, Vector2.Zero),
+        };
 
         Vector2 Point; // DPIs
         Vector2 Position; // Pixels
@@ -47,10 +51,15 @@ namespace Luo_Painter.TestApp
                 if (file is null) return;
 
                 bool? result = await this.AddAsync(file);
-                if (result is null) return; 
+                if (result is null) return;
                 if (result is false) return;
 
-                this.Transformer = new Transformer(512, 512, Vector2.Zero);
+                this.FreeTransform = new TransformMatrix3D
+                {
+                    Matrix = Matrix3x2.Identity,
+                    Border = new TransformerBorder(512, 512),
+                    Transformer = new Transformer(512, 512, Vector2.Zero)
+                };
 
                 this.CanvasControl.Invalidate(); // Invalidate
                 this.ToolCanvasControl.Invalidate(); // Invalidate
@@ -60,7 +69,12 @@ namespace Luo_Painter.TestApp
             };
             this.ResetButton.Click += (s, e) =>
             {
-                this.Transformer = new Transformer(512, 512, Vector2.Zero);
+                this.FreeTransform = new TransformMatrix3D
+                {
+                    Matrix = Matrix3x2.Identity,
+                    Border = new TransformerBorder(512, 512),
+                    Transformer = new Transformer(512, 512, Vector2.Zero)
+                };
 
                 this.CanvasControl.Invalidate(); // Invalidate
                 this.ToolCanvasControl.Invalidate(); // Invalidate
@@ -86,14 +100,13 @@ namespace Luo_Painter.TestApp
 
                 args.DrawingSession.FillRectangle(0, 0, 512, 512, Colors.White);
 
-                Matrix3x2 matrix = FanKit.Transformers.Transformer.FindHomography(this.Transformer, this.TransformerRect, out Vector2 distance);
                 args.DrawingSession.DrawImage(new PixelShaderEffect(this.ShaderCodeBytes)
                 {
                     Source1 = this.BitmapLayer[BitmapType.Source],
                     Properties =
                     {
-                        ["matrix3x2"] = matrix,
-                        ["zdistance"] = distance,
+                        ["matrix3x2"] = this.FreeTransform.Matrix,
+                        ["zdistance"] = this.FreeTransform.Distance,
                         ["left"] = 0f,
                         ["top"] = 0f,
                         ["right"] = 512f,
@@ -113,11 +126,11 @@ namespace Luo_Painter.TestApp
                 args.DrawingSession.Units = CanvasUnits.Dips; /// <see cref="DPIExtensions">
 
                 Matrix3x2 matrix = sender.Dpi.ConvertPixelsToDips();
-                args.DrawingSession.DrawBound(this.Transformer, matrix);
-                args.DrawingSession.DrawNode2(Vector2.Transform(this.Transformer.LeftTop, matrix));
-                args.DrawingSession.DrawNode2(Vector2.Transform(this.Transformer.RightTop, matrix));
-                args.DrawingSession.DrawNode2(Vector2.Transform(this.Transformer.RightBottom, matrix));
-                args.DrawingSession.DrawNode2(Vector2.Transform(this.Transformer.LeftBottom, matrix));
+                args.DrawingSession.DrawBound(this.FreeTransform.Transformer, matrix);
+                args.DrawingSession.DrawNode2(Vector2.Transform(this.FreeTransform.Transformer.LeftTop, matrix));
+                args.DrawingSession.DrawNode2(Vector2.Transform(this.FreeTransform.Transformer.RightTop, matrix));
+                args.DrawingSession.DrawNode2(Vector2.Transform(this.FreeTransform.Transformer.RightBottom, matrix));
+                args.DrawingSession.DrawNode2(Vector2.Transform(this.FreeTransform.Transformer.LeftBottom, matrix));
             };
 
 
@@ -181,8 +194,8 @@ namespace Luo_Painter.TestApp
                 this.Position = this.CanvasControl.Dpi.ConvertDipsToPixels(point);
 
                 Matrix3x2 matrix = this.CanvasControl.Dpi.ConvertPixelsToDips();
-                this.Mode = Transformer.ContainsNodeMode(this.Point, this.Transformer, matrix);
-                this.TextBlock.Text = this.Mode.ToString();
+                this.FreeTransform.Mode = Transformer.ContainsNodeMode(this.Point, (Transformer)this.FreeTransform.Transformer, matrix);
+                this.TextBlock.Text = this.FreeTransform.Mode.ToString();
 
                 //bool fillContainsPoint = this.Transformer.FillContainsPoint(this.PositionPixels);
                 //this.TextBlock.Text = fillContainsPoint.ToString();
@@ -199,14 +212,16 @@ namespace Luo_Painter.TestApp
                 this.Position = position;
                 this.Point = point;
 
-                switch (this.Mode)
+                switch (this.FreeTransform.Mode)
                 {
-                    case TransformerMode.ScaleLeftTop: this.Transformer.LeftTop = this.Position; break;
-                    case TransformerMode.ScaleRightTop: this.Transformer.RightTop = this.Position; break;
-                    case TransformerMode.ScaleRightBottom: this.Transformer.RightBottom = this.Position; break;
-                    case TransformerMode.ScaleLeftBottom: this.Transformer.LeftBottom = this.Position; break;
+                    case TransformerMode.ScaleLeftTop: this.FreeTransform.Transformer.LeftTop = this.Position; break;
+                    case TransformerMode.ScaleRightTop: this.FreeTransform.Transformer.RightTop = this.Position; break;
+                    case TransformerMode.ScaleRightBottom: this.FreeTransform.Transformer.RightBottom = this.Position; break;
+                    case TransformerMode.ScaleLeftBottom: this.FreeTransform.Transformer.LeftBottom = this.Position; break;
                     default: break;
                 }
+
+                this.FreeTransform.UpdateMatrix();
 
                 this.CanvasControl.Invalidate(); // Invalidate
                 this.ToolCanvasControl.Invalidate(); // Invalidate
