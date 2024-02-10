@@ -9,8 +9,14 @@ namespace Luo_Painter.HSVColorPickers
         public TransformerMode Mode;
 
         public Matrix3x2 Matrix;
+        // Source
         public TransformerBorder Border;
-
+        // Destination
         public Transformer Transformer;
+
+        public void UpdateMatrix()
+        {
+            this.Matrix = Transformer.FindHomography(this.Transformer, this.Border, out this.Distance);
+        }
     }
 }

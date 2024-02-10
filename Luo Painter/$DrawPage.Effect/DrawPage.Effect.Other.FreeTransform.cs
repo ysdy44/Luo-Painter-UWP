@@ -27,10 +27,12 @@ namespace Luo_Painter
 
         private void ResetFreeTransform(PixelBounds bounds)
         {
-            this.FreeTransform.Distance = Vector2.Zero;
-            this.FreeTransform.Matrix = Matrix3x2.Identity;
-            this.FreeTransform.Border = bounds.ToBorder();
-            this.FreeTransform.Transformer = this.FreeTransform.Border.ToTransformer();
+            this.FreeTransform = new TransformMatrix3D
+            {
+                Matrix = Matrix3x2.Identity,
+                Border = bounds.ToBorder(),
+                Transformer = bounds.ToBorder().ToTransformer()
+            };
 
             this.LTPicker.Value = this.FreeTransform.Transformer.LeftTop;
             this.RTPicker.Value = this.FreeTransform.Transformer.RightTop;
@@ -44,7 +46,7 @@ namespace Luo_Painter
             {
                 case 0:
                     this.FreeTransform.Transformer.LeftTop = new Vector2(e, this.FreeTransform.Transformer.LeftTop.Y);
-                    this.FreeTransform.Matrix = FanKit.Transformers.Transformer.FindHomography(this.FreeTransform.Transformer, this.FreeTransform.Border, out this.FreeTransform.Distance);
+                    this.FreeTransform.UpdateMatrix();
 
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
                     this.CanvasControl.Invalidate(); // Invalidate
@@ -53,7 +55,7 @@ namespace Luo_Painter
                     break;
                 case 1:
                     this.FreeTransform.Transformer.LeftTop = new Vector2(this.FreeTransform.Transformer.LeftTop.X, e);
-                    this.FreeTransform.Matrix = FanKit.Transformers.Transformer.FindHomography(this.FreeTransform.Transformer, this.FreeTransform.Border, out this.FreeTransform.Distance);
+                    this.FreeTransform.UpdateMatrix();
 
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
                     this.CanvasControl.Invalidate(); // Invalidate
@@ -63,7 +65,7 @@ namespace Luo_Painter
 
                 case 2:
                     this.FreeTransform.Transformer.RightTop = new Vector2(e, this.FreeTransform.Transformer.RightTop.Y);
-                    this.FreeTransform.Matrix = FanKit.Transformers.Transformer.FindHomography(this.FreeTransform.Transformer, this.FreeTransform.Border, out this.FreeTransform.Distance);
+                    this.FreeTransform.UpdateMatrix();
 
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
                     this.CanvasControl.Invalidate(); // Invalidate
@@ -72,7 +74,7 @@ namespace Luo_Painter
                     break;
                 case 3:
                     this.FreeTransform.Transformer.RightTop = new Vector2(this.FreeTransform.Transformer.RightTop.X, e);
-                    this.FreeTransform.Matrix = FanKit.Transformers.Transformer.FindHomography(this.FreeTransform.Transformer, this.FreeTransform.Border, out this.FreeTransform.Distance);
+                    this.FreeTransform.UpdateMatrix();
 
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
                     this.CanvasControl.Invalidate(); // Invalidate
@@ -82,7 +84,7 @@ namespace Luo_Painter
 
                 case 4:
                     this.FreeTransform.Transformer.RightBottom = new Vector2(e, this.FreeTransform.Transformer.RightBottom.Y);
-                    this.FreeTransform.Matrix = FanKit.Transformers.Transformer.FindHomography(this.FreeTransform.Transformer, this.FreeTransform.Border, out this.FreeTransform.Distance);
+                    this.FreeTransform.UpdateMatrix();
 
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
                     this.CanvasControl.Invalidate(); // Invalidate
@@ -91,7 +93,7 @@ namespace Luo_Painter
                     break;
                 case 5:
                     this.FreeTransform.Transformer.RightBottom = new Vector2(this.FreeTransform.Transformer.RightBottom.X, e);
-                    this.FreeTransform.Matrix = FanKit.Transformers.Transformer.FindHomography(this.FreeTransform.Transformer, this.FreeTransform.Border, out this.FreeTransform.Distance);
+                    this.FreeTransform.UpdateMatrix();
 
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
                     this.CanvasControl.Invalidate(); // Invalidate
@@ -101,7 +103,7 @@ namespace Luo_Painter
 
                 case 6:
                     this.FreeTransform.Transformer.LeftBottom = new Vector2(e, this.FreeTransform.Transformer.LeftBottom.Y);
-                    this.FreeTransform.Matrix = FanKit.Transformers.Transformer.FindHomography(this.FreeTransform.Transformer, this.FreeTransform.Border, out this.FreeTransform.Distance);
+                    this.FreeTransform.UpdateMatrix();
 
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
                     this.CanvasControl.Invalidate(); // Invalidate
@@ -110,7 +112,7 @@ namespace Luo_Painter
                     break;
                 case 7:
                     this.FreeTransform.Transformer.LeftBottom = new Vector2(this.FreeTransform.Transformer.LeftBottom.X, e);
-                    this.FreeTransform.Matrix = FanKit.Transformers.Transformer.FindHomography(this.FreeTransform.Transformer, this.FreeTransform.Border, out this.FreeTransform.Distance);
+                    this.FreeTransform.UpdateMatrix();
 
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
                     this.CanvasControl.Invalidate(); // Invalidate
@@ -135,7 +137,7 @@ namespace Luo_Painter
             {
                 case TransformerMode.ScaleLeftTop:
                     this.FreeTransform.Transformer.LeftTop = this.Position;
-                    this.FreeTransform.Matrix = FanKit.Transformers.Transformer.FindHomography(this.FreeTransform.Transformer, this.FreeTransform.Border, out this.FreeTransform.Distance);
+                    this.FreeTransform.UpdateMatrix();
 
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
                     this.CanvasControl.Invalidate(); // Invalidate
@@ -144,7 +146,7 @@ namespace Luo_Painter
                     break;
                 case TransformerMode.ScaleRightTop:
                     this.FreeTransform.Transformer.RightTop = this.Position;
-                    this.FreeTransform.Matrix = FanKit.Transformers.Transformer.FindHomography(this.FreeTransform.Transformer, this.FreeTransform.Border, out this.FreeTransform.Distance);
+                    this.FreeTransform.UpdateMatrix();
 
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
                     this.CanvasControl.Invalidate(); // Invalidate
@@ -153,7 +155,7 @@ namespace Luo_Painter
                     break;
                 case TransformerMode.ScaleRightBottom:
                     this.FreeTransform.Transformer.RightBottom = this.Position;
-                    this.FreeTransform.Matrix = FanKit.Transformers.Transformer.FindHomography(this.FreeTransform.Transformer, this.FreeTransform.Border, out this.FreeTransform.Distance);
+                    this.FreeTransform.UpdateMatrix();
 
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
                     this.CanvasControl.Invalidate(); // Invalidate
@@ -162,7 +164,7 @@ namespace Luo_Painter
                     break;
                 case TransformerMode.ScaleLeftBottom:
                     this.FreeTransform.Transformer.LeftBottom = this.Position;
-                    this.FreeTransform.Matrix = FanKit.Transformers.Transformer.FindHomography(this.FreeTransform.Transformer, this.FreeTransform.Border, out this.FreeTransform.Distance);
+                    this.FreeTransform.UpdateMatrix();
 
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
                     this.CanvasControl.Invalidate(); // Invalidate
