@@ -1,9 +1,9 @@
 ﻿using FanKit.Transformers;
 using System.Numerics;
 
-namespace Luo_Painter.UI
+namespace Luo_Painter.HSVColorPickers
 {
-    public struct TransformZDistance
+    public struct TransformMatrix3D
     {
         public Vector2 Distance;
         public TransformerMode Mode;

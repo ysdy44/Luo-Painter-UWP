@@ -1,7 +1,7 @@
 ﻿using FanKit.Transformers;
 using System.Numerics;
 
-namespace Luo_Painter.UI
+namespace Luo_Painter.HSVColorPickers
 {
     public struct TransformMatrix
     {

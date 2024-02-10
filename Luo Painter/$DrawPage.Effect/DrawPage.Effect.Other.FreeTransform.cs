@@ -1,5 +1,6 @@
 ﻿using FanKit.Transformers;
 using Luo_Painter.Elements;
+using Luo_Painter.HSVColorPickers;
 using Luo_Painter.Layers;
 using Luo_Painter.UI;
 using System.Numerics;

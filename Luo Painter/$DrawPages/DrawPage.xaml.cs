@@ -1,6 +1,7 @@
 ﻿using Luo_Painter.Brushes;
 using Luo_Painter.Controls;
 using Luo_Painter.Elements;
+using Luo_Painter.HSVColorPickers;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Models;
@@ -125,7 +126,7 @@ namespace Luo_Painter
 
         TransformMatrix Transform;
         TransformBase CreateTransform;
-        TransformZDistance FreeTransform;
+        TransformMatrix3D FreeTransform;
 
         TransformBase CropTransform;
         Vector2 StartingPositionWithoutRadian;
