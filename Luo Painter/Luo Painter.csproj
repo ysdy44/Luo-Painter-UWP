@@ -344,9 +344,6 @@
     <Compile Include="UI\SourceDrawToStyleAttribute.cs" />
     <Compile Include="UI\SourceMainToDrawAttribute.cs" />
     <Compile Include="UI\SourcePageType.cs" />
-    <Compile Include="UI\TransformBase.cs" />
-    <Compile Include="UI\TransformMatrix.cs" />
-    <Compile Include="UI\TransformZDistance.cs" />
     <Compile Include="UI\XamlGridView.cs" />
     <Compile Include="UI\XamlListView.cs" />
   </ItemGroup>

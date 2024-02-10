@@ -196,6 +196,9 @@
       <DependentUpon>Strawer.xaml</DependentUpon>
     </Compile>
     <Compile Include="TemplateSettings.cs" />
+    <Compile Include="Transforms\TransformBase.cs" />
+    <Compile Include="Transforms\TransformMatrix.cs" />
+    <Compile Include="Transforms\TransformMatrix3D.cs" />
     <EmbeddedResource Include="Properties\Luo_Painter.HSVColorPickers.rd.xml" />
   </ItemGroup>
   <ItemGroup>
