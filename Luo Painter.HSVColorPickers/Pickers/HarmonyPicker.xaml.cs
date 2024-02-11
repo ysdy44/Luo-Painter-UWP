@@ -248,10 +248,7 @@ namespace Luo_Painter.HSVColorPickers
             Canvas.SetLeft(this.WhiteEllipse, xy.X - 13);
             Canvas.SetTop(this.WhiteEllipse, xy.Y - 13);
         }
-    }
 
-    public sealed partial class HarmonyPicker
-    {
         public void Remode(HarmonyMode mode)
         {
             if (this.Mode == mode) return;

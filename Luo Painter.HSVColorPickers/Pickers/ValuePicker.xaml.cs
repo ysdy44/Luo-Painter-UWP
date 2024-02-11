@@ -120,10 +120,7 @@ namespace Luo_Painter.HSVColorPickers
                 this.ColorChangedCompleted?.Invoke(this, color); // Delegate
             };
         }
-    }
 
-    public sealed partial class ValuePicker
-    {
         public void Recolor(Color color)
         {
             this.HSV = color.ToHSV();
@@ -204,10 +201,7 @@ namespace Luo_Painter.HSVColorPickers
 
             this.Color(this.HSV.ToColor());
         }
-    }
 
-    public sealed partial class ValuePicker
-    {
         private void Color(Color color)
         {
             this.ColorChanged?.Invoke(this, color); // Delegate

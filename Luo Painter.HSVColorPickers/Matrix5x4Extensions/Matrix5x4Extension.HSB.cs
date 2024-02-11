@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace Luo_Painter.HSVColorPickers
 {
-    public static partial class Matrix5x4Extension
+    partial class Matrix5x4Extension
     {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

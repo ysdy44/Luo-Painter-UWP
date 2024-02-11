@@ -139,10 +139,7 @@ namespace Luo_Painter.HSVColorPickers
                 this.TextBlock.Visibility = Visibility.Collapsed;
             };
         }
-    }
 
-    public sealed partial class TricolorPicker
-    {
         public void Recolor(Color color)
         {
             this.HSV = color.ToHSV();
@@ -229,10 +226,7 @@ namespace Luo_Painter.HSVColorPickers
             this.Stop(HSVExtensions.ToColor(this.HSV.Z));
             this.Color(this.HSV.ToColor());
         }
-    }
 
-    public sealed partial class TricolorPicker
-    {
         private void Color(Color color)
         {
             this.ColorChanged?.Invoke(this, color); // Delegate
