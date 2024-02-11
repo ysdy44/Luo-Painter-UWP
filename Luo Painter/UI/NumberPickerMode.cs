@@ -13,5 +13,7 @@
 
         ViewRadian = -2,
         ViewScale = -3,
+
+        FloodTolerance = -4,
     }
 }

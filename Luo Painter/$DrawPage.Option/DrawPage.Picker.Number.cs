@@ -31,7 +31,9 @@ namespace Luo_Painter
 
             this.RadianSlider.Click += (s, e) => this.NumberShowAt(this.RadianSlider, NumberPickerMode.ViewRadian);
             this.ScaleSlider.Click += (s, e) => this.NumberShowAt(this.ScaleSlider, NumberPickerMode.ViewScale);
-
+         
+            this.SelectionFloodToleranceSlider.Click += (s, e) => this.NumberShowAt(this.SelectionFloodToleranceSlider, NumberPickerMode.FloodTolerance);
+            
             this.NumberFlyout.Closed += (s, e) => this.NumberPicker.Close();
             this.NumberFlyout.Opened += (s, e) => this.NumberPicker.Open();
             this.NumberPicker.ValueChanged += (s, e) =>
@@ -51,6 +53,10 @@ namespace Luo_Painter
                         break;
                     case NumberPickerMode.ViewScale:
                         this.ScaleSlider.Value = e;
+                        break;
+
+                    case NumberPickerMode.FloodTolerance:
+                        this.SelectionFloodToleranceSlider.Value = e;
                         break;
 
                     default:
