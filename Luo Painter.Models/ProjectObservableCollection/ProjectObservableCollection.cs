@@ -35,13 +35,6 @@ namespace Luo_Painter.Models
             base.Insert(1, project);
         }
 
-        public void Enable()
-        {
-            foreach (ProjectBase item in this)
-            {
-                item.Enable();
-            }
-        }
         public void Enable(ProjectType types)
         {
             foreach (ProjectBase item in this)

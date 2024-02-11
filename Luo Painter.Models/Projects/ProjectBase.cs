@@ -18,7 +18,6 @@ namespace Luo_Painter.Models
         //@Construct
         protected ProjectBase(ProjectType type) => this.Type = type;
 
-        public void Enable() => this.IsEnabled = true;
         public void Enable(ProjectType types)
         {
             switch (this.Type)
