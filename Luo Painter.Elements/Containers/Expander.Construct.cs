@@ -6,7 +6,7 @@ using Windows.UI.Xaml.Media.Animation;
 
 namespace Luo_Painter.Elements
 {
-    public partial class Expander : ContentControl
+    partial class Expander
     {
         
         /// <inheritdoc/>

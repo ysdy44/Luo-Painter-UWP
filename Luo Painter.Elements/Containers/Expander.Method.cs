@@ -4,7 +4,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Elements
 {
-    public partial class Expander : ContentControl
+    partial class Expander
     {
 
         /// <summary>

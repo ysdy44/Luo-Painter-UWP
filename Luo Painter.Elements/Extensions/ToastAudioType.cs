@@ -32,7 +32,7 @@
         Looping_Call10,
     }
 
-    public static partial class ToastExtensions
+    partial class ToastExtensions
     {
 
         public static string ToSource(this ToastAudioType audioName)

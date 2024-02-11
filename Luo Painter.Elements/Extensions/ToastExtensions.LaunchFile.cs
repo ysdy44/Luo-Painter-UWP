@@ -9,7 +9,7 @@ using Windows.UI.Notifications;
 
 namespace Luo_Painter.Elements
 {
-    public static partial class ToastExtensions
+    partial class ToastExtensions
     {
 
         public static void Show(string textString, string assetsImageFile, ToastAudioType audioName = default)
