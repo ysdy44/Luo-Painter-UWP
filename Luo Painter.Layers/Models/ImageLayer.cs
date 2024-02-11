@@ -14,7 +14,8 @@ namespace Luo_Painter.Layers.Models
         //@Static
         public static readonly IDictionary<string, CanvasBitmap> Instance = new Dictionary<string, CanvasBitmap>();
 
-        TransformerRect Source;
+        float SourceWidth;
+        float SourceHeight;
         Transformer StartingDestination;
         Transformer Destination;
         public Matrix3x2 Matrix { get; private set; }
@@ -29,9 +30,10 @@ namespace Luo_Painter.Layers.Models
         private ImageLayer(ICanvasResourceCreator resourceCreator, ImageLayer imageLayer, int width, int height) : this(resourceCreator, imageLayer, imageLayer.Destination, width, height) { }
         private ImageLayer(ICanvasResourceCreator resourceCreator, ImageLayer imageLayer, Transformer transformer, int width, int height) : base(null, null, resourceCreator, width, height)
         {
-            this.Source = imageLayer.Source;
+            this.SourceWidth = imageLayer.SourceWidth;
+            this.SourceHeight = imageLayer.SourceHeight;
             this.Destination = transformer;
-            this.Matrix = Transformer.FindHomography(this.Source, transformer);
+            this.Matrix = Transformer.FindHomography(this.SourceWidth, this.SourceHeight, transformer);
 
             this.Rect = new Rect(0, 0, width, height);
 
@@ -49,13 +51,15 @@ namespace Luo_Painter.Layers.Models
 
             if (element is null is false && element.Element("Transformer") is XElement transformer)
             {
-                this.Source = new TransformerRect(w, h, Vector2.Zero);
+                this.SourceWidth = w;
+                this.SourceHeight = h;
                 this.Destination = XML.LoadTransformer(transformer);
-                this.Matrix = Transformer.FindHomography(this.Source, this.Destination);
+                this.Matrix = Transformer.FindHomography(this.SourceWidth, this.SourceHeight, this.Destination);
             }
             else
             {
-                this.Source = new TransformerRect(w, h, Vector2.Zero);
+                this.SourceWidth = w;
+                this.SourceHeight = h;
                 this.Destination = new Transformer(w, h, Vector2.Zero);
                 this.Matrix = Matrix3x2.Identity;
             }
@@ -147,12 +151,12 @@ namespace Luo_Painter.Layers.Models
         public void TransformMultiplies(Matrix3x2 matrix)
         {
             this.Destination = this.StartingDestination * matrix;
-            this.Matrix = Transformer.FindHomography(this.Source, this.Destination);
+            this.Matrix = Transformer.FindHomography(this.SourceWidth, this.SourceHeight, this.Destination);
         }
         public void TransformAdd(Vector2 vector)
         {
             this.Destination = this.StartingDestination + vector;
-            this.Matrix = Transformer.FindHomography(this.Source, this.Destination);
+            this.Matrix = Transformer.FindHomography(this.SourceWidth, this.SourceHeight, this.Destination);
         }
     }
 }
