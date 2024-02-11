@@ -33,8 +33,6 @@ namespace Luo_Painter.TestApp
         Vector2 Point; // DPIs
         Vector2 Position; // Pixels
 
-        byte[] ShaderCodeBytes;
-
         public FreeTransformPage()
         {
             this.InitializeComponent();
@@ -94,7 +92,6 @@ namespace Luo_Painter.TestApp
             this.CanvasControl.CreateResources += (sender, args) =>
             {
                 this.BitmapLayer = new BitmapLayer(this.Device, 512, 512);
-                args.TrackAsyncAction(this.CreateResourcesAsync().AsAsyncAction());
             };
             this.CanvasControl.Draw += (sender, args) =>
             {
@@ -173,11 +170,6 @@ namespace Luo_Painter.TestApp
                     Scale = new Vector2(this.CanvasControl.Dpi.ConvertDipsToPixels(100) / 512)
                 });
             };
-        }
-
-        private async Task CreateResourcesAsync()
-        {
-            this.ShaderCodeBytes = await new ShaderUri(ShaderType.FreeTransform).LoadAsync();
         }
 
         private void ConstructOperator()

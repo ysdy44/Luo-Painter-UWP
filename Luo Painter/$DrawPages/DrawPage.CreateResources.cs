@@ -25,7 +25,6 @@ namespace Luo_Painter
         float[] BlueHistogram;
 
         byte[] LiquefactionShaderCodeBytes;
-        byte[] FreeTransformShaderCodeBytes;
         byte[] GradientMappingShaderCodeBytes;
         byte[] RippleEffectShaderCodeBytes;
         byte[] ThresholdShaderCodeBytes;
@@ -103,7 +102,6 @@ namespace Luo_Painter
         private async Task CreateResourcesAsync()
         {
             this.LiquefactionShaderCodeBytes = await new ShaderUri(ShaderType.Liquefaction).LoadAsync();
-            this.FreeTransformShaderCodeBytes = await new ShaderUri(ShaderType.FreeTransform).LoadAsync();
             this.GradientMappingShaderCodeBytes = await new ShaderUri(ShaderType.GradientMapping).LoadAsync();
             this.RippleEffectShaderCodeBytes = await new ShaderUri(ShaderType.RippleEffect).LoadAsync();
             this.ThresholdShaderCodeBytes = await new ShaderUri(ShaderType.Threshold).LoadAsync();

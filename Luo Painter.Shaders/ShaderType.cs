@@ -6,7 +6,6 @@
         GeneralBrush,
         SprayGun,
         GradientMapping,
-        FreeTransform,
         DottedLine,
         RippleEffect,
         Difference,

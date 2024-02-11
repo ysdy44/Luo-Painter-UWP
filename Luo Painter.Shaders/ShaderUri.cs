@@ -29,7 +29,6 @@ namespace Luo_Painter.Shaders
                 case ShaderType.GeneralBrush: return "ms-appx:///Luo Painter.Shaders/GeneralBrush.bin";
                 case ShaderType.SprayGun: return "ms-appx:///Luo Painter.Shaders/SprayGun.txt";
                 case ShaderType.GradientMapping: return "ms-appx:///Luo Painter.Shaders/GradientMapping.bin";
-                case ShaderType.FreeTransform: return "ms-appx:///Luo Painter.Shaders/FreeTransform.bin";
                 case ShaderType.DottedLine: return "ms-appx:///Luo Painter.Shaders/DottedLine.txt";
                 case ShaderType.RippleEffect: return "ms-appx:///Luo Painter.Shaders/RippleEffect.bin";
                 case ShaderType.Difference: return "ms-appx:///Luo Painter.Shaders/Difference.bin";
