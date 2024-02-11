@@ -5,7 +5,7 @@ using Windows.UI.Input.Inking;
 
 namespace Luo_Painter.Brushes
 {
-    public partial class InkAttributes
+    partial class InkAttributes
     {
 
         public XElement Save() => new XElement("Brush",

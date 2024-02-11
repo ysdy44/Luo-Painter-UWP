@@ -6,7 +6,7 @@ using Windows.Graphics.Effects;
 
 namespace Luo_Painter.Brushes
 {
-    public sealed partial class InkPresenter
+    partial class InkPresenter
     {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

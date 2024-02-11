@@ -3,7 +3,7 @@ using Microsoft.Graphics.Canvas.Effects;
 
 namespace Luo_Painter.Brushes
 {
-    public sealed partial class InkPresenter
+    partial class InkPresenter
     {
 
         public void Preview(CanvasDrawingSession ds, InkType type, ICanvasImage image, ICanvasImage wet)
