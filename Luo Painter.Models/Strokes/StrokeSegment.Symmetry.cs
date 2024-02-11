@@ -3,7 +3,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Models
 {
-    public partial struct StrokeSegment
+    partial struct StrokeSegment
     {
         public StrokeSegment(StrokeSegment mirror, Vector2 center, Orientation orientation)
         {

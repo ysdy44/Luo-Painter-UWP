@@ -3,7 +3,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Models
 {
-    public partial struct StrokeCap
+    partial struct StrokeCap
     {
         public StrokeCap(StrokeCap mirror, Vector2 center, Orientation orientation)
         {

@@ -7,7 +7,7 @@ using Windows.Storage;
 
 namespace Luo_Painter.Models
 {
-    public sealed partial class ProjectObservableCollection : ObservableCollection<ProjectBase>
+    partial class ProjectObservableCollection
     {
 
         public async Task DeleteAsync(ProjectBase selectedItem)

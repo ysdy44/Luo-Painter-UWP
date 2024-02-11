@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Luo_Painter.Models
 {
-    public sealed partial class ProjectObservableCollection : ObservableCollection<ProjectBase>
+    partial class ProjectObservableCollection
     {
 
         public void OrderByType()

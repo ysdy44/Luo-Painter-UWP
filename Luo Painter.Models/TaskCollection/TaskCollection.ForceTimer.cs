@@ -2,7 +2,7 @@
 
 namespace Luo_Painter.Models
 {
-    public sealed partial class TaskCollection
+    partial class TaskCollection
     {
 
         //@Const

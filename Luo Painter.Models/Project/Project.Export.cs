@@ -13,7 +13,7 @@ using Windows.Storage.Streams;
 
 namespace Luo_Painter.Models
 {
-    public sealed partial class Project
+    partial class Project
     {
 
         public async Task<ProjectParameter> SaveAsync(StorageFolder item, System.Drawing.Size size)
