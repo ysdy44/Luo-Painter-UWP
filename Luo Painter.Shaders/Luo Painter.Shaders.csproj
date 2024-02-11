@@ -142,7 +142,6 @@
     <Content Include="DottedLine.txt" />
     <Content Include="DottedLineTransform.hlsl" />
     <Content Include="FilmicEffect.hlsl" />
-    <Content Include="FreeTransform.hlsl" />
     <Content Include="Difference.hlsl" />
     <Content Include="GradientMapping.bin" />
     <Content Include="LalphaMaskEffect.hlsl" />
@@ -168,7 +167,6 @@
     <None Include="ColorMatch.shader" />
     <None Include="CompileShaders.cmd" />
     <Content Include="GeneralBrush.bin" />
-    <Content Include="FreeTransform.bin" />
     <Content Include="Difference.bin" />
     <Content Include="DottedLineTransform.bin" />
     <Content Include="FilmicEffect.bin" />
