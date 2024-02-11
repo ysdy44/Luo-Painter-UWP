@@ -19,7 +19,7 @@ namespace Luo_Painter.Models
             this.DateCreated = item.DateCreated;
 
             string thumbnail = System.IO.Path.Combine(item.Path, "Thumbnail.png");
-            base.Thumbnail = thumbnail;
+            this.Thumbnail = thumbnail;
             this.FileImageSource = new FileImageSource(thumbnail);
         }
 
@@ -44,7 +44,7 @@ namespace Luo_Painter.Models
 
         public async Task RenameAsync(string name)
         {
-            StorageFolder zipFolder = await StorageFolder.GetFolderFromPathAsync(base.Path);
+            StorageFolder zipFolder = await StorageFolder.GetFolderFromPathAsync(this.Path);
             await zipFolder.RenameAsync($"{name}.luo", NameCollisionOption.ReplaceExisting);
 
             this.Path = zipFolder.Path;
@@ -67,7 +67,7 @@ namespace Luo_Painter.Models
             switch (this.Type)
             {
                 case ProjectType.Project:
-                    StorageFolder zipFolder = await StorageFolder.GetFolderFromPathAsync(base.Path);
+                    StorageFolder zipFolder = await StorageFolder.GetFolderFromPathAsync(this.Path);
                     StorageFolder zipFolder2 = await folder.CreateFolderAsync($"{this.DisplayName} - {suffix}.luo", CreationCollisionOption.ReplaceExisting);
                     foreach (StorageFile item in await zipFolder.GetFilesAsync())
                     {
@@ -78,7 +78,7 @@ namespace Luo_Painter.Models
                 default:
                     return null;
             }
-        }
+        } 
 
     }
 }

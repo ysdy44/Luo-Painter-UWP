@@ -19,31 +19,31 @@ namespace Luo_Painter.Models
             //@Static
             const string fallbackImage = @"ms-appx:///Icons\LoadFaill.jpg";
 
-            base.Path = item.Path;
-            base.Name = item.Name;
-            base.DisplayName = item.DisplayName;
-            base.DateCreated = item.DateCreated;
+            this.Path = item.Path;
+            this.Name = item.Name;
+            this.DisplayName = item.DisplayName;
+            this.DateCreated = item.DateCreated;
 
             if (images is null)
             {
-                base.Thumbnail = this.ThumbnailLeft = this.ThumbnailRight = fallbackImage;
+                this.Thumbnail = this.ThumbnailLeft = this.ThumbnailRight = fallbackImage;
                 return;
             }
 
             switch (images.Count)
             {
                 case 0:
-                    base.Thumbnail = this.ThumbnailLeft = this.ThumbnailRight = fallbackImage;
+                    this.Thumbnail = this.ThumbnailLeft = this.ThumbnailRight = fallbackImage;
                     break;
                 case 1:
-                    base.Thumbnail = this.ThumbnailLeft = this.ThumbnailRight = images[0].Path;
+                    this.Thumbnail = this.ThumbnailLeft = this.ThumbnailRight = images[0].Path;
                     break;
                 case 2:
-                    base.Thumbnail = images[0].Path;
+                    this.Thumbnail = images[0].Path;
                     this.ThumbnailLeft = this.ThumbnailRight = images[1].Path;
                     break;
                 default:
-                    base.Thumbnail = images[0].Path;
+                    this.Thumbnail = images[0].Path;
                     this.ThumbnailLeft = images[1].Path;
                     this.ThumbnailRight = images[2].Path;
                     break;
@@ -61,16 +61,16 @@ namespace Luo_Painter.Models
 
             await item.RenameAsync(name, NameCollisionOption.GenerateUniqueName);
 
-            base.Path = item.Path;
-            base.Name = item.Name;
-            base.DisplayName = item.DisplayName;
-            base.DateCreated = item.DateCreated;
+            this.Path = item.Path;
+            this.Name = item.Name;
+            this.DisplayName = item.DisplayName;
+            this.DateCreated = item.DateCreated;
             this.OnPropertyChanged(nameof(Name)); // Notify 
             this.OnPropertyChanged(nameof(DisplayName)); // Notify 
             this.OnPropertyChanged(nameof(DateCreated)); // Notify 
 
             string thumbnail = System.IO.Path.Combine(item.Path, "Thumbnail.png");
-            base.Thumbnail = thumbnail;
+            this.Thumbnail = thumbnail;
             this.ThumbnailLeft = thumbnail;
             this.ThumbnailRight = thumbnail;
             this.OnPropertyChanged(nameof(Thumbnail)); // Notify 
@@ -96,7 +96,7 @@ namespace Luo_Painter.Models
 
         public async void LocalAsync()
         {
-            await Launcher.LaunchFolderPathAsync(base.Path);
+            await Launcher.LaunchFolderPathAsync(this.Path);
         }
 
     }
