@@ -4,7 +4,6 @@ using Windows.Storage.Streams;
 
 namespace Luo_Painter.Models
 {
-
     public class ProjectParameter
     {
         public ProjectParameterType Type { get; internal set; }

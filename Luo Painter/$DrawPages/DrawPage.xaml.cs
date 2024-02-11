@@ -71,12 +71,12 @@ namespace Luo_Painter
             }
         }
 
-
+        // Range
         readonly InverseProportionRange SizeRange = new InverseProportionRange(12, 1, 400, 100000);
         readonly InverseProportionRange SpacingRange = new InverseProportionRange(25, 10, 400, 1000000);
         readonly InverseProportionRange ScaleRange = new InverseProportionRange(1, 0.1, 10, 100);
 
-
+        // Canvas
         public CanvasDevice CanvasDevice { get; } = new CanvasDevice();
         readonly Historian<IHistory> History = new Historian<IHistory>();
 
@@ -89,7 +89,7 @@ namespace Luo_Painter
         public object LayerSelectedItem { get => this.LayerListView.SelectedItem; set => this.LayerListView.SelectedItem = value; }
         public IList<object> LayerSelectedItems => this.LayerListView.SelectedItems;
 
-
+        // Bitmap
         CanvasRenderTarget GradientMesh { get; set; }
         CanvasBitmap GrayAndWhiteMesh { get; set; }
         CanvasRenderTarget Mesh { get; set; }
@@ -108,7 +108,6 @@ namespace Luo_Painter
         ReferenceImage ReferenceImage { get; set; }
         IList<ReferenceImage> ReferenceImages { get; } = new List<ReferenceImage>();
 
-
         //@Task
         readonly object Locker = new object();
         //@ Paint
@@ -123,7 +122,7 @@ namespace Luo_Painter
         SymmetryType SymmetryType;
         readonly Symmetryer Symmetryer = new Symmetryer();
 
-
+        // Transform
         TransformMatrix Transform;
         TransformBase CreateTransform;
         TransformMatrix3D FreeTransform;
@@ -136,7 +135,7 @@ namespace Luo_Painter
         Rect StartingBorderCrop;
         Rect BorderCrop;
 
-
+        // Position
         Vector2 StartingPosition;
         Vector2 Position;
 
@@ -149,7 +148,7 @@ namespace Luo_Painter
         Vector2 StartingMove;
         Vector2 Move;
 
-
+        // Ink
         #region IInkParameter
 
         public InkType InkType { get; set; } = InkType.Tip;
@@ -190,13 +189,12 @@ namespace Luo_Painter
 
         #endregion
 
-
+        // Disabler
         public bool Disabler
         {
             get => App.SourcePageType != SourcePageType.DrawPage;
             set => App.SourcePageType = value ? SourcePageType.Invalid : SourcePageType.DrawPage;
         }
-
 
         //@Construct
         public DrawPage()

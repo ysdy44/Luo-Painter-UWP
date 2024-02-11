@@ -302,7 +302,7 @@ namespace Luo_Painter
                     }
                     break;
                 case OptionType.Redo:
-                    if (this.History.CanRedo != false)
+                    if (this.History.CanRedo)
                     {
                         // History
                         bool result = this.History.Redo(this.Redo);
