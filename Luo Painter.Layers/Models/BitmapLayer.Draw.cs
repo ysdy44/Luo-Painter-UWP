@@ -9,7 +9,7 @@ using Windows.UI.Input.Inking;
 
 namespace Luo_Painter.Layers.Models
 {
-    public sealed partial class BitmapLayer
+    partial class BitmapLayer
     {
 
         //@Static

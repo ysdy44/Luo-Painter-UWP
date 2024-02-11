@@ -5,7 +5,7 @@ using System.Numerics;
 
 namespace Luo_Painter.Layers.Models
 {
-    public sealed partial class BitmapLayer
+    partial class BitmapLayer
     {
 
         /// <summary>

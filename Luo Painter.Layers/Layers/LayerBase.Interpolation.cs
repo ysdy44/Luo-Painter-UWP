@@ -8,7 +8,7 @@ using Windows.UI;
 
 namespace Luo_Painter.Layers
 {
-    public abstract partial class LayerBase
+    partial class LayerBase
     {
 
         readonly CanvasRenderTarget Interpolation;

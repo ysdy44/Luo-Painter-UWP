@@ -4,7 +4,7 @@ using Windows.UI;
 
 namespace Luo_Painter.Layers.Models
 {
-    public sealed partial class BitmapLayer
+    partial class BitmapLayer
     {    
         // Mix WetHdr and StartingWetHdr
         Vector4 MixHdr;

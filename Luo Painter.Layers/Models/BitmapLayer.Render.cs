@@ -7,7 +7,7 @@ using Windows.UI;
 
 namespace Luo_Painter.Layers.Models
 {
-    public sealed partial class BitmapLayer
+    partial class BitmapLayer
     {
         public ICanvasImage Render(ICanvasImage background) => base.Render(background, this.SourceRenderTarget);
         public ICanvasImage Render(ICanvasImage background, string id, ICanvasImage mezzanine) => base.Render(background,

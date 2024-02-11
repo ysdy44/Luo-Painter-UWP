@@ -10,7 +10,7 @@ using Windows.UI;
 
 namespace Luo_Painter.Layers.Models
 {
-    public sealed partial class BitmapLayer
+    partial class BitmapLayer
     {
 
         readonly HashSet<int> Retrieves = new HashSet<int>();

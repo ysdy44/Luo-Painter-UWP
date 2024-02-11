@@ -4,7 +4,7 @@ using Windows.Graphics.Imaging;
 
 namespace Luo_Painter.Layers
 {
-    public partial interface ILayer
+    partial interface ILayer
     {
         ILayer Clone(ICanvasResourceCreator resourceCreator);
 

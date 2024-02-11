@@ -6,7 +6,7 @@ using System.Numerics;
 
 namespace Luo_Painter.Layers
 {
-    public sealed partial class Anchor 
+    partial class Anchor 
     {
         // Don't change this Magic Code !
         internal void SegmentLine()

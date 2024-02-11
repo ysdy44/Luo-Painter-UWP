@@ -5,7 +5,7 @@ using System.Xml.Linq;
 
 namespace Luo_Painter.Layers
 {
-    public partial class LayerNodes
+    partial class LayerNodes
     {
 
         public IEnumerable<XElement> Save() =>

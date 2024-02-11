@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace Luo_Painter.Layers
 {
-    public sealed partial class AnchorCollection
+    partial class AnchorCollection
     {
 
         public XElement Save()

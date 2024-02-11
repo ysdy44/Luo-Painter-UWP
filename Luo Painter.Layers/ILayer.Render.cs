@@ -3,7 +3,7 @@ using Windows.UI.Xaml;
 
 namespace Luo_Painter.Layers
 {
-    public partial interface ILayer
+    partial interface ILayer
     {
         Visibility Visibility { get; set; }
 

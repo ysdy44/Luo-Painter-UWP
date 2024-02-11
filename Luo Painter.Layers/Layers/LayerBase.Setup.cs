@@ -5,7 +5,7 @@ using Windows.Graphics.Imaging;
 
 namespace Luo_Painter.Layers
 {
-    public abstract partial class LayerBase
+    partial class LayerBase
     {
 
         protected abstract ILayer CloneSelf(ICanvasResourceCreator resourceCreator);

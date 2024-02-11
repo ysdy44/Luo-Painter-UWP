@@ -15,7 +15,7 @@ namespace Luo_Painter.Layers.Models
         MarqueePixelBounds
     }
 
-    public sealed partial class BitmapLayer
+    partial class BitmapLayer
     {
 
         public SelectionType GetDrawSelection(bool isOpaque, BitmapLayer marquee, out Color[] InterpolationColors, out PixelBoundsMode mode)

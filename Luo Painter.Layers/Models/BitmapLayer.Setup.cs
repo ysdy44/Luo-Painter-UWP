@@ -5,7 +5,7 @@ using Windows.Graphics.Imaging;
 
 namespace Luo_Painter.Layers.Models
 {
-    public sealed partial class BitmapLayer 
+    partial class BitmapLayer 
     {
 
         protected override ILayer CloneSelf(ICanvasResourceCreator resourceCreator) => new BitmapLayer(resourceCreator, this);

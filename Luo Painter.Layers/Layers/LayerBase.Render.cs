@@ -15,7 +15,7 @@ namespace Luo_Painter.Layers
         Transparent,
     }
 
-    public abstract partial class LayerBase
+    partial class LayerBase
     {
 
         public string Name

@@ -6,7 +6,7 @@ using Windows.UI;
 
 namespace Luo_Painter.Layers.Models
 {
-    public sealed partial class BitmapLayer
+    partial class BitmapLayer
     {
 
         public IHistory GetBitmapHistory()

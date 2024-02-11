@@ -1,6 +1,6 @@
 ﻿namespace Luo_Painter.Layers
 {
-    public partial interface ILayer
+    partial interface ILayer
     {
         int Depth { get; set; }
 
