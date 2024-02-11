@@ -1,7 +1,8 @@
 ﻿namespace Luo_Painter.Models
 {
-    public class CompositeHistory : HistoryTitle, IHistory
+    public sealed class CompositeHistory : IHistory
     {
+        public string Title { get; set; }
         public HistoryMode Mode => HistoryMode.Composite;
         public HistoryPropertyMode PropertyMode => HistoryPropertyMode.None;
 
@@ -18,5 +19,7 @@
                 item.Dispose();
             }
         }
+
+        public override string ToString() => this.Title;
     }
 }

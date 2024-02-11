@@ -1,7 +1,8 @@
 ﻿namespace Luo_Painter.Models
 {
-    public class ArrangeHistory : HistoryTitle, IHistory
+    public sealed class ArrangeHistory : IHistory
     {
+        public string Title { get; set; }
         public HistoryMode Mode => HistoryMode.Arrange;
         public HistoryPropertyMode PropertyMode => HistoryPropertyMode.None;
 
@@ -24,5 +25,7 @@
                 item.Dispose();
             }
         }
+
+        public override string ToString() => this.Title;
     }
 }

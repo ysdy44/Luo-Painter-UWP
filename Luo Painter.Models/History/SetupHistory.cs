@@ -1,7 +1,8 @@
 ﻿namespace Luo_Painter.Models
 {
-    public class SetupHistory : HistoryTitle, IHistory
+    public sealed class SetupHistory : IHistory
     {
+        public string Title { get; set; }
         public HistoryMode Mode => HistoryMode.Setup;
         public HistoryPropertyMode PropertyMode => HistoryPropertyMode.None;
 
@@ -16,5 +17,7 @@
         public void Dispose()
         {
         }
+
+        public override string ToString() => this.Title;
     }
 }
