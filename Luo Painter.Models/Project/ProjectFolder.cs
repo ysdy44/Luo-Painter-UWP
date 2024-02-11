@@ -1,20 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.System;
 
 namespace Luo_Painter.Models
 {
-    public sealed class ProjectFolder : ProjectBase
+    public sealed class ProjectFolder : ProjectBase, INotifyPropertyChanged
     {
-
         //@Content
+        public ProjectType Type => ProjectType.Folder;
+        public bool IsEnabled { get; private set; } = true;
+        public string Path { get; private set; }
+        public string Name { get; private set; }
+        public string DisplayName { get; private set; }
+        public DateTimeOffset DateCreated { get; private set; }
+
+        public string Thumbnail { get; private set; }
         public string ThumbnailLeft { get; private set; }
         public string ThumbnailRight { get; private set; }
 
         //@Construct
-        public ProjectFolder(StorageFolder item, IReadOnlyList<StorageFile> images = null) : base(ProjectType.Folder)
+        public ProjectFolder(StorageFolder item, IReadOnlyList<StorageFile> images = null)
         {
             //@Static
             const string fallbackImage = @"ms-appx:///Icons\LoadFaill.jpg";
@@ -99,5 +107,22 @@ namespace Luo_Painter.Models
             await Launcher.LaunchFolderPathAsync(this.Path);
         }
 
+        public void Enable(ProjectType types)
+        {
+            bool isEnabled = types.HasFlag(ProjectType.Folder);
+            if (this.IsEnabled == isEnabled) return;
+
+            this.IsEnabled = isEnabled;
+            this.OnPropertyChanged(nameof(IsEnabled)); // Notify 
+        }
+
+        //@Notify 
+        /// <summary> Multicast event for property change notifications. </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+        /// <summary>
+        /// Notifies listeners that a property value has changed.
+        /// </summary>
+        /// <param name="propertyName"> Name of the property used to notify listeners. </param>
+        private void OnPropertyChanged(string propertyName) => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

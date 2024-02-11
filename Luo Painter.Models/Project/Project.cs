@@ -1,17 +1,27 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Xaml.Media;
 
 namespace Luo_Painter.Models
 {
-    public sealed partial class Project : ProjectBase
+    public sealed partial class Project : ProjectBase, INotifyPropertyChanged
     {
+        //@Content
+        public ProjectType Type => ProjectType.Project;
+        public bool IsEnabled { get; private set; } = true;
+        public string Path { get; private set; }
+        public string Name { get; private set; }
+        public string DisplayName { get; private set; }
+        public DateTimeOffset DateCreated { get; private set; }
+
+        public string Thumbnail { get; private set; }
 
         public ImageSource ImageSource => this.FileImageSource.ImageSource;
         readonly FileImageSource FileImageSource;
 
-        public Project(StorageFolder item) : base(ProjectType.Project)
+        public Project(StorageFolder item)
         {
             this.Path = item.Path;
             this.Name = item.Name;
@@ -78,7 +88,24 @@ namespace Luo_Painter.Models
                 default:
                     return null;
             }
-        } 
+        }
 
+        public void Enable(ProjectType types)
+        {
+            bool isEnabled = types.HasFlag(ProjectType.Project);
+            if (this.IsEnabled == isEnabled) return;
+
+            this.IsEnabled = isEnabled;
+            this.OnPropertyChanged(nameof(IsEnabled)); // Notify 
+        }
+
+        //@Notify 
+        /// <summary> Multicast event for property change notifications. </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+        /// <summary>
+        /// Notifies listeners that a property value has changed.
+        /// </summary>
+        /// <param name="propertyName"> Name of the property used to notify listeners. </param>
+        private void OnPropertyChanged(string propertyName) => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }
