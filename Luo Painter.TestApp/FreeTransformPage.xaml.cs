@@ -24,8 +24,9 @@ namespace Luo_Painter.TestApp
 
         TransformMatrix3D FreeTransform = new TransformMatrix3D
         {
-            Matrix = Matrix3x2.Identity,
-            Border = new TransformerBorder(512, 512),
+            Matrix = Matrix4x4.Identity,
+            Width = 512,
+            Height = 512,
             Transformer = new Transformer(512, 512, Vector2.Zero),
         };
 
@@ -56,8 +57,9 @@ namespace Luo_Painter.TestApp
 
                 this.FreeTransform = new TransformMatrix3D
                 {
-                    Matrix = Matrix3x2.Identity,
-                    Border = new TransformerBorder(512, 512),
+                    Matrix = Matrix4x4.Identity,
+                    Width = 512,
+                    Height = 512,
                     Transformer = new Transformer(512, 512, Vector2.Zero)
                 };
 
@@ -71,8 +73,9 @@ namespace Luo_Painter.TestApp
             {
                 this.FreeTransform = new TransformMatrix3D
                 {
-                    Matrix = Matrix3x2.Identity,
-                    Border = new TransformerBorder(512, 512),
+                    Matrix = Matrix4x4.Identity,
+                    Width = 512,
+                    Height = 512,
                     Transformer = new Transformer(512, 512, Vector2.Zero)
                 };
 
@@ -100,18 +103,10 @@ namespace Luo_Painter.TestApp
 
                 args.DrawingSession.FillRectangle(0, 0, 512, 512, Colors.White);
 
-                args.DrawingSession.DrawImage(new PixelShaderEffect(this.ShaderCodeBytes)
+                args.DrawingSession.DrawImage(new Transform3DEffect
                 {
-                    Source1 = this.BitmapLayer[BitmapType.Source],
-                    Properties =
-                    {
-                        ["matrix3x2"] = this.FreeTransform.Matrix,
-                        ["zdistance"] = this.FreeTransform.Distance,
-                        ["left"] = 0f,
-                        ["top"] = 0f,
-                        ["right"] = 512f,
-                        ["bottom"] = 512f,
-                    },
+                    Source = this.BitmapLayer[BitmapType.Source],
+                    TransformMatrix = this.FreeTransform.Matrix
                 });
 
                 args.DrawingSession.DrawNode(this.Position);

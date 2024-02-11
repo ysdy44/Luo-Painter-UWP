@@ -29,8 +29,11 @@ namespace Luo_Painter
         {
             this.FreeTransform = new TransformMatrix3D
             {
-                Matrix = Matrix3x2.Identity,
-                Border = bounds.ToBorder(),
+                Matrix = Matrix4x4.Identity,
+                X = bounds.Left,
+                Y = bounds.Top,
+                Width = bounds.Width(),
+                Height = bounds.Height(),
                 Transformer = bounds.ToBorder().ToTransformer()
             };
 

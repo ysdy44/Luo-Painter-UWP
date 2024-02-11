@@ -27,7 +27,10 @@ namespace Luo_Painter
             this.Transform = new TransformMatrix
             {
                 Matrix = Matrix3x2.Identity,
-                Border = bounds.ToBorder(),
+                X = bounds.Left,
+                Y = bounds.Top,
+                Width = bounds.Width(),
+                Height = bounds.Height(),
                 Transformer = bounds.ToBorder().ToTransformer()
             };
 

@@ -24,7 +24,8 @@ namespace Luo_Painter.TestApp
         TransformMatrix Transform = new TransformMatrix
         {
             Matrix = Matrix3x2.Identity,
-            Border = new TransformerBorder(512, 512),
+            Width = 512,
+            Height = 512,
             Transformer = new Transformer(512, 512, Vector2.Zero)
         };
 
@@ -57,7 +58,8 @@ namespace Luo_Painter.TestApp
                 this.Transform = new TransformMatrix
                 {
                     Matrix = Matrix3x2.Identity,
-                    Border = new TransformerBorder(512, 512),
+                    Width = 512,
+                    Height = 512,
                     Transformer = new Transformer(512, 512, Vector2.Zero)
                 };
 
@@ -72,7 +74,8 @@ namespace Luo_Painter.TestApp
                 this.Transform = new TransformMatrix
                 {
                     Matrix = Matrix3x2.Identity,
-                    Border = new TransformerBorder(512, 512),
+                    Width = 512,
+                    Height = 512,
                     Transformer = new Transformer(512, 512, Vector2.Zero)
                 };
 

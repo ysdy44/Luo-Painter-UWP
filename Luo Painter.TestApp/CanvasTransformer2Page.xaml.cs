@@ -88,7 +88,8 @@ namespace Luo_Painter.TestApp
             this.Transform = new TransformMatrix
             {
                 Matrix = Matrix3x2.Identity,
-                Border = new TransformerBorder(512, 512),
+                Width = this.Bitmap.SizeInPixels.Width,
+                Height = this.Bitmap.SizeInPixels.Height,
                 Transformer = new Transformer(this.Bitmap.SizeInPixels.Width, this.Bitmap.SizeInPixels.Height, Vector2.Zero)
             };
         }

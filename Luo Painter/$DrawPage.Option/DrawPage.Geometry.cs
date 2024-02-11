@@ -224,7 +224,7 @@ namespace Luo_Painter
                         (float)(this.CogNotchSlider.Value / 100));
                 case OptionType.GeometryDonut:
                 case OptionType.GeometryDonutTransform:
-                    return TransformerGeometry.CreateDount(resourceCreator, transformerLTRB,
+                    return TransformerGeometry.CreateDonut(resourceCreator, transformerLTRB,
                         (float)(this.DonutHoleRadiusSlider.Value / 100));
                 case OptionType.GeometryPie:
                 case OptionType.GeometryPieTransform:

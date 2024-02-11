@@ -237,18 +237,12 @@ namespace Luo_Painter
                         Source = image
                     };
                 case OptionType.FreeTransform:
-                    return new PixelShaderEffect(this.FreeTransformShaderCodeBytes)
+                    return new Transform3DEffect
                     {
-                        Source1 = image,
-                        Properties =
-                        {
-                            ["matrix3x2"] = this.FreeTransform.Matrix,
-                            ["zdistance"] = this.FreeTransform.Distance,
-                            ["left"] = this.FreeTransform.Border.Left,
-                            ["top"] = this.FreeTransform.Border.Top,
-                            ["right"] = this.FreeTransform.Border.Right,
-                            ["bottom"] = this.FreeTransform.Border.Bottom,
-                        },
+                        BorderMode = EffectBorderMode.Hard,
+                        InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
+                        TransformMatrix = this.FreeTransform.Matrix,
+                        Source = image
                     };
 
 
