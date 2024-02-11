@@ -21,7 +21,7 @@ namespace Luo_Painter.Controls
         GrainScale,
     }
 
-    public sealed partial class PaintScrollViewer
+    partial class PaintScrollViewer
     {
 
         PaintNumberPickerMode NumberPickerMode;

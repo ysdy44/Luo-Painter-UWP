@@ -3,7 +3,7 @@ using Luo_Painter.UI;
 
 namespace Luo_Painter.Controls
 {
-    public sealed partial class ColorPicker2
+    partial class ColorPicker2
     {
 
         ColorNumberPickerMode NumberPickerMode;

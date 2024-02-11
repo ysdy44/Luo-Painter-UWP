@@ -4,7 +4,7 @@ using Microsoft.Graphics.Canvas.Effects;
 
 namespace Luo_Painter.Controls
 {
-    public sealed partial class PaintScrollViewer
+    partial class PaintScrollViewer
     {
 
         readonly BrushEdgeHardness[] Hardnesss = new BrushEdgeHardness[]

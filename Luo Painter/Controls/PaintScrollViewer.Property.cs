@@ -3,7 +3,7 @@ using Windows.UI.Input.Inking;
 
 namespace Luo_Painter.Controls
 {
-    public sealed partial class PaintScrollViewer
+    partial class PaintScrollViewer
     {
 
         public void ConstructProperty()

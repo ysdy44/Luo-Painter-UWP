@@ -4,7 +4,7 @@ using Windows.UI;
 
 namespace Luo_Painter.Controls
 {
-    public sealed partial class PaintScrollViewer
+    partial class PaintScrollViewer
     {
         //@Converter
         private double CapOffsetConverter(double value) => 0.8 - 0.04 * value; // 0.4 * (20 - value) / 10;

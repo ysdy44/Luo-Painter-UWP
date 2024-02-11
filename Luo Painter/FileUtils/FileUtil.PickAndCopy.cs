@@ -7,7 +7,7 @@ using Windows.Storage.Pickers;
 
 namespace Luo_Painter
 {
-    public static partial class FileUtil
+    partial class FileUtil
     {
 
         /// <summary>
