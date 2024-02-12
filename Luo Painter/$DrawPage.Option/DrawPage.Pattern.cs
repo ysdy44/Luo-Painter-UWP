@@ -18,23 +18,23 @@ namespace Luo_Painter
             this.GridComboBox.SelectionChanged += (s, e) => this.PatternInvalidate();
 
             this.GridStrokeWidthSlider.ValueChanged += (s, e) => this.PatternInvalidate();
-            this.GridStrokeWidthSlider.Click += (s, e) => this.NumberShowAt(this.GridStrokeWidthSlider, NumberPickerMode.Case0);
+            this.GridStrokeWidthSlider.Click += (s, e) => this.NumberShowAt(this.GridStrokeWidthSlider, NumberPickerMode.GridStrokeWidthSlider);
 
             this.GridColumnSpanSlider.ValueChanged += (s, e) => this.PatternInvalidate();
-            this.GridColumnSpanSlider.Click += (s, e) => this.NumberShowAt(this.GridColumnSpanSlider, NumberPickerMode.Case1);
+            this.GridColumnSpanSlider.Click += (s, e) => this.NumberShowAt(this.GridColumnSpanSlider, NumberPickerMode.GridColumnSpanSlider);
 
             this.GridRowSpanSlider.ValueChanged += (s, e) => this.PatternInvalidate();
-            this.GridRowSpanSlider.Click += (s, e) => this.NumberShowAt(this.GridRowSpanSlider, NumberPickerMode.Case2);
+            this.GridRowSpanSlider.Click += (s, e) => this.NumberShowAt(this.GridRowSpanSlider, NumberPickerMode.GridRowSpanSlider);
 
             // Spotted
             this.SpottedRadiusSlider.ValueChanged += (s, e) => this.PatternInvalidate();
-            this.SpottedRadiusSlider.Click += (s, e) => this.NumberShowAt(this.SpottedRadiusSlider, NumberPickerMode.Case0);
+            this.SpottedRadiusSlider.Click += (s, e) => this.NumberShowAt(this.SpottedRadiusSlider, NumberPickerMode.SpottedRadiusSlider);
 
             this.SpottedSpanSlider.ValueChanged += (s, e) => this.PatternInvalidate();
-            this.SpottedSpanSlider.Click += (s, e) => this.NumberShowAt(this.SpottedSpanSlider, NumberPickerMode.Case1);
+            this.SpottedSpanSlider.Click += (s, e) => this.NumberShowAt(this.SpottedSpanSlider, NumberPickerMode.SpottedSpanSlider);
 
             this.SpottedFadeSlider.ValueChanged += (s, e) => this.PatternInvalidate();
-            this.SpottedFadeSlider.Click += (s, e) => this.NumberShowAt(this.SpottedFadeSlider, NumberPickerMode.Case2);
+            this.SpottedFadeSlider.Click += (s, e) => this.NumberShowAt(this.SpottedFadeSlider, NumberPickerMode.SpottedFadeSlider);
         }
 
         private void PatternInvalidate()

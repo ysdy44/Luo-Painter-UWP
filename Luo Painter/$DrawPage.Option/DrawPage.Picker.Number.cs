@@ -369,13 +369,13 @@ namespace Luo_Painter
                             case OptionType.PatternGridTransform:
                                 switch (mode)
                                 {
-                                    case NumberPickerMode.Case0:
+                                    case NumberPickerMode.GridStrokeWidthSlider:
                                         this.GridStrokeWidthSlider.Value = e;
                                         break;
-                                    case NumberPickerMode.Case1:
+                                    case NumberPickerMode.GridColumnSpanSlider:
                                         this.GridColumnSpanSlider.Value = e;
                                         break;
-                                    case NumberPickerMode.Case2:
+                                    case NumberPickerMode.GridRowSpanSlider:
                                         this.GridRowSpanSlider.Value = e;
                                         break;
                                     default:
@@ -386,13 +386,13 @@ namespace Luo_Painter
                             case OptionType.PatternSpottedTransform:
                                 switch (mode)
                                 {
-                                    case NumberPickerMode.Case0:
+                                    case NumberPickerMode.SpottedRadiusSlider:
                                         this.SpottedRadiusSlider.Value = e;
                                         break;
-                                    case NumberPickerMode.Case1:
+                                    case NumberPickerMode.SpottedSpanSlider:
                                         this.SpottedSpanSlider.Value = e;
                                         break;
-                                    case NumberPickerMode.Case2:
+                                    case NumberPickerMode.SpottedFadeSlider:
                                         this.SpottedFadeSlider.Value = e;
                                         break;
                                     default:

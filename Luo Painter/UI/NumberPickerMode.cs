@@ -108,6 +108,17 @@
         CookieSweepAngleSlider,
         #endregion
 
+        #region Pattern
+        // PatternGrid
+        GridStrokeWidthSlider,
+        GridColumnSpanSlider,
+        GridRowSpanSlider,
+        // PatternSpotted
+        SpottedRadiusSlider,
+        SpottedSpanSlider,
+        SpottedFadeSlider,
+        #endregion
+
         // Layer
         OpacitySlider = -1,
         // View
