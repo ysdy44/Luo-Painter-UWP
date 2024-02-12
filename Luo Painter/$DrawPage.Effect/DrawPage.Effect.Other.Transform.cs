@@ -39,9 +39,9 @@ namespace Luo_Painter
 
         private void SetTransform(NumberPickerMode mode, float e)
         {
-            switch ((int)mode)
+            switch (mode)
             {
-                case 0:
+                case NumberPickerMode.TransformX:
                     this.Transform.Transformer += this.Transform.Transformer.TransformX(e, IndicatorMode.LeftTop);
                     this.Transform.UpdateMatrix();
 
@@ -50,7 +50,7 @@ namespace Luo_Painter
 
                     this.TXButton.Value = e;
                     break;
-                case 1:
+                case NumberPickerMode.TransformY:
                     this.Transform.Transformer += this.Transform.Transformer.TransformY(e, IndicatorMode.LeftTop);
                     this.Transform.UpdateMatrix();
 
@@ -60,7 +60,7 @@ namespace Luo_Painter
                     this.TYButton.Value = e;
                     break;
 
-                case 2:
+                case NumberPickerMode.TransformWidth:
                     this.Transform.Transformer *= this.Transform.Transformer.TransformWidth(e, IndicatorMode.LeftTop, this.IsRatio);
                     this.Transform.UpdateMatrix();
 
@@ -69,7 +69,7 @@ namespace Luo_Painter
 
                     this.TWButton.Value = e;
                     break;
-                case 3:
+                case NumberPickerMode.TransformHeight:
                     this.Transform.Transformer *= this.Transform.Transformer.TransformHeight(e, IndicatorMode.LeftTop, this.IsRatio);
                     this.Transform.UpdateMatrix();
 
@@ -79,7 +79,7 @@ namespace Luo_Painter
                     this.THButton.Value = e;
                     break;
 
-                case 4:
+                case NumberPickerMode.TransformSkew:
                     this.Transform.Transformer *= this.Transform.Transformer.TransformSkew(e, IndicatorMode.Center);
                     this.Transform.UpdateMatrix();
 
@@ -88,7 +88,7 @@ namespace Luo_Painter
 
                     this.TSButton.Value = e;
                     break;
-                case 5:
+                case NumberPickerMode.TransformRotate:
                     this.Transform.Transformer *= this.Transform.Transformer.TransformRotate(e, IndicatorMode.Center);
                     this.Transform.UpdateMatrix();
 

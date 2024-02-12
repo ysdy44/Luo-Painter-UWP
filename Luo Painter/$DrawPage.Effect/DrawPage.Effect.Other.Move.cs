@@ -8,8 +8,8 @@ namespace Luo_Painter
 
         public void ConstructMove()
         {
-            this.MovePicker.XClick += (s, e) => this.NumberShowAt(this.MovePicker.XNumber, NumberPickerMode.Case0);
-            this.MovePicker.YClick += (s, e) => this.NumberShowAt(this.MovePicker.YNumber, NumberPickerMode.Case1);
+            this.MovePicker.XClick += (s, e) => this.NumberShowAt(this.MovePicker.XNumber, NumberPickerMode.MoveX);
+            this.MovePicker.YClick += (s, e) => this.NumberShowAt(this.MovePicker.YNumber, NumberPickerMode.MoveY);
         }
 
         private void ResetMove()
@@ -24,7 +24,7 @@ namespace Luo_Painter
         {
             switch (mode)
             {
-                case NumberPickerMode.Case0:
+                case NumberPickerMode.MoveX:
                     this.Move.X = e;
 
                     this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -32,7 +32,7 @@ namespace Luo_Painter
 
                     this.MovePicker.X = e;
                     break;
-                case NumberPickerMode.Case1:
+                case NumberPickerMode.MoveY:
                     this.Move.Y = e;
 
                     this.CanvasVirtualControl.Invalidate(); // Invalidate

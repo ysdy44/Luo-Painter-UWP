@@ -45,9 +45,9 @@ namespace Luo_Painter
 
         private void SetFreeTransform(NumberPickerMode mode, float e)
         {
-            switch ((int)mode)
+            switch (mode)
             {
-                case 0:
+                case NumberPickerMode.FreeTransform0:
                     this.FreeTransform.Transformer.LeftTop = new Vector2(e, this.FreeTransform.Transformer.LeftTop.Y);
                     this.FreeTransform.UpdateMatrix();
 
@@ -56,7 +56,7 @@ namespace Luo_Painter
 
                     this.LTPicker.X = e;
                     break;
-                case 1:
+                case NumberPickerMode.FreeTransform1:
                     this.FreeTransform.Transformer.LeftTop = new Vector2(this.FreeTransform.Transformer.LeftTop.X, e);
                     this.FreeTransform.UpdateMatrix();
 
@@ -66,7 +66,7 @@ namespace Luo_Painter
                     this.LTPicker.Y = e;
                     break;
 
-                case 2:
+                case NumberPickerMode.FreeTransform2:
                     this.FreeTransform.Transformer.RightTop = new Vector2(e, this.FreeTransform.Transformer.RightTop.Y);
                     this.FreeTransform.UpdateMatrix();
 
@@ -75,7 +75,7 @@ namespace Luo_Painter
 
                     this.RTPicker.X = e;
                     break;
-                case 3:
+                case NumberPickerMode.FreeTransform3:
                     this.FreeTransform.Transformer.RightTop = new Vector2(this.FreeTransform.Transformer.RightTop.X, e);
                     this.FreeTransform.UpdateMatrix();
 
@@ -85,7 +85,7 @@ namespace Luo_Painter
                     this.RTPicker.Y = e;
                     break;
 
-                case 4:
+                case NumberPickerMode.FreeTransform4:
                     this.FreeTransform.Transformer.RightBottom = new Vector2(e, this.FreeTransform.Transformer.RightBottom.Y);
                     this.FreeTransform.UpdateMatrix();
 
@@ -94,7 +94,7 @@ namespace Luo_Painter
 
                     this.RBPicker.X = e;
                     break;
-                case 5:
+                case NumberPickerMode.FreeTransform5:
                     this.FreeTransform.Transformer.RightBottom = new Vector2(this.FreeTransform.Transformer.RightBottom.X, e);
                     this.FreeTransform.UpdateMatrix();
 
@@ -104,7 +104,7 @@ namespace Luo_Painter
                     this.RBPicker.Y = e;
                     break;
 
-                case 6:
+                case NumberPickerMode.FreeTransform6:
                     this.FreeTransform.Transformer.LeftBottom = new Vector2(e, this.FreeTransform.Transformer.LeftBottom.Y);
                     this.FreeTransform.UpdateMatrix();
 
@@ -113,7 +113,7 @@ namespace Luo_Painter
 
                     this.LBPicker.X = e;
                     break;
-                case 7:
+                case NumberPickerMode.FreeTransform7:
                     this.FreeTransform.Transformer.LeftBottom = new Vector2(this.FreeTransform.Transformer.LeftBottom.X, e);
                     this.FreeTransform.UpdateMatrix();
 
