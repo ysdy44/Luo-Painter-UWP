@@ -2,12 +2,16 @@
 {
     public enum NumberPickerMode
     {
-        None = 0,
+        None,
 
-        Case0 = 0,
-        Case1 = 1,
-        Case2 = 2,
-        Case3 = 3,
+        // Layer
+        OpacitySlider,
+
+        // View
+        RadianSlider,
+        ScaleSlider,
+        // FloodTolerance
+        SelectionFloodToleranceSlider,
 
         #region Transform
         // Move
@@ -118,13 +122,5 @@
         SpottedSpanSlider,
         SpottedFadeSlider,
         #endregion
-
-        // Layer
-        OpacitySlider = -1,
-        // View
-        RadianSlider = -2,
-        ScaleSlider = -3,
-        // FloodTolerance
-        SelectionFloodToleranceSlider = -4,
     }
 }
