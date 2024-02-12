@@ -24,15 +24,15 @@ namespace Luo_Painter
         {
             this.OpacitySlider.Click += (s, e) =>
             {
-                this.NumberPickerMode = NumberPickerMode.LayerOpacity;
+                this.NumberPickerMode = NumberPickerMode.OpacitySlider;
                 this.NumberFlyout.ShowAt(this.OpacitySlider.PlacementTarget);
                 this.NumberPicker.Construct(this.OpacitySlider);
             };
 
-            this.RadianSlider.Click += (s, e) => this.NumberShowAt(this.RadianSlider, NumberPickerMode.ViewRadian);
-            this.ScaleSlider.Click += (s, e) => this.NumberShowAt(this.ScaleSlider, NumberPickerMode.ViewScale);
+            this.RadianSlider.Click += (s, e) => this.NumberShowAt(this.RadianSlider, NumberPickerMode.RadianSlider);
+            this.ScaleSlider.Click += (s, e) => this.NumberShowAt(this.ScaleSlider, NumberPickerMode.ScaleSlider);
          
-            this.SelectionFloodToleranceSlider.Click += (s, e) => this.NumberShowAt(this.SelectionFloodToleranceSlider, NumberPickerMode.FloodTolerance);
+            this.SelectionFloodToleranceSlider.Click += (s, e) => this.NumberShowAt(this.SelectionFloodToleranceSlider, NumberPickerMode.SelectionFloodToleranceSlider);
             
             this.NumberFlyout.Closed += (s, e) => this.NumberPicker.Close();
             this.NumberFlyout.Opened += (s, e) => this.NumberPicker.Open();
@@ -44,18 +44,18 @@ namespace Luo_Painter
                 NumberPickerMode mode = this.NumberPickerMode;
                 switch (mode)
                 {
-                    case NumberPickerMode.LayerOpacity:
+                    case NumberPickerMode.OpacitySlider:
                         this.OpacitySlider.Value = e;
                         break;
 
-                    case NumberPickerMode.ViewRadian:
+                    case NumberPickerMode.RadianSlider:
                         this.RadianSlider.Value = e;
                         break;
-                    case NumberPickerMode.ViewScale:
+                    case NumberPickerMode.ScaleSlider:
                         this.ScaleSlider.Value = e;
                         break;
 
-                    case NumberPickerMode.FloodTolerance:
+                    case NumberPickerMode.SelectionFloodToleranceSlider:
                         this.SelectionFloodToleranceSlider.Value = e;
                         break;
 

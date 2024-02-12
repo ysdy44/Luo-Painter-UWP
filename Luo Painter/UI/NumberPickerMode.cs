@@ -8,12 +8,12 @@
         Case1 = 1,
         Case2 = 2,
         Case3 = 3,
-
-        LayerOpacity = -1,
-
-        ViewRadian = -2,
-        ViewScale = -3,
-
-        FloodTolerance = -4,
+        // Layer
+        OpacitySlider = -1,
+        // View
+        RadianSlider = -2,
+        ScaleSlider = -3,
+        // FloodTolerance
+        SelectionFloodToleranceSlider = -4,
     }
 }
