@@ -94,6 +94,20 @@
         LightAngleSlider,
         #endregion
 
+        #region Geometry
+        // GeometryStar
+        StarPointsSlider,
+        StarInnerRadiusSlider,
+        // GeometryCog
+        CogCountSlider,
+        CogInnerRadiusSlider,
+        CogToothSlider,
+        CogNotchSlider,
+        // GeometryCookie
+        CookieInnerRadiusSlider,
+        CookieSweepAngleSlider,
+        #endregion
+
         // Layer
         OpacitySlider = -1,
         // View

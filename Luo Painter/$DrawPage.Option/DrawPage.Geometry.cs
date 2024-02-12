@@ -33,19 +33,19 @@ namespace Luo_Painter
 
             // Star
             this.StarPointsSlider.ValueChanged += (s, e) => this.GeometryInvalidate();
-            this.StarPointsSlider.Click += (s, e) => this.NumberShowAt(this.StarPointsSlider, NumberPickerMode.Case0);
+            this.StarPointsSlider.Click += (s, e) => this.NumberShowAt(this.StarPointsSlider, NumberPickerMode.StarPointsSlider);
             this.StarInnerRadiusSlider.ValueChanged += (s, e) => this.GeometryInvalidate();
-            this.StarInnerRadiusSlider.Click += (s, e) => this.NumberShowAt(this.StarInnerRadiusSlider, NumberPickerMode.Case1);
+            this.StarInnerRadiusSlider.Click += (s, e) => this.NumberShowAt(this.StarInnerRadiusSlider, NumberPickerMode.StarInnerRadiusSlider);
 
             // Cog
             this.CogCountSlider.ValueChanged += (s, e) => this.GeometryInvalidate();
-            this.CogCountSlider.Click += (s, e) => this.NumberShowAt(this.CogCountSlider, NumberPickerMode.Case0);
+            this.CogCountSlider.Click += (s, e) => this.NumberShowAt(this.CogCountSlider, NumberPickerMode.CogCountSlider);
             this.CogInnerRadiusSlider.ValueChanged += (s, e) => this.GeometryInvalidate();
-            this.CogInnerRadiusSlider.Click += (s, e) => this.NumberShowAt(this.CogInnerRadiusSlider, NumberPickerMode.Case1);
+            this.CogInnerRadiusSlider.Click += (s, e) => this.NumberShowAt(this.CogInnerRadiusSlider, NumberPickerMode.CogInnerRadiusSlider);
             this.CogToothSlider.ValueChanged += (s, e) => this.GeometryInvalidate();
-            this.CogToothSlider.Click += (s, e) => this.NumberShowAt(this.CogToothSlider, NumberPickerMode.Case2);
+            this.CogToothSlider.Click += (s, e) => this.NumberShowAt(this.CogToothSlider, NumberPickerMode.CogToothSlider);
             this.CogNotchSlider.ValueChanged += (s, e) => this.GeometryInvalidate();
-            this.CogNotchSlider.Click += (s, e) => this.NumberShowAt(this.CogNotchSlider, NumberPickerMode.Case3);
+            this.CogNotchSlider.Click += (s, e) => this.NumberShowAt(this.CogNotchSlider, NumberPickerMode.CogNotchSlider);
 
             // Donut
             this.DonutHoleRadiusSlider.ValueChanged += (s, e) => this.GeometryInvalidate();
@@ -57,9 +57,9 @@ namespace Luo_Painter
 
             // Cookie
             this.CookieInnerRadiusSlider.ValueChanged += (s, e) => this.GeometryInvalidate();
-            this.CookieInnerRadiusSlider.Click += (s, e) => this.NumberShowAt(this.CookieInnerRadiusSlider, NumberPickerMode.Case0);
+            this.CookieInnerRadiusSlider.Click += (s, e) => this.NumberShowAt(this.CookieInnerRadiusSlider, NumberPickerMode.CookieInnerRadiusSlider);
             this.CookieSweepAngleSlider.ValueChanged += (s, e) => this.GeometryInvalidate();
-            this.CookieSweepAngleSlider.Click += (s, e) => this.NumberShowAt(this.CookieSweepAngleSlider, NumberPickerMode.Case1);
+            this.CookieSweepAngleSlider.Click += (s, e) => this.NumberShowAt(this.CookieSweepAngleSlider, NumberPickerMode.CookieSweepAngleSlider);
 
             // Arrow
             this.ArrowWidthSlider.ValueChanged += (s, e) => this.GeometryInvalidate();

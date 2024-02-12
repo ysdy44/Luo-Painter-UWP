@@ -87,10 +87,10 @@ namespace Luo_Painter
                             case OptionType.Temperature:
                                 switch (mode)
                                 {
-                                    case NumberPickerMode.Case0:
+                                    case NumberPickerMode.TemperatureSlider:
                                         this.TemperatureSlider.Value = e;
                                         break;
-                                    case NumberPickerMode.Case1:
+                                    case NumberPickerMode.TintSlider:
                                         this.TintSlider.Value = e;
                                         break;
                                     default:
@@ -100,16 +100,16 @@ namespace Luo_Painter
                             case OptionType.HighlightsAndShadows:
                                 switch (mode)
                                 {
-                                    case NumberPickerMode.Case0:
+                                    case NumberPickerMode.ShadowsSlider:
                                         this.ShadowsSlider.Value = e;
                                         break;
-                                    case NumberPickerMode.Case1:
+                                    case NumberPickerMode.HighlightsSlider:
                                         this.HighlightsSlider.Value = e;
                                         break;
-                                    case NumberPickerMode.Case2:
+                                    case NumberPickerMode.ClaritySlider:
                                         this.ClaritySlider.Value = e;
                                         break;
-                                    case NumberPickerMode.Case3:
+                                    case NumberPickerMode.BlurSlider:
                                         this.BlurSlider.Value = e;
                                         break;
                                     default:
@@ -130,10 +130,10 @@ namespace Luo_Painter
                             case OptionType.DirectionalBlur:
                                 switch (mode)
                                 {
-                                    case NumberPickerMode.Case0:
+                                    case NumberPickerMode.DirectionalBlurSlider:
                                         this.DirectionalBlurSlider.Value = e;
                                         break;
-                                    case NumberPickerMode.Case1:
+                                    case NumberPickerMode.DirectionalBlurAngleSlider:
                                         this.DirectionalBlurAngleSlider.Value = e;
                                         break;
                                     default:
@@ -146,16 +146,16 @@ namespace Luo_Painter
                             case OptionType.Shadow:
                                 switch (mode)
                                 {
-                                    case NumberPickerMode.Case0:
+                                    case NumberPickerMode.ShadowAmountSlider:
                                         this.ShadowAmountSlider.Value = e;
                                         break;
-                                    case NumberPickerMode.Case1:
+                                    case NumberPickerMode.ShadowOpacitySlider:
                                         this.ShadowOpacitySlider.Value = e;
                                         break;
-                                    case NumberPickerMode.Case2:
+                                    case NumberPickerMode.ShadowXSlider:
                                         this.ShadowXSlider.Value = e;
                                         break;
-                                    case NumberPickerMode.Case3:
+                                    case NumberPickerMode.ShadowYSlider:
                                         this.ShadowYSlider.Value = e;
                                         break;
                                     default:
@@ -165,10 +165,10 @@ namespace Luo_Painter
                             case OptionType.EdgeDetection:
                                 switch (mode)
                                 {
-                                    case NumberPickerMode.Case0:
+                                    case NumberPickerMode.EdgeDetectionSlider:
                                         this.EdgeDetectionSlider.Value = e;
                                         break;
-                                    case NumberPickerMode.Case1:
+                                    case NumberPickerMode.EdgeDetectionBlurAmountSlider:
                                         this.EdgeDetectionBlurAmountSlider.Value = e;
                                         break;
                                     default:
@@ -181,10 +181,10 @@ namespace Luo_Painter
                             case OptionType.Emboss:
                                 switch (mode)
                                 {
-                                    case NumberPickerMode.Case0:
+                                    case NumberPickerMode.EmbossSlider:
                                         this.EmbossSlider.Value = e;
                                         break;
-                                    case NumberPickerMode.Case1:
+                                    case NumberPickerMode.EmbossAngleSlider:
                                         this.EmbossAngleSlider.Value = e;
                                         break;
                                     default:
@@ -215,10 +215,10 @@ namespace Luo_Painter
                             case OptionType.DisplacementLiquefaction:
                                 switch (mode)
                                 {
-                                    case NumberPickerMode.Case0:
+                                    case NumberPickerMode.DisplacementLiquefactionSizeSlider:
                                         this.DisplacementLiquefactionSizeSlider.Value = e;
                                         break;
-                                    case NumberPickerMode.Case1:
+                                    case NumberPickerMode.DisplacementLiquefactionPressureSlider:
                                         this.DisplacementLiquefactionPressureSlider.Value = e;
                                         break;
                                     default:
@@ -228,13 +228,13 @@ namespace Luo_Painter
                             case OptionType.RippleEffect:
                                 switch (mode)
                                 {
-                                    case NumberPickerMode.Case0:
+                                    case NumberPickerMode.FrequencySlider:
                                         this.FrequencySlider.Value = e;
                                         break;
-                                    case NumberPickerMode.Case1:
+                                    case NumberPickerMode.PhaseSlider:
                                         this.PhaseSlider.Value = e;
                                         break;
-                                    case NumberPickerMode.Case2:
+                                    case NumberPickerMode.AmplitudeSlider:
                                         this.AmplitudeSlider.Value = e;
                                         break;
                                     default:
@@ -247,13 +247,13 @@ namespace Luo_Painter
                             case OptionType.HSB:
                                 switch (mode)
                                 {
-                                    case NumberPickerMode.Case0:
+                                    case NumberPickerMode.HSBHueSlider:
                                         this.HSBHueSlider.Value = e;
                                         break;
-                                    case NumberPickerMode.Case1:
+                                    case NumberPickerMode.HSBSaturationSlider:
                                         this.HSBSaturationSlider.Value = e;
                                         break;
-                                    case NumberPickerMode.Case2:
+                                    case NumberPickerMode.HSBBrightnessSlider:
                                         this.HSBBrightnessSlider.Value = e;
                                         break;
                                     default:
@@ -264,13 +264,13 @@ namespace Luo_Painter
                             case OptionType.Lighting:
                                 switch (mode)
                                 {
-                                    case NumberPickerMode.Case0:
+                                    case NumberPickerMode.LightDistanceSlider:
                                         this.LightDistanceSlider.Value = e;
                                         break;
-                                    case NumberPickerMode.Case1:
+                                    case NumberPickerMode.LightAmbientSlider:
                                         this.LightAmbientSlider.Value = e;
                                         break;
-                                    case NumberPickerMode.Case2:
+                                    case NumberPickerMode.LightAngleSlider:
                                         this.LightAngleSlider.Value = e;
                                         break;
                                     default:
@@ -304,10 +304,10 @@ namespace Luo_Painter
                             case OptionType.GeometryStarTransform:
                                 switch (mode)
                                 {
-                                    case NumberPickerMode.Case0:
+                                    case NumberPickerMode.StarPointsSlider:
                                         this.StarPointsSlider.Value = e;
                                         break;
-                                    case NumberPickerMode.Case1:
+                                    case NumberPickerMode.StarInnerRadiusSlider:
                                         this.StarInnerRadiusSlider.Value = e;
                                         break;
                                     default:
@@ -318,16 +318,16 @@ namespace Luo_Painter
                             case OptionType.GeometryCogTransform:
                                 switch (mode)
                                 {
-                                    case NumberPickerMode.Case0:
+                                    case NumberPickerMode.CogCountSlider:
                                         this.CogCountSlider.Value = e;
                                         break;
-                                    case NumberPickerMode.Case1:
+                                    case NumberPickerMode.CogInnerRadiusSlider:
                                         this.CogInnerRadiusSlider.Value = e;
                                         break;
-                                    case NumberPickerMode.Case2:
+                                    case NumberPickerMode.CogToothSlider:
                                         this.CogToothSlider.Value = e;
                                         break;
-                                    case NumberPickerMode.Case3:
+                                    case NumberPickerMode.CogNotchSlider:
                                         this.CogNotchSlider.Value = e;
                                         break;
                                     default:
@@ -346,10 +346,10 @@ namespace Luo_Painter
                             case OptionType.GeometryCookieTransform:
                                 switch (mode)
                                 {
-                                    case NumberPickerMode.Case0:
+                                    case NumberPickerMode.CookieInnerRadiusSlider:
                                         this.CookieInnerRadiusSlider.Value = e;
                                         break;
-                                    case NumberPickerMode.Case1:
+                                    case NumberPickerMode.CookieSweepAngleSlider:
                                         this.CookieSweepAngleSlider.Value = e;
                                         break;
                                     default:
