@@ -36,6 +36,24 @@
         FreeTransform7,
         #endregion
 
+        #region GammaTransfer
+        GTAASlider,
+        GTEASlider,
+        GTOASlider,
+
+        GTARSlider,
+        GTERSlider,
+        GTORSlider,
+
+        GTAGSlider,
+        GTEGSlider,
+        GTOGSlider,
+
+        GTABSlider,
+        GTEBSlider,
+        GTOBSlider,
+        #endregion
+
         // Layer
         OpacitySlider = -1,
         // View
