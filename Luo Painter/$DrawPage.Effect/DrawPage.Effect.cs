@@ -48,18 +48,18 @@ namespace Luo_Painter
             this.ContrastSlider.Click += (s, e) => this.NumberShowAt(this.ContrastSlider);
             // Temperature
             this.TemperatureSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
-            this.TemperatureSlider.Click += (s, e) => this.NumberShowAt(this.TemperatureSlider, NumberPickerMode.Case0);
+            this.TemperatureSlider.Click += (s, e) => this.NumberShowAt(this.TemperatureSlider, NumberPickerMode.TemperatureSlider);
             this.TintSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
-            this.TintSlider.Click += (s, e) => this.NumberShowAt(this.TintSlider, NumberPickerMode.Case1);
+            this.TintSlider.Click += (s, e) => this.NumberShowAt(this.TintSlider, NumberPickerMode.TintSlider);
             // HighlightsAndShadows
             this.ShadowsSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
-            this.ShadowsSlider.Click += (s, e) => this.NumberShowAt(this.ShadowsSlider, NumberPickerMode.Case0);
+            this.ShadowsSlider.Click += (s, e) => this.NumberShowAt(this.ShadowsSlider, NumberPickerMode.ShadowsSlider);
             this.HighlightsSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
-            this.HighlightsSlider.Click += (s, e) => this.NumberShowAt(this.HighlightsSlider, NumberPickerMode.Case1);
+            this.HighlightsSlider.Click += (s, e) => this.NumberShowAt(this.HighlightsSlider, NumberPickerMode.HighlightsSlider);
             this.ClaritySlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
-            this.ClaritySlider.Click += (s, e) => this.NumberShowAt(this.ClaritySlider, NumberPickerMode.Case2);
+            this.ClaritySlider.Click += (s, e) => this.NumberShowAt(this.ClaritySlider, NumberPickerMode.ClaritySlider);
             this.BlurSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
-            this.BlurSlider.Click += (s, e) => this.NumberShowAt(this.BlurSlider, NumberPickerMode.Case3);
+            this.BlurSlider.Click += (s, e) => this.NumberShowAt(this.BlurSlider, NumberPickerMode.BlurSlider);
 
             // Vignette
             this.VignetteSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -77,9 +77,9 @@ namespace Luo_Painter
             this.GaussianBlurSlider.Click += (s, e) => this.NumberShowAt(this.GaussianBlurSlider);
             // DirectionalBlur
             this.DirectionalBlurSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
-            this.DirectionalBlurSlider.Click += (s, e) => this.NumberShowAt(this.DirectionalBlurSlider, NumberPickerMode.Case0);
+            this.DirectionalBlurSlider.Click += (s, e) => this.NumberShowAt(this.DirectionalBlurSlider, NumberPickerMode.DirectionalBlurSlider);
             this.DirectionalBlurAngleSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
-            this.DirectionalBlurAngleSlider.Click += (s, e) => this.NumberShowAt(this.DirectionalBlurAngleSlider, NumberPickerMode.Case1);
+            this.DirectionalBlurAngleSlider.Click += (s, e) => this.NumberShowAt(this.DirectionalBlurAngleSlider, NumberPickerMode.DirectionalBlurAngleSlider);
             // Sharpen
             this.SharpenSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
             this.SharpenSlider.Click += (s, e) => this.NumberShowAt(this.SharpenSlider);
@@ -88,18 +88,18 @@ namespace Luo_Painter
             this.ShadowColorButton.SetColorHdr(Vector4.UnitW);
             this.ShadowColorButton.Click += (s, e) => this.ColorShowAt(this.ShadowColorButton);
             this.ShadowAmountSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
-            this.ShadowAmountSlider.Click += (s, e) => this.NumberShowAt(this.ShadowAmountSlider, NumberPickerMode.Case0);
+            this.ShadowAmountSlider.Click += (s, e) => this.NumberShowAt(this.ShadowAmountSlider, NumberPickerMode.ShadowAmountSlider);
             this.ShadowOpacitySlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
-            this.ShadowOpacitySlider.Click += (s, e) => this.NumberShowAt(this.ShadowOpacitySlider, NumberPickerMode.Case1);
+            this.ShadowOpacitySlider.Click += (s, e) => this.NumberShowAt(this.ShadowOpacitySlider, NumberPickerMode.ShadowOpacitySlider);
             this.ShadowXSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
-            this.ShadowXSlider.Click += (s, e) => this.NumberShowAt(this.ShadowXSlider, NumberPickerMode.Case2);
+            this.ShadowXSlider.Click += (s, e) => this.NumberShowAt(this.ShadowXSlider, NumberPickerMode.ShadowXSlider);
             this.ShadowYSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
-            this.ShadowYSlider.Click += (s, e) => this.NumberShowAt(this.ShadowYSlider, NumberPickerMode.Case3);
+            this.ShadowYSlider.Click += (s, e) => this.NumberShowAt(this.ShadowYSlider, NumberPickerMode.ShadowYSlider);
             // EdgeDetection
             this.EdgeDetectionSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
-            this.EdgeDetectionSlider.Click += (s, e) => this.NumberShowAt(this.EdgeDetectionSlider, NumberPickerMode.Case0);
+            this.EdgeDetectionSlider.Click += (s, e) => this.NumberShowAt(this.EdgeDetectionSlider, NumberPickerMode.EdgeDetectionSlider);
             this.EdgeDetectionBlurAmountSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
-            this.EdgeDetectionBlurAmountSlider.Click += (s, e) => this.NumberShowAt(this.EdgeDetectionBlurAmountSlider, NumberPickerMode.Case1);
+            this.EdgeDetectionBlurAmountSlider.Click += (s, e) => this.NumberShowAt(this.EdgeDetectionBlurAmountSlider, NumberPickerMode.EdgeDetectionBlurAmountSlider);
             this.EdgeDetectionButton.Unchecked += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
             this.EdgeDetectionButton.Checked += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
             this.EdgeDetectionModeButton.Toggled += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
@@ -107,9 +107,9 @@ namespace Luo_Painter
             this.MorphologySlider.Toggled += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
             // Emboss
             this.EmbossSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
-            this.EmbossSlider.Click += (s, e) => this.NumberShowAt(this.EmbossSlider, NumberPickerMode.Case0);
+            this.EmbossSlider.Click += (s, e) => this.NumberShowAt(this.EmbossSlider, NumberPickerMode.EmbossSlider);
             this.EmbossAngleSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
-            this.EmbossAngleSlider.Click += (s, e) => this.NumberShowAt(this.EmbossAngleSlider, NumberPickerMode.Case1);
+            this.EmbossAngleSlider.Click += (s, e) => this.NumberShowAt(this.EmbossAngleSlider, NumberPickerMode.EmbossAngleSlider);
             // Straighten
             this.StraightenSlider.ValueChanged += (s, e) => this.CanvasVirtualControl.Invalidate(); // Invalidate
             this.StraightenSlider.Click += (s, e) => this.NumberShowAt(this.StraightenSlider);

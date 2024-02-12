@@ -20,8 +20,8 @@ namespace Luo_Painter
 
         public void ConstructDisplacementLiquefaction()
         {
-            this.DisplacementLiquefactionSizeSlider.Click += (s, e) => this.NumberShowAt(this.DisplacementLiquefactionSizeSlider, NumberPickerMode.Case0);
-            this.DisplacementLiquefactionPressureSlider.Click += (s, e) => this.NumberShowAt(this.DisplacementLiquefactionPressureSlider, NumberPickerMode.Case1);
+            this.DisplacementLiquefactionSizeSlider.Click += (s, e) => this.NumberShowAt(this.DisplacementLiquefactionSizeSlider, NumberPickerMode.DisplacementLiquefactionSizeSlider);
+            this.DisplacementLiquefactionPressureSlider.Click += (s, e) => this.NumberShowAt(this.DisplacementLiquefactionPressureSlider, NumberPickerMode.DisplacementLiquefactionPressureSlider);
         }
 
         private void ResetDisplacementLiquefaction()

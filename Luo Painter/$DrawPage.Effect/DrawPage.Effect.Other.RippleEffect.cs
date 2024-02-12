@@ -22,21 +22,21 @@ namespace Luo_Painter
 
         public void ConstructRippleEffect()
         {
-            this.FrequencySlider.Click += (s, e) => this.NumberShowAt(this.FrequencySlider, NumberPickerMode.Case0);
+            this.FrequencySlider.Click += (s, e) => this.NumberShowAt(this.FrequencySlider, NumberPickerMode.FrequencySlider);
             this.FrequencySlider.ValueChanged += (s, e) =>
             {
                 this.Rippler.Frequency = (float)(e.NewValue);
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
             };
 
-            this.PhaseSlider.Click += (s, e) => this.NumberShowAt(this.PhaseSlider, NumberPickerMode.Case1);
+            this.PhaseSlider.Click += (s, e) => this.NumberShowAt(this.PhaseSlider, NumberPickerMode.PhaseSlider);
             this.PhaseSlider.ValueChanged += (s, e) =>
             {
                 this.Rippler.Phase = (float)(e.NewValue);
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
             };
 
-            this.AmplitudeSlider.Click += (s, e) => this.NumberShowAt(this.AmplitudeSlider, NumberPickerMode.Case2);
+            this.AmplitudeSlider.Click += (s, e) => this.NumberShowAt(this.AmplitudeSlider, NumberPickerMode.AmplitudeSlider);
             this.AmplitudeSlider.ValueChanged += (s, e) =>
             {
                 this.Rippler.Amplitude = (float)(e.NewValue);

@@ -54,6 +54,46 @@
         GTOBSlider,
         #endregion
 
+        #region Effect
+        // Temperature
+        TemperatureSlider,
+        TintSlider,
+        // HighlightsAndShadows
+        ShadowsSlider,
+        HighlightsSlider,
+        ClaritySlider,
+        BlurSlider,
+        // DirectionalBlur
+        DirectionalBlurSlider,
+        DirectionalBlurAngleSlider,
+        // Shadow
+        ShadowAmountSlider,
+        ShadowOpacitySlider,
+        ShadowXSlider,
+        ShadowYSlider,
+        // EdgeDetection
+        EdgeDetectionSlider,
+        EdgeDetectionBlurAmountSlider,
+        // Emboss
+        EmbossSlider,
+        EmbossAngleSlider,
+        // DisplacementLiquefaction
+        DisplacementLiquefactionSizeSlider,
+        DisplacementLiquefactionPressureSlider,
+        // RippleEffect
+        FrequencySlider,
+        PhaseSlider,
+        AmplitudeSlider,
+        // HSB
+        HSBHueSlider,
+        HSBSaturationSlider,
+        HSBBrightnessSlider,
+        // Lighting
+        LightDistanceSlider,
+        LightAmbientSlider,
+        LightAngleSlider,
+        #endregion
+
         // Layer
         OpacitySlider = -1,
         // View

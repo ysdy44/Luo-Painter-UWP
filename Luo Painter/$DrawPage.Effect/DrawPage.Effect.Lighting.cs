@@ -25,7 +25,7 @@ namespace Luo_Painter
 
         public void ConstructLighting()
         {
-            this.LightDistanceSlider.Click += (s, e) => this.NumberShowAt(this.LightDistanceSlider, NumberPickerMode.Case0);
+            this.LightDistanceSlider.Click += (s, e) => this.NumberShowAt(this.LightDistanceSlider, NumberPickerMode.LightDistanceSlider);
             this.LightDistanceSlider.ValueChanged += (s, e) =>
             {
                 this.LightDistance = (float)e.NewValue;
@@ -33,14 +33,14 @@ namespace Luo_Painter
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
             };
 
-            this.LightAngleSlider.Click += (s, e) => this.NumberShowAt(this.LightAngleSlider, NumberPickerMode.Case2);
+            this.LightAngleSlider.Click += (s, e) => this.NumberShowAt(this.LightAngleSlider, NumberPickerMode.LightAngleSlider);
             this.LightAngleSlider.ValueChanged += (s, e) =>
             {
                 this.LightAngle = (float)(e.NewValue * MathF.PI / 180);
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
             };
 
-            this.LightAmbientSlider.Click += (s, e) => this.NumberShowAt(this.LightAmbientSlider, NumberPickerMode.Case1);
+            this.LightAmbientSlider.Click += (s, e) => this.NumberShowAt(this.LightAmbientSlider, NumberPickerMode.LightAmbientSlider);
             this.LightAmbientSlider.ValueChanged += (s, e) =>
             {
                 this.LightAmbient = (float)(e.NewValue / 100);

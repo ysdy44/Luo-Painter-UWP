@@ -14,7 +14,7 @@ namespace Luo_Painter
 
         public void ConstructHSB()
         {
-            this.HSBHueSlider.Click += (s, e) => this.NumberShowAt(this.HSBHueSlider, NumberPickerMode.Case0);
+            this.HSBHueSlider.Click += (s, e) => this.NumberShowAt(this.HSBHueSlider, NumberPickerMode.HSBHueSlider);
             this.HSBHueSlider.ValueChanged += (s, e) =>
             {
                 this.HSBHue = (float)(e.NewValue / 120d);
@@ -22,7 +22,7 @@ namespace Luo_Painter
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
             };
 
-            this.HSBSaturationSlider.Click += (s, e) => this.NumberShowAt(this.HSBSaturationSlider, NumberPickerMode.Case1);
+            this.HSBSaturationSlider.Click += (s, e) => this.NumberShowAt(this.HSBSaturationSlider, NumberPickerMode.HSBSaturationSlider);
             this.HSBSaturationSlider.ValueChanged += (s, e) =>
             {
                 this.HSBSaturation = (float)(e.NewValue / 100d);
@@ -30,7 +30,7 @@ namespace Luo_Painter
                 this.CanvasVirtualControl.Invalidate(); // Invalidate
             };
 
-            this.HSBBrightnessSlider.Click += (s, e) => this.NumberShowAt(this.HSBBrightnessSlider, NumberPickerMode.Case2);
+            this.HSBBrightnessSlider.Click += (s, e) => this.NumberShowAt(this.HSBBrightnessSlider, NumberPickerMode.HSBBrightnessSlider);
             this.HSBBrightnessSlider.ValueChanged += (s, e) =>
             {
                 this.HSBBrightness = (float)(e.NewValue / 100d);
