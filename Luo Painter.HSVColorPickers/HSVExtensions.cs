@@ -50,11 +50,11 @@ namespace Luo_Painter.HSVColorPickers
                     }
                     return null;
                 case 3:
-                    if (byte.TryParse($"{hex[0]}", NumberStyles.HexNumber, null, out byte r3) &&
-                    byte.TryParse($"{hex[1]}", NumberStyles.HexNumber, null, out byte g3) &&
-                    byte.TryParse($"{hex[2]}", NumberStyles.HexNumber, null, out byte b3))
+                    if (int.TryParse($"{hex[0]}", NumberStyles.HexNumber, null, out int r3) &&
+                        int.TryParse($"{hex[1]}", NumberStyles.HexNumber, null, out int g3) &&
+                        int.TryParse($"{hex[2]}", NumberStyles.HexNumber, null, out int b3))
                     {
-                        return Color.FromArgb(255, r3, g3, b3);
+                        return Color.FromArgb(255, (byte)(r3 * 0x11), (byte)(g3 * 0x11), (byte)(b3 * 0x11));
                     }
                     return null;
                 case 4:
