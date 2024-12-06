@@ -2,13 +2,16 @@
 
 ![](ScreenShot/logo.png)
 
- In development, please stay tuned......
+ 
+ Windows 10 app store address: 
+[Buy Luo-Painter - Microsoft Store](https://www.microsoft.com/store/productId/9NWRWGKW5MK3)   
+
 
 <br/>
 
 ## Function description
 
-Painting Tool. You can give it a try if you need to paint something.
+Luo Painter is a free and open source painting tool that only supports the Windows OS platform. It is designed for pressure sensitive pens, supports regular, liquefied, blur and other brushes, with a wealth of brush presets, supports more than 30 filters, and allows users to freely transform and select the pixels they need. If you need to paint might as well try.
 
 
 <br/>
