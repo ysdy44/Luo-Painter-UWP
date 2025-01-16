@@ -1,10 +1,13 @@
 ﻿using Luo_Painter.Brushes;
-using System.Runtime.InteropServices;
+using Microsoft.Graphics.Canvas.Effects;
 
 namespace Luo_Painter.UI
 {
     public sealed class PaintBrush : InkAttributes
     {
+        public InkType Type { get; set; } = InkType.General;
+
+        // Property
         public double Size2 { get => base.Size; set => base.Size = (float)value; }
         public double Opacity2 { get => base.Opacity; set => base.Opacity = (float)value; }
 
@@ -19,6 +22,31 @@ namespace Luo_Painter.UI
         public uint Tile { get; set; }
         public string ImageSource => this.Tile == default ? BrushExtensions.DeaultTile : this.Tile.GetTile();
         public int Tile2 { get => (int)this.Tile; set => this.Tile = (uint)value; }
+
+
+        public BrushEasePressure SizePressure { get; set; }
+        public BrushEasePressure FlowPressure { get; set; }
+
+        public Windows.UI.Input.Inking.PenTipShape Tip { get; set; }
+        public bool IsStroke { get; set; }
+
+        public BrushEdgeHardness Hardness { get; set; }
+
+        // Texture
+        public bool Rotate { get; set; }
+        public string Shape { get; set; }
+        public bool RecolorShape { get; set; } = true;
+
+        //public double GrainScale2 { get; set; } = 1;
+        public string Grain { get; set; }
+        public bool RecolorGrain { get; set; } = true;
+
+        public BlendEffectMode BlendMode { get; set; } = (BlendEffectMode)(-1);
+
+        // Mix
+        public double Mix2 { get; set; }
+        public double Wet2 { get; set; } = 10;
+        public double Persistence2 { get; set; }
 
         public void CopyTo(InkPresenter presenter)
         {
