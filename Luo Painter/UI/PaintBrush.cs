@@ -3,26 +3,25 @@ using Microsoft.Graphics.Canvas.Effects;
 
 namespace Luo_Painter.UI
 {
-    public sealed class PaintBrush : InkAttributes
+    public sealed class PaintBrush
     {
         public InkType Type { get; set; } = InkType.General;
 
         // Property
-        public double Size2 { get => base.Size; set => base.Size = (float)value; }
-        public double Opacity2 { get => base.Opacity; set => base.Opacity = (float)value; }
+        public double Size2 { get; set; }
+        public double Opacity2 { get; set; }
 
-        public double Spacing2 { get => base.Spacing; set => base.Spacing = (float)value; }
-        public double Flow2 { get => base.Flow; set => base.Flow = (float)value; }
+        public double Spacing2 { get; set; }
+        public double Flow2 { get; set; }
 
-        public double MinSize2 { get => base.MinSize; set => base.MinSize = (float)value; }
-        public double MinFlow2 { get => base.MinFlow; set => base.MinFlow = (float)value; }
+        public double MinSize2 { get; set; }
+        public double MinFlow2 { get; set; }
 
-        public double GrainScale2 { get => base.GrainScale; set => base.GrainScale = (float)value; }
+        public double GrainScale2 { get; set; }
 
-        public uint Tile { get; set; }
+        public uint Tile => (uint)this.Tile2;
         public string ImageSource => this.Tile == default ? BrushExtensions.DeaultTile : this.Tile.GetTile();
-        public int Tile2 { get => (int)this.Tile; set => this.Tile = (uint)value; }
-
+        public int Tile2 { get; set; }
 
         public BrushEasePressure SizePressure { get; set; }
         public BrushEasePressure FlowPressure { get; set; }
@@ -53,13 +52,13 @@ namespace Luo_Painter.UI
             presenter.Type = this.Type;
 
             // Property
-            presenter.Size = this.Size;
-            presenter.Opacity = this.Opacity;
-            presenter.Spacing = this.Spacing;
-            presenter.Flow = this.Flow;
+            presenter.Size = (float)this.Size2;
+            presenter.Opacity = (float)this.Opacity2;
+            presenter.Spacing = (float)this.Spacing2;
+            presenter.Flow = (float)this.Flow2;
 
-            presenter.MinSize = this.MinSize;
-            presenter.MinFlow = this.MinFlow;
+            presenter.MinSize = (float)this.MinSize2;
+            presenter.MinFlow = (float)this.MinFlow2;
 
             presenter.SizePressure = this.SizePressure;
             presenter.FlowPressure = this.FlowPressure;
@@ -74,16 +73,16 @@ namespace Luo_Painter.UI
             presenter.Shape = this.Shape;
             presenter.RecolorShape = this.RecolorShape;
 
-            presenter.GrainScale = this.GrainScale;
+            presenter.GrainScale = (float)this.GrainScale2;
             presenter.Grain = this.Grain;
             presenter.RecolorGrain = this.RecolorGrain;
 
             presenter.BlendMode = this.BlendMode;
 
             // Mix
-            presenter.Mix = this.Mix;
-            presenter.Wet = this.Wet;
-            presenter.Persistence = this.Persistence;
+            presenter.Mix = (float)this.Mix2;
+            presenter.Wet = (float)this.Wet2;
+            presenter.Persistence = (float)this.Persistence2;
         }
     }
 }
