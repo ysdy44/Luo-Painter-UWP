@@ -1,5 +1,5 @@
 ﻿using Luo_Painter.Brushes;
-using Luo_Painter.Controls;
+using Luo_Painter.UI;
 using Microsoft.Graphics.Canvas;
 using System;
 
@@ -8,7 +8,7 @@ namespace Luo_Painter
     public sealed partial class DrawPage
     {
 
-        private async void ConstructBrush(InkAttributes brush)
+        private async void ConstructBrush(PaintBrush brush)
         {
             if (string.IsNullOrEmpty(brush.Shape)) this.InkPresenter.ClearShape();
             else this.InkPresenter.ConstructShape(brush.Shape, await CanvasBitmap.LoadAsync(this.CanvasDevice, brush.Shape.GetTextureSource()));
