@@ -1,4 +1,6 @@
-﻿using Luo_Painter.UI;
+﻿using Luo_Painter.Models;
+using Luo_Painter.Strings;
+using Luo_Painter.UI;
 using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -51,6 +53,7 @@ namespace Luo_Painter
             }
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            this.UnhandledException += OnUnhandledException;
         }
 
         /// <summary>
@@ -117,6 +120,36 @@ namespace Luo_Painter
             var deferral = e.SuspendingOperation.GetDeferral();
 
             deferral.Complete();
+        }
+
+        private async void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
+        {
+            e.Handled = true;
+            Debugger debug = new Debugger(e);
+
+            await Window.Current.Content.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
+            {
+                ContentDialog contentDialog = new ContentDialog
+                {
+                    Title = debug.Title,
+                    Content = debug.Content,
+
+                    PrimaryButtonText = UIType.Feedback.GetString(),
+                    PrimaryButtonCommandParameter = ContentDialogButton.Primary,
+                    PrimaryButtonCommand = debug,
+
+                    SecondaryButtonText = OptionType.Copy.GetString(),
+                    SecondaryButtonCommandParameter = ContentDialogButton.Secondary,
+                    SecondaryButtonCommand = debug,
+
+                    CloseButtonText = OptionType.Close.GetString(),
+                    CloseButtonCommandParameter = ContentDialogButton.Close,
+                    CloseButtonCommand = debug,
+
+                    DefaultButton = ContentDialogButton.Close,
+                };
+                await contentDialog.ShowAsync();
+            });
         }
     }
 }
