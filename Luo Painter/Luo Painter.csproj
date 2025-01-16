@@ -295,6 +295,7 @@
     <Compile Include="Controls\ToolListView.xaml.cs">
       <DependentUpon>ToolListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Debugger.cs" />
     <Compile Include="FileUtils\FileUtil.Clipboard.cs" />
     <Compile Include="FileUtils\FileUtil.PickAndCopy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
