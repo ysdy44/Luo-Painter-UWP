@@ -3,6 +3,7 @@ using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Resources;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -22,12 +23,28 @@ namespace Luo_Painter
         //@Strings
         internal static readonly ResourceLoader Resource = ResourceLoader.GetForCurrentView();
 
+        //@Setting
+        private readonly ApplicationDataContainer LocalSettings = ApplicationData.Current.LocalSettings;
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
         public App()
         {
+            if (this.LocalSettings.Values.ContainsKey("Theme"))
+            {
+                if (this.LocalSettings.Values["Theme"] is int item)
+                {
+                    switch ((ElementTheme)item)
+                    {
+                        case ElementTheme.Default: break;
+                        case ElementTheme.Light: base.RequestedTheme = ApplicationTheme.Light; break;
+                        case ElementTheme.Dark: base.RequestedTheme = ApplicationTheme.Dark; break;
+                        default: break;
+                    }
+                }
+            }
             this.InitializeComponent();
             this.Suspending += OnSuspending;
         }
