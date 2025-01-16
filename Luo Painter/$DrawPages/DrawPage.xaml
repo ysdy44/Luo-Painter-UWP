@@ -92,6 +92,18 @@
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="1080"/>
                     </VisualState.StateTriggers>
+                    <!--90+900+90=1080-->
+                    <VisualState.Setters>
+                        <Setter Target="HeadGrid.MaxWidth" Value="900"/>
+                        <Setter Target="AppBarHeadGrid.MaxWidth" Value="900"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <!--Inline-->
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1300"/>
+                    </VisualState.StateTriggers>
+                    <!--90+1120+90=1300-->
                 </VisualState>
             </VisualStateGroup>
 
