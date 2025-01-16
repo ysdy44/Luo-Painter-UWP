@@ -132,8 +132,20 @@ namespace Luo_Painter.Controls
             this.Thumb.DragCompleted += (s, e) => this.Toggle(this.StatringX < base.ActualHeight / 2);
         }
 
-        public void Hide() => this.HideStoryboard.Begin();
-        public void Show() => this.ShowStoryboard.Begin();
+        public void Hide()
+        {
+            {
+                this.HideStoryboard.Begin();
+            }
+        }
+
+        public void Show()
+        {
+            {
+                this.ShowStoryboard.Begin();
+            }
+        }
+
         public void Toggle() => this.Toggle(base.Visibility != default);
         private void Toggle(bool isShow)
         {
