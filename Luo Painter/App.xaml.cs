@@ -4,6 +4,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Resources;
 using Windows.Storage;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -19,6 +20,9 @@ namespace Luo_Painter
         /// <see cref="Frame.SourcePageType"/>
         /// </summary>
         internal static SourcePageType SourcePageType { get; set; }
+
+        // UISettings
+        internal static readonly UISettings UISettings = new UISettings();
 
         //@Strings
         internal static readonly ResourceLoader Resource = ResourceLoader.GetForCurrentView();
