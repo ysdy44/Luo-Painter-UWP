@@ -276,6 +276,12 @@ namespace Luo_Painter
 
             this.PaintScrollViewer.ScratchpadClick += (s, e) => this.TryShowBrushPage();
 
+            this.SplitLeftView.PaneClosing += (s, e) => this.TryHideAppBar();
+            this.SplitLeftView.PaneClosed += (s, e) => this.TryShowAppBar();
+
+            this.SplitLeftView.PaneOpening += (s, e) => this.TryHideAppBar();
+            this.SplitLeftView.PaneOpened += (s, e) => this.TryShowAppBar();
+
             this.SplitLeftButton.Click += (s, e) => this.SplitLeftView.IsPaneOpen = true;
             this.SplitLeftButton.PointerEntered += (s, e) =>
             {
@@ -344,6 +350,29 @@ namespace Luo_Painter
             //    //e.DragUIOverride.Caption = 
             //    e.DragUIOverride.IsCaptionVisible = e.DragUIOverride.IsContentVisible = e.DragUIOverride.IsGlyphVisible = true;
             //};
+        }
+
+        private void TryHideAppBar()
+        {
+            if (App.UISettings.AnimationsEnabled)
+            {
+                switch (this.SplitLeftView.DisplayMode)
+                {
+                    case SplitViewDisplayMode.Inline:
+                        this.HideStoryboard.Begin(); // Storyboard
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private void TryShowAppBar()
+        {
+            if (this.AppBarGrid.Opacity < 1.0)
+            {
+                this.ShowStoryboard.Begin(); // Storyboard
+            }
         }
 
         //@BackRequested

@@ -43,6 +43,15 @@
                 <SplineDoubleKeyFrame Value="23" KeyTime="0:0:0.2" KeySpline="0.5,1.0 1,1"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
+        <!--Show-->
+        <Storyboard x:Name="HideStoryboard">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="AppBarGrid" Storyboard.TargetProperty="Opacity">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="0" />
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Name="ShowStoryboard">
+            <DoubleAnimation Duration="0:0:0.1" By="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="AppBarGrid" d:IsOptimized="True"/>
+        </Storyboard>
         <!--Flyout-->
         <Flyout x:Name="ColorFlyout" Placement="Top" Windows10version1903:ShouldConstrainToRootBounds="False" FlyoutPresenterStyle="{StaticResource AppFlyoutPresenterStyle}">
             <controls:ColorPicker2 x:Name="ColorPicker" />
