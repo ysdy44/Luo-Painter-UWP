@@ -19,5 +19,43 @@ namespace Luo_Painter.UI
         public uint Tile { get; set; }
         public string ImageSource => this.Tile == default ? BrushExtensions.DeaultTile : this.Tile.GetTile();
         public int Tile2 { get => (int)this.Tile; set => this.Tile = (uint)value; }
+
+        public void CopyTo(InkPresenter presenter)
+        {
+            presenter.Type = this.Type;
+
+            // Property
+            presenter.Size = this.Size;
+            presenter.Opacity = this.Opacity;
+            presenter.Spacing = this.Spacing;
+            presenter.Flow = this.Flow;
+
+            presenter.MinSize = this.MinSize;
+            presenter.MinFlow = this.MinFlow;
+
+            presenter.SizePressure = this.SizePressure;
+            presenter.FlowPressure = this.FlowPressure;
+
+            presenter.Tip = this.Tip;
+            presenter.IsStroke = this.IsStroke;
+
+            presenter.Hardness = this.Hardness;
+
+            // Texture
+            presenter.Rotate = this.Rotate;
+            presenter.Shape = this.Shape;
+            presenter.RecolorShape = this.RecolorShape;
+
+            presenter.GrainScale = this.GrainScale;
+            presenter.Grain = this.Grain;
+            presenter.RecolorGrain = this.RecolorGrain;
+
+            presenter.BlendMode = this.BlendMode;
+
+            // Mix
+            presenter.Mix = this.Mix;
+            presenter.Wet = this.Wet;
+            presenter.Persistence = this.Persistence;
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace Luo_Painter
             if (string.IsNullOrEmpty(brush.Grain)) this.InkPresenter.ClearGrain();
             else this.InkPresenter.ConstructGrain(brush.Grain, await CanvasBitmap.LoadAsync(this.CanvasDevice, brush.Grain.GetTextureSource()));
 
-            this.InkPresenter.CopyWith(brush);
+            brush.CopyTo(this.InkPresenter);
             this.InkType = this.InkPresenter.GetType();
 
             this.IsInkEnabled = false;

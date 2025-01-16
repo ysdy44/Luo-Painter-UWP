@@ -55,44 +55,5 @@ namespace Luo_Painter.Brushes
         public float Mix { get; set; } /// <see cref="InkPresenter.GetType"/>
         public float Wet { get; set; } = 10;
         public float Persistence { get; set; }
-
-        public void CopyWith(InkAttributes attributes)
-        {
-            this.Type = attributes.Type;
-
-            // Property
-            this.Size = attributes.Size;
-            this.Opacity = attributes.Opacity;
-            this.Spacing = attributes.Spacing;
-            this.Flow = attributes.Flow;
-
-            this.MinSize = attributes.MinSize;
-            this.MinFlow = attributes.MinFlow;
-
-            this.SizePressure = attributes.SizePressure;
-            this.FlowPressure = attributes.FlowPressure;
-
-            this.Tip = attributes.Tip;
-            this.IsStroke = attributes.IsStroke;
-
-            this.Hardness = attributes.Hardness;
-
-            // Texture
-            this.Rotate = attributes.Rotate;
-            this.Shape = attributes.Shape;
-            this.RecolorShape = attributes.RecolorShape;
-
-            this.GrainScale = attributes.GrainScale;
-            this.Grain = attributes.Grain;
-            this.RecolorGrain = attributes.RecolorGrain;
-
-            this.BlendMode = attributes.BlendMode;
-
-            // Mix
-            this.Mix = attributes.Mix;
-            this.Wet = attributes.Wet;
-            this.Persistence = attributes.Persistence;
-        }
-
     }
 }
