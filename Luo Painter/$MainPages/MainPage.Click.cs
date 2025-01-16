@@ -106,8 +106,9 @@ namespace Luo_Painter
                         this.RenameTextBox.SelectAll();
                         this.RenameTextBox.Focus(FocusState.Keyboard);
 
-                        this.RenameIcon.Symbol = Symbol.Folder;
+                        this.RenameIcon.Symbol = Symbol.NewFolder;
                         this.RenameDialog.IsPrimaryButtonEnabled = true;
+                        this.RenameDialog.Title = UIType.NewFolder.GetString();
 
                         ContentDialogResult result = await this.RenameDialog.ShowInstance();
                         switch (result)
@@ -235,10 +236,12 @@ namespace Luo_Painter
                                 case ProjectType.Project:
                                     this.RenameIcon.Symbol = Symbol.Document;
                                     this.RenameDialog.IsPrimaryButtonEnabled = false;
+                                    this.RenameDialog.Title = UIType.RenameProject.GetString();
                                     break;
                                 case ProjectType.Folder:
                                     this.RenameIcon.Symbol = Symbol.Folder;
                                     this.RenameDialog.IsPrimaryButtonEnabled = false;
+                                    this.RenameDialog.Title = UIType.RenameProject.GetString();
                                     break;
                                 default:
                                     break;
