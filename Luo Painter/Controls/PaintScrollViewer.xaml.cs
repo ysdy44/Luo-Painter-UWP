@@ -17,8 +17,8 @@ namespace Luo_Painter.Controls
     {
         //@Delegate
         public event RoutedEventHandler ScratchpadClick { remove => this.ScratchpadButton.Click -= value; add => this.ScratchpadButton.Click += value; }
-        public event EventHandler<object> Opened { remove => this.ShowStoryboard.Completed -= value; add => this.ShowStoryboard.Completed += value; }
-        public event EventHandler<object> Closed { remove => this.HideStoryboard.Completed -= value; add => this.HideStoryboard.Completed += value; }
+        public event EventHandler<object> Opened;
+        public event EventHandler<object> Closed;
 
         //@Converter
         private double PercentageConverter(double value) => System.Math.Clamp(value / 100d, 0d, 1d);
@@ -125,6 +125,9 @@ namespace Luo_Painter.Controls
                 this.DoubleAnimation.To = e.NewSize.Height;
             };
 
+            this.HideStoryboard.Completed += this.Closed;
+            this.ShowStoryboard.Completed += this.Opened;
+
             this.Opened += (s, e) => this.ConstructInkSliderValue(this.InkPresenter);
 
             this.Thumb.DragStarted += (s, e) => this.StatringX = this.TranslateTransform.Y;
@@ -132,34 +135,78 @@ namespace Luo_Painter.Controls
             this.Thumb.DragCompleted += (s, e) => this.Toggle(this.StatringX < base.ActualHeight / 2);
         }
 
+        private void HideCore()
+        {
+            this.RootGrid.Visibility = Visibility.Collapsed;
+            this.RootGrid.IsHitTestVisible = false;
+
+            //this.TranslateTransform.Y = base.ActualHeight;
+            this.TranslateTransform.Y = 0;
+
+            this.Closed?.Invoke(this, null); // Delegate
+        }
+
+        private void ShowCore()
+        {
+            this.RootGrid.Visibility = Visibility.Visible;
+            this.RootGrid.IsHitTestVisible = true;
+
+            this.TranslateTransform.Y = 0;
+
+            this.Opened?.Invoke(this, null); // Delegate
+        }
+
         public void Hide()
         {
+            if (App.UISettings.AnimationsEnabled)
             {
                 this.HideStoryboard.Begin();
+            }
+            else
+            {
+                this.HideCore();
             }
         }
 
         public void Show()
         {
+            if (App.UISettings.AnimationsEnabled)
             {
                 this.ShowStoryboard.Begin();
+            }
+            else
+            {
+                this.ShowCore();
             }
         }
 
         public void Toggle() => this.Toggle(base.Visibility != default);
         private void Toggle(bool isShow)
         {
-            if (isShow)
+            if (App.UISettings.AnimationsEnabled)
             {
-                this.HideStoryboard.Pause();
-                this.ShowStoryboard.Begin();
+                if (isShow)
+                {
+                    this.HideStoryboard.Pause();
+                    this.ShowStoryboard.Begin();
+                }
+                else
+                {
+                    this.ShowStoryboard.Pause();
+                    this.HideStoryboard.Begin();
+                }
             }
             else
             {
-                this.ShowStoryboard.Pause();
-                this.HideStoryboard.Begin();
+                if (isShow)
+                {
+                    this.ShowCore();
+                }
+                else
+                {
+                    this.HideCore();
+                }
             }
         }
-
     }
 }

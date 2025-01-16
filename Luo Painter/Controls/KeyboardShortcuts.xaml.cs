@@ -25,7 +25,14 @@ namespace Luo_Painter.Controls
             this.Timer.Tick += (s, e) =>
             {
                 this.Timer.Stop();
-                this.HideStoryboard.Begin(); // Storyboard
+                if (App.UISettings.AnimationsEnabled)
+                {
+                    this.HideStoryboard.Begin(); // Storyboard
+                }
+                else
+                {
+                    base.Visibility = Visibility.Collapsed;
+                }
             };
         }
 
@@ -33,8 +40,15 @@ namespace Luo_Painter.Controls
         {
             base.Visibility = Visibility.Visible;
 
-            this.HideStoryboard.Stop(); // Storyboard
-            this.ShowStoryboard.Begin(); // Storyboard
+            if (App.UISettings.AnimationsEnabled)
+            {
+                this.HideStoryboard.Stop(); // Storyboard
+                this.ShowStoryboard.Begin(); // Storyboard
+            }
+            else
+            {
+                base.Visibility = Visibility.Visible;
+            }
 
             this.Timer.Stop();
             this.Timer.Start();
