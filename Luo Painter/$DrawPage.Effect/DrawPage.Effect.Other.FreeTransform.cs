@@ -12,17 +12,17 @@ namespace Luo_Painter
 
         public void ConstructFreeTransform()
         {
-            this.LTPicker.XClick += (s, e) => this.NumberShowAt(this.LTPicker.XNumber, (NumberPickerMode)0);
-            this.LTPicker.YClick += (s, e) => this.NumberShowAt(this.LTPicker.YNumber, (NumberPickerMode)1);
+            this.LTPicker.XClick += (s, e) => this.NumberShowAt(this.LTPicker.XNumber, NumberPickerMode.FreeTransform0);
+            this.LTPicker.YClick += (s, e) => this.NumberShowAt(this.LTPicker.YNumber, NumberPickerMode.FreeTransform1);
 
-            this.RTPicker.XClick += (s, e) => this.NumberShowAt(this.RTPicker.XNumber, (NumberPickerMode)2);
-            this.RTPicker.YClick += (s, e) => this.NumberShowAt(this.RTPicker.YNumber, (NumberPickerMode)3);
+            this.RTPicker.XClick += (s, e) => this.NumberShowAt(this.RTPicker.XNumber, NumberPickerMode.FreeTransform2);
+            this.RTPicker.YClick += (s, e) => this.NumberShowAt(this.RTPicker.YNumber, NumberPickerMode.FreeTransform3);
 
-            this.RBPicker.XClick += (s, e) => this.NumberShowAt(this.RBPicker.XNumber, (NumberPickerMode)4);
-            this.RBPicker.YClick += (s, e) => this.NumberShowAt(this.RBPicker.YNumber, (NumberPickerMode)5);
+            this.RBPicker.XClick += (s, e) => this.NumberShowAt(this.RBPicker.XNumber, NumberPickerMode.FreeTransform4);
+            this.RBPicker.YClick += (s, e) => this.NumberShowAt(this.RBPicker.YNumber, NumberPickerMode.FreeTransform5);
 
-            this.LBPicker.XClick += (s, e) => this.NumberShowAt(this.LBPicker.XNumber, (NumberPickerMode)6);
-            this.LBPicker.YClick += (s, e) => this.NumberShowAt(this.LBPicker.YNumber, (NumberPickerMode)7);
+            this.LBPicker.XClick += (s, e) => this.NumberShowAt(this.LBPicker.XNumber, NumberPickerMode.FreeTransform6);
+            this.LBPicker.YClick += (s, e) => this.NumberShowAt(this.LBPicker.YNumber, NumberPickerMode.FreeTransform7);
         }
 
         private void ResetFreeTransform(PixelBounds bounds)
