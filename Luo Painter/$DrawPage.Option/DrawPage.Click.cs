@@ -1595,7 +1595,7 @@ namespace Luo_Painter
                                     break;
                                 }
 
-                                this.Primary(type, bitmapLayer, this.GetPreview(type, bitmapLayer[BitmapType.Origin]));
+                                this.PrimaryGrayOrInvert(type, bitmapLayer, this.GetPreview(type, bitmapLayer[BitmapType.Origin]));
                                 break;
                             }
                             else this.ToastTip.Tip(TipType.NotBitmapLayer.GetString(), TipType.NotBitmapLayer.GetString(true));

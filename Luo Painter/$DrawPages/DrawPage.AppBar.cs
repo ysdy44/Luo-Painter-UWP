@@ -124,7 +124,7 @@ namespace Luo_Painter
             this.CanvasControl.Invalidate(); // Invalidate
         }
 
-        private void Primary(OptionType type, BitmapLayer bitmapLayer, ICanvasImage source)
+        private void PrimaryGrayOrInvert(OptionType type, BitmapLayer bitmapLayer, ICanvasImage source)
         {
             Color[] InterpolationColors = this.Marquee.GetInterpolationColorsBySource();
             PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(InterpolationColors);
