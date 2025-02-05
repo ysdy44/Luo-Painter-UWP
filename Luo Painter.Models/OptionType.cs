@@ -5,16 +5,16 @@ namespace Luo_Painter.Models
     /// <summary>
     /// None: <para/>
     /// 0b_00000000_00000000_00000000_00000000 <para/>
-    /// 
+    ///
     /// Root: <para/>
     /// 0b_00011111_00000000_00000000_00000000 <para/>
-    /// 
+    ///
     /// Category: <para/>
     /// 0b_00000000_11111111_00000000_00000000 <para/>
-    /// 
+    ///
     /// Item: <para/>
     /// 0b_00000000_00000000_11111111_00000000 <para/>
-    /// 
+    ///
     /// Flag: <para/>
     /// 0b_00000000_00000000_00000000_11111111 <para/>
     /// </summary>
@@ -132,6 +132,8 @@ namespace Luo_Painter.Models
         Grow = Marquees | 3 << 8 | WithState | HasPreview | ExistIcon | IsItemClickEnabled,
         Shrink = Marquees | 4 << 8 | WithState | HasPreview | ExistIcon | IsItemClickEnabled,
 
+        // CropCanvas
+
         // ResizeCanvas
         Stretch = ResizeCanvas | 2 << 8 | WithState | HasMenu | ExistIcon | IsItemClickEnabled,
         Extend = ResizeCanvas | 3 << 8 | WithState | HasMenu | ExistIcon | IsItemClickEnabled,
@@ -242,7 +244,7 @@ namespace Luo_Painter.Models
 
         HSB = Other | 8 << 8 | HasPreview | ExistIcon | IsItemClickEnabled,
 
-        // Adjustment1
+        // Adjustment
         Gray = Adjustment | 1 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
         Invert = Adjustment | 2 << 8 | ExistThumbnail | ExistIcon | IsItemClickEnabled,
         Exposure = Adjustment | 3 << 8 | HasPreview | ExistThumbnail | ExistIcon | IsItemClickEnabled,
@@ -336,27 +338,26 @@ namespace Luo_Painter.Models
         TextFrame = Text | 2 << 8 | ExistIcon | IsItemClickEnabled,
 
         // Geometry
-        // Geometry0
+
         GeometryRectangle = Geometry | 1 << 8 | ExistIcon | IsItemClickEnabled,
         GeometryEllipse = Geometry | 2 << 8 | ExistIcon | IsItemClickEnabled,
-        // Geometry1
+
         GeometryRoundRect = Geometry | 3 << 8 | ExistIcon | IsItemClickEnabled,
         GeometryTriangle = Geometry | 4 << 8 | ExistIcon | IsItemClickEnabled,
         GeometryDiamond = Geometry | 5 << 8 | ExistIcon | IsItemClickEnabled,
-        // Geometry2
+
         GeometryPentagon = Geometry | 6 << 8 | ExistIcon | IsItemClickEnabled,
         GeometryStar = Geometry | 7 << 8 | ExistIcon | IsItemClickEnabled,
         GeometryCog = Geometry | 8 << 8 | ExistIcon | IsItemClickEnabled,
-        // Geometry3
+
         GeometryDonut = Geometry | 9 << 8 | ExistIcon | IsItemClickEnabled,
         GeometryPie = Geometry | 10 << 8 | ExistIcon | IsItemClickEnabled,
         GeometryCookie = Geometry | 11 << 8 | ExistIcon | IsItemClickEnabled,
-        // Geometry4
+
         GeometryArrow = Geometry | 12 << 8 | ExistIcon | IsItemClickEnabled,
         GeometryCapsule = Geometry | 13 << 8 | ExistIcon | IsItemClickEnabled,
         GeometryHeart = Geometry | 14 << 8 | ExistIcon | IsItemClickEnabled,
 
-        // PatternTransform
         // Pattern
         PatternGrid = Pattern | 1 << 8 | ExistIcon | IsItemClickEnabled,
         PatternDiagonal = Pattern | 2 << 8 | ExistIcon | IsItemClickEnabled,
@@ -365,28 +366,26 @@ namespace Luo_Painter.Models
         #endregion
 
         // GeometryTransform
-        // Geometry0
         GeometryRectangleTransform = GeometryRectangle | WithTransform | HasPreview,
         GeometryEllipseTransform = GeometryEllipse | WithTransform | HasPreview,
-        // Geometry1
+
         GeometryRoundRectTransform = GeometryRoundRect | WithTransform | HasPreview,
         GeometryTriangleTransform = GeometryTriangle | WithTransform | HasPreview,
         GeometryDiamondTransform = GeometryDiamond | WithTransform | HasPreview,
-        // Geometry2
+
         GeometryPentagonTransform = GeometryPentagon | WithTransform | HasPreview,
         GeometryStarTransform = GeometryStar | WithTransform | HasPreview,
         GeometryCogTransform = GeometryCog | WithTransform | HasPreview,
-        // Geometry3
+
         GeometryDonutTransform = GeometryDonut | WithTransform | HasPreview,
         GeometryPieTransform = GeometryPie | WithTransform | HasPreview,
         GeometryCookieTransform = GeometryCookie | WithTransform | HasPreview,
-        // Geometry4
+
         GeometryArrowTransform = GeometryArrow | WithTransform | HasPreview,
         GeometryCapsuleTransform = GeometryCapsule | WithTransform | HasPreview,
         GeometryHeartTransform = GeometryHeart | WithTransform | HasPreview,
 
         // PatternTransform
-        // Pattern
         PatternGridTransform = PatternGrid | WithTransform | HasPreview,
         PatternDiagonalTransform = PatternDiagonal | WithTransform | HasPreview,
         PatternSpottedTransform = PatternSpotted | WithTransform | HasPreview,
