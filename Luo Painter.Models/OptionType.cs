@@ -115,10 +115,10 @@ namespace Luo_Painter.Models
 
         // Edit
         Cut = Edit | 1 << 8 | WithState | ExistIcon | IsItemClickEnabled,
-        Copy = Edit | 3 << 8 | WithState | ExistIcon | IsItemClickEnabled,
-        Paste = Edit | 4 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        Copy = Edit | 2 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        Paste = Edit | 3 << 8 | WithState | ExistIcon | IsItemClickEnabled,
 
-        Clear = Edit | 5 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        Clear = Edit | 4 << 8 | WithState | ExistIcon | IsItemClickEnabled,
 
         // Select
         All = Select | 1 << 8 | WithState | ExistIcon | IsItemClickEnabled,
@@ -135,17 +135,17 @@ namespace Luo_Painter.Models
         // CropCanvas
 
         // ResizeCanvas
-        Stretch = ResizeCanvas | 2 << 8 | WithState | HasMenu | ExistIcon | IsItemClickEnabled,
-        Extend = ResizeCanvas | 3 << 8 | WithState | HasMenu | ExistIcon | IsItemClickEnabled,
-        Offset = ResizeCanvas | 4 << 8 | WithState | HasMenu | ExistIcon | IsItemClickEnabled,
+        Stretch = ResizeCanvas | 1 << 8 | WithState | HasMenu | ExistIcon | IsItemClickEnabled,
+        Extend = ResizeCanvas | 2 << 8 | WithState | HasMenu | ExistIcon | IsItemClickEnabled,
+        Offset = ResizeCanvas | 3 << 8 | WithState | HasMenu | ExistIcon | IsItemClickEnabled,
 
         // RotateCanvas
-        FlipHorizontal = RotateCanvas | 5 << 8 | WithState | ExistIcon | IsItemClickEnabled,
-        FlipVertical = RotateCanvas | 6 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        FlipHorizontal = RotateCanvas | 1 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        FlipVertical = RotateCanvas | 2 << 8 | WithState | ExistIcon | IsItemClickEnabled,
 
-        LeftTurn = RotateCanvas | 7 << 8 | WithState | ExistIcon | IsItemClickEnabled,
-        RightTurn = RotateCanvas | 8 << 8 | WithState | ExistIcon | IsItemClickEnabled,
-        OverTurn = RotateCanvas | 9 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        LeftTurn = RotateCanvas | 3 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        RightTurn = RotateCanvas | 4 << 8 | WithState | ExistIcon | IsItemClickEnabled,
+        OverTurn = RotateCanvas | 5 << 8 | WithState | ExistIcon | IsItemClickEnabled,
 
         #endregion
 
@@ -164,11 +164,11 @@ namespace Luo_Painter.Models
         Align = Layer | 128 << 16,
 
         // New
-        AddLayer = New | 0 << 8 | ExistIcon | IsItemClickEnabled,
-        AddBitmapLayer = New | 1 << 8 | ExistIcon | IsItemClickEnabled,
-        AddImageLayer = New | 2 << 8 | ExistIcon | IsItemClickEnabled,
-        AddCurveLayer = New | 3 << 8 | ExistIcon | IsItemClickEnabled,
-        AddFillLayer = New | 4 << 8 | ExistIcon | IsItemClickEnabled,
+        AddLayer = New | 1 << 8 | ExistIcon | IsItemClickEnabled,
+        AddBitmapLayer = New | 2 << 8 | ExistIcon | IsItemClickEnabled,
+        AddImageLayer = New | 3 << 8 | ExistIcon | IsItemClickEnabled,
+        AddCurveLayer = New | 4 << 8 | ExistIcon | IsItemClickEnabled,
+        AddFillLayer = New | 5 << 8 | ExistIcon | IsItemClickEnabled,
 
         // Clipboard
         CutLayer = Clipboard | 1 << 8 | WithState | ExistIcon | IsItemClickEnabled,
@@ -239,7 +239,7 @@ namespace Luo_Painter.Models
 
         DisplacementLiquefaction = Other | 4 << 8 | HasDifference | HasPreview | ExistIcon | IsItemClickEnabled,
         GradientMapping = Other | 5 << 8 | HasPreview | ExistIcon | IsItemClickEnabled,
-        RippleEffect = Other | 6 << 8 | HasPreview | ExistIcon | HasDifference | IsItemClickEnabled,
+        RippleEffect = Other | 6 << 8 | HasDifference | HasPreview | ExistIcon | IsItemClickEnabled,
         Threshold = Other | 7 << 8 | HasPreview | ExistIcon | IsItemClickEnabled,
 
         HSB = Other | 8 << 8 | HasPreview | ExistIcon | IsItemClickEnabled,
