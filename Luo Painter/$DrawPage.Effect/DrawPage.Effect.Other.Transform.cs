@@ -12,14 +12,14 @@ namespace Luo_Painter
 
         public void ConstructTransform()
         {
-            this.TXButton.Click += (s, e) => this.NumberShowAt(this.TXButton, (NumberPickerMode)0);
-            this.TYButton.Click += (s, e) => this.NumberShowAt(this.TYButton, (NumberPickerMode)1);
+            this.TXButton.Click += (s, e) => this.NumberShowAt(this.TXButton, NumberPickerMode.TransformX);
+            this.TYButton.Click += (s, e) => this.NumberShowAt(this.TYButton, NumberPickerMode.TransformY);
 
-            this.TWButton.Click += (s, e) => this.NumberShowAt(this.TWButton, (NumberPickerMode)2);
-            this.THButton.Click += (s, e) => this.NumberShowAt(this.THButton, (NumberPickerMode)3);
+            this.TWButton.Click += (s, e) => this.NumberShowAt(this.TWButton, NumberPickerMode.TransformWidth);
+            this.THButton.Click += (s, e) => this.NumberShowAt(this.THButton, NumberPickerMode.TransformHeight);
 
-            this.TSButton.Click += (s, e) => this.NumberShowAt(this.TSButton, (NumberPickerMode)4);
-            this.TRButton.Click += (s, e) => this.NumberShowAt(this.TRButton, (NumberPickerMode)5);
+            this.TSButton.Click += (s, e) => this.NumberShowAt(this.TSButton, NumberPickerMode.TransformSkew);
+            this.TRButton.Click += (s, e) => this.NumberShowAt(this.TRButton, NumberPickerMode.TransformRotate);
         }
 
         private void ResetTransform(PixelBounds bounds)
