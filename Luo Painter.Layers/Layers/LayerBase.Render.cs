@@ -128,20 +128,20 @@ namespace Luo_Painter.Layers
                 case RenderMode.NoneWithBlendMode:
                     return new BlendEffect
                     {
-                        Background = currentImage,
+                        Mode = this.BlendMode,
                         Foreground = previousImage,
-                        Mode = this.BlendMode
+                        Background = currentImage
                     };
                 case RenderMode.NoneWithOpacityAndBlendMode:
                     return new BlendEffect
                     {
+                        Mode = this.BlendMode,
+                        Foreground = previousImage,
                         Background = new OpacityEffect
                         {
                             Opacity = this.Opacity,
                             Source = currentImage
-                        },
-                        Foreground = previousImage,
-                        Mode = this.BlendMode
+                        }
                     };
                 default:
                     return previousImage;

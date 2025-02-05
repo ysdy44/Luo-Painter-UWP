@@ -86,13 +86,13 @@ namespace Luo_Painter.Layers.Models
         {
             InterpolationMode = interpolationMode,
             TransformMatrix = matrix,
-            Source = this.GetRender(),
+            Source = this.GetRender()
         });
         public ICanvasImage Render(ICanvasImage background, Matrix3x2 matrix, CanvasImageInterpolation interpolationMode, string id, ICanvasImage mezzanine) => base.Render(background, new Transform2DEffect
         {
             InterpolationMode = interpolationMode,
             TransformMatrix = matrix,
-            Source = (base.Id == id) ? mezzanine : this.GetRender(),
+            Source = (base.Id == id) ? mezzanine : this.GetRender()
         });
         private ICanvasImage GetRender() => new CropEffect
         {
