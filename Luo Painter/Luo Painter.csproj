@@ -349,6 +349,7 @@
     <Compile Include="UI\SourcePageType.cs" />
     <Compile Include="UI\XamlGridView.cs" />
     <Compile Include="UI\XamlListView.cs" />
+    <Compile Include="Version.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
