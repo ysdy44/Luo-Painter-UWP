@@ -61,6 +61,7 @@
   <!--Separator 0-->
   <data name='Name' xml:space='preserve'> <value>Luo Painter</value> </data>
   <data name='Version' xml:space='preserve'> <value>1.2.0</value> </data>
+  <data name='Log' xml:space='preserve'> <value>Journal des modifications de version</value> </data>
   <data name='InputText' xml:space='preserve'> <value>Veuillez saisir le texte</value> </data>
   <data name='Untitled' xml:space='preserve'> <value>Sans titre</value> </data>
   <data name='UntitledFolder' xml:space='preserve'> <value>Nouveau dossier</value> </data>
