@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ControlTemplate x:Key="InkMosaicIcon" TargetType="ContentControl">
-        <PathIcon HorizontalAlignment="Center" >
+        <PathIcon HorizontalAlignment="Center" VerticalAlignment="Center">
             <PathIcon.Data>
                 <GeometryGroup>
                     <RectangleGeometry Rect="0,12.2,9.4,9.4"/>

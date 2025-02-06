@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ControlTemplate x:Key="InkBlurIcon" TargetType="ContentControl">
-        <PathIcon HorizontalAlignment="Center" >
+        <PathIcon HorizontalAlignment="Center" VerticalAlignment="Center">
             <PathIcon.Data>
                 <PathGeometry>
                     <PathFigure StartPoint="17.81612,0.0256691">
