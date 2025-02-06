@@ -170,6 +170,8 @@ namespace Luo_Painter.Models
         AddCurveLayer = New | 4 << 8 | ExistIcon | IsItemClickEnabled,
         AddFillLayer = New | 5 << 8 | ExistIcon | IsItemClickEnabled,
 
+        AddImage = New | 6 << 8 | ExistIcon | IsItemClickEnabled,
+
         // Clipboard
         CutLayer = Clipboard | 1 << 8 | WithState | ExistIcon | IsItemClickEnabled,
         CopyLayer = Clipboard | 2 << 8 | WithState | ExistIcon | IsItemClickEnabled,
@@ -364,6 +366,9 @@ namespace Luo_Painter.Models
         PatternSpotted = Pattern | 3 << 8 | ExistIcon | IsItemClickEnabled,
 
         #endregion
+
+        // AddTransform
+        AddImageTransform = AddImage | WithTransform | HasPreview,
 
         // GeometryTransform
         GeometryRectangleTransform = GeometryRectangle | WithTransform | HasPreview,
