@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ControlTemplate x:Key="AddImageIcon" TargetType="ContentControl">
-        <PathIcon HorizontalAlignment="Center" >
+        <PathIcon HorizontalAlignment="Center" VerticalAlignment="Center">
             <PathIcon.Data>
                 M22.276,4.455C22.276,1.996 20.28,0 17.821,0L4.455,0C1.996,0 0,1.996 0,4.455L0,17.821C0,20.28 1.996,22.276 4.455,22.276L17.821,22.276C20.28,22.276 22.276,20.28 22.276,17.821L22.276,4.455ZM13.957,13.15L11.957,15.979L7.05,9.979L2.05,19.243L19.957,19.243L13.957,13.15ZM16.09,4.111C17.745,4.111 19.09,5.455 19.09,7.111C19.09,8.767 17.745,10.111 16.09,10.111C14.434,10.111 13.09,8.767 13.09,7.111C13.09,5.455 14.434,4.111 16.09,4.111Z
             </PathIcon.Data>
