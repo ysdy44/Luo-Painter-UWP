@@ -60,7 +60,7 @@
   </resheader>
   <!--Separator 0-->
   <data name='Name' xml:space='preserve'> <value>Luo Painter</value> </data>
-  <data name='Version' xml:space='preserve'> <value>1.2.0</value> </data>
+  <data name='Version' xml:space='preserve'> <value>1.3.0</value> </data>
   <data name='Log' xml:space='preserve'> <value>Versie changelog</value> </data>
   <data name='InputText' xml:space='preserve'> <value>Gelieve de tekst in te voeren</value> </data>
   <data name='Untitled' xml:space='preserve'> <value>Ongetiteld</value> </data>
@@ -252,6 +252,7 @@
   <data name='PatternGrid' xml:space='preserve'> <value>Rooster</value> </data>
   <data name='PatternDiagonal' xml:space='preserve'> <value>Diagonaal</value> </data>
   <data name='PatternSpotted' xml:space='preserve'> <value>Gevlekt</value> </data>
+  <data name='AddImageTransform' xml:space='preserve'> <value>Voeg een afbeelding toe</value> </data>
   <data name='GeometryRectangleTransform' xml:space='preserve'> <value>Rechthoek</value> </data>
   <data name='GeometryEllipseTransform' xml:space='preserve'> <value>Ellips</value> </data>
   <data name='GeometryRoundRectTransform' xml:space='preserve'> <value>Afgeronde rechthoek</value> </data>

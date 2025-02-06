@@ -60,7 +60,7 @@
   </resheader>
   <!--Separator 0-->
   <data name='Name' xml:space='preserve'> <value>洛画</value> </data>
-  <data name='Version' xml:space='preserve'> <value>1.2.0</value> </data>
+  <data name='Version' xml:space='preserve'> <value>1.3.0</value> </data>
   <data name='Log' xml:space='preserve'> <value>版本更新日志</value> </data>
   <data name='InputText' xml:space='preserve'> <value>请输入文本</value> </data>
   <data name='Untitled' xml:space='preserve'> <value>未命名</value> </data>
@@ -252,6 +252,7 @@
   <data name='PatternGrid' xml:space='preserve'> <value>网格</value> </data>
   <data name='PatternDiagonal' xml:space='preserve'> <value>斜线</value> </data>
   <data name='PatternSpotted' xml:space='preserve'> <value>斑点</value> </data>
+  <data name='AddImageTransform' xml:space='preserve'> <value>添加图像</value> </data>
   <data name='GeometryRectangleTransform' xml:space='preserve'> <value>矩形</value> </data>
   <data name='GeometryEllipseTransform' xml:space='preserve'> <value>椭圆</value> </data>
   <data name='GeometryRoundRectTransform' xml:space='preserve'> <value>圆角矩形</value> </data>
