@@ -160,6 +160,12 @@
         Theme_Dark,
         Theme_UseSystem,
 
+        // Ink Touch Mode
+        Touch,
+        Touch_Draw,
+        Touch_Move,
+        Touch_Disable,
+
         // Language
         Language,
         Language_Tip,
