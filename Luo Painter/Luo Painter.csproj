@@ -330,6 +330,7 @@
       <DependentUpon>OptionItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\OptionSwitchPresenter.cs" />
+    <Compile Include="UI\OptionTarget.cs" />
     <Compile Include="UI\OptionThumbnail.xaml.cs">
       <DependentUpon>OptionThumbnail.xaml</DependentUpon>
     </Compile>
