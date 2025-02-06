@@ -126,6 +126,10 @@ namespace Luo_Painter
 
         private void Secondary()
         {
+            this.AddImageId = null;
+            this.AddImage?.Dispose();
+            this.AddImage = null;
+            this.ImageLayer = null;
             this.BitmapLayer = null;
             this.OptionType = this.ToolListView.SelectedType;
             this.ConstructAppBar(this.OptionType);
@@ -186,6 +190,9 @@ namespace Luo_Painter
                     break;
             }
 
+            this.AddImageId = null;
+            this.AddImage?.Dispose();
+            this.AddImage = null;
             this.ImageLayer = null;
             this.BitmapLayer = null;
             this.OptionType = this.ToolListView.SelectedType;
@@ -283,11 +290,85 @@ namespace Luo_Painter
                 }
             }
 
+            this.AddImageId = null;
+            this.AddImage?.Dispose();
+            this.AddImage = null;
             this.BitmapLayer = null;
             this.OptionType = this.ToolListView.SelectedType;
             this.ConstructAppBar(this.OptionType);
 
             this.CanvasAnimatedControl.Invalidate(false); // Invalidate
+            this.CanvasVirtualControl.Invalidate(); // Invalidate
+            this.CanvasControl.Invalidate(); // Invalidate
+
+            this.RaiseHistoryCanExecuteChanged();
+        }
+
+        private void PrimaryAddImageTransform(CanvasBitmap bitmap)
+        {
+            Layerage[] undo = this.Nodes.Convert();
+
+            int count = 0;
+            int index = this.LayerSelectedIndex;
+            if (index > 0 && this.LayerSelectedItem is ILayer neighbor)
+            {
+                ILayer parent = this.ObservableCollection.GetParent(neighbor);
+                if (parent is null)
+                {
+                    int indexChild = this.Nodes.IndexOf(neighbor);
+
+                    BitmapLayer add = new BitmapLayer(this.CanvasDevice,
+                        this.GetPreview(OptionType.AddImageTransform, bitmap),
+                        this.Transformer.Width, this.Transformer.Height);
+
+                    this.Nodes.Insert(indexChild, add);
+                    this.ObservableCollection.InsertChild(index, add);
+                    count++;
+                }
+                else
+                {
+                    int indexChild = parent.Children.IndexOf(neighbor);
+
+                    BitmapLayer add = new BitmapLayer(this.CanvasDevice,
+                        this.GetPreview(OptionType.AddImageTransform, bitmap),
+                        this.Transformer.Width, this.Transformer.Height);
+
+                    parent.Children.Insert(indexChild, add);
+                    this.ObservableCollection.InsertChild(index, add);
+                    count++;
+                }
+
+                this.LayerSelectedIndex = index;
+            }
+            else
+            {
+                {
+                    BitmapLayer add = new BitmapLayer(this.CanvasDevice,
+                        this.GetPreview(OptionType.AddImageTransform, bitmap),
+                        this.Transformer.Width, this.Transformer.Height);
+
+                    this.Nodes.Insert(0, add);
+                    this.ObservableCollection.InsertChild(0, add);
+                    count++;
+                }
+
+                this.LayerSelectedIndex = 0;
+            }
+
+            this.AddImageId = null;
+            this.AddImage?.Dispose();
+            this.AddImage = null;
+            this.BitmapLayer = null;
+
+            // History
+            Layerage[] redo = this.Nodes.Convert();
+            IHistory history = new ArrangeHistory(undo, redo);
+            history.Title = OptionType.AddImageLayer.GetString();
+            int removes = this.History.Push(history);
+
+            this.OptionType = this.ToolListView.SelectedType;
+            this.ConstructAppBar(this.OptionType);
+
             this.CanvasVirtualControl.Invalidate(); // Invalidate
             this.CanvasControl.Invalidate(); // Invalidate
 
