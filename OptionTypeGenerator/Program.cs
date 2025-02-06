@@ -125,6 +125,8 @@ namespace OptionTypeGenerator
                     new ItemTreeNode("AddImageLayer", ExistIcon: true, IsItemClickEnabled: true),
                     new ItemTreeNode("AddCurveLayer", ExistIcon: true, IsItemClickEnabled: true),
                     new ItemTreeNode("AddFillLayer", ExistIcon: true, IsItemClickEnabled: true),
+                    ItemTreeNode.Empty,
+                    new ItemTreeNode("AddImage", ExistIcon: true, IsItemClickEnabled: true),
                 },
                 CategoryTreeNode.Empty,
                 new CategoryTreeNode("Clipboard", Bitwise.B16)
@@ -327,6 +329,11 @@ namespace OptionTypeGenerator
 
         public static List<CategoryTreeNode> TransformRoots = new List<CategoryTreeNode>
         {
+            new CategoryTreeNode("Add")
+            {
+                new ItemTreeNode("AddImage"),
+            },
+            CategoryTreeNode.Empty,
             new CategoryTreeNode("Geometry")
             {
                 new ItemTreeNode("GeometryRectangle"),
