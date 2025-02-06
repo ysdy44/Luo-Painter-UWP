@@ -332,6 +332,7 @@
                                             <KeyboardAccelerator Key="Insert"/>
                                         </UIElement.KeyboardAccelerators>
                                     </MenuFlyoutItem>
+                                    <MenuFlyoutItem Text="{strings:Option Type=AddImage}" Tag="{strings:OptionIcon Type=AddImage}" CommandParameter="{strings:OptionType Type=AddImage}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}"/>
                                     <!--<MenuFlyoutItem Type="AddImageLayer" Command="{x:Bind Command}"/>-->
                                     <!--<MenuFlyoutItem Type="AddCurveLayer" Command="{x:Bind Command}"/>-->
                                     <MenuFlyoutItem Text="{strings:Option Type=AddFillLayer}" Tag="{strings:OptionIcon Type=AddFillLayer}" CommandParameter="{strings:OptionType Type=AddFillLayer}" Command="{x:Bind Command}" Style="{StaticResource AppTagMenuFlyoutItemStyle}"/>

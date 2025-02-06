@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Devices.Input;
 using Windows.Foundation;
 using Windows.Graphics.Display;
@@ -360,19 +361,48 @@ namespace Luo_Painter
             };
 
             // Drag and Drop 
-            //base.AllowDrop = true;
-            //base.Drop += async (s, e) =>
-            //{
-            //    if (e.DataView.Contains(StandardDataFormats.StorageItems) is false) return;
+            base.AllowDrop = true;
+            base.Drop += async (s, e) =>
+            {
+                if (e.DataView.Contains(StandardDataFormats.StorageItems))
+                {
+                    IReadOnlyList<IStorageItem> items = await e.DataView.GetStorageItemsAsync();
+                    foreach (IStorageItem item in items)
+                    {
+                        if (item is IStorageFile file)
+                        {
+                            /**
+                             * Copy from <see cref="OptionType.AddImage"/> in DrawPage.Click.cs
+                             */
+                            CanvasBitmap bitmap = await this.CreateBitmap(file);
+                            if (bitmap is null)
+                            {
+                                await TipType.NoSupport.ToDialog(item.Path).ShowAsync();
+                                continue;
+                            }
 
-            //    this.AddAsync(from file in await e.DataView.GetStorageItemsAsync() where file is IStorageFile select file as IStorageFile);
-            //};
-            //base.DragOver += (s, e) =>
-            //{
-            //    e.AcceptedOperation = DataPackageOperation.Copy;
-            //    //e.DragUIOverride.Caption = 
-            //    e.DragUIOverride.IsCaptionVisible = e.DragUIOverride.IsContentVisible = e.DragUIOverride.IsGlyphVisible = true;
-            //};
+                            this.AddImage = bitmap;
+                            this.AddImageId = this.LayerSelectedItem is ILayer layer ? layer.Id : null;
+
+                            this.ResetTransform(bitmap);
+
+                            this.OptionType = OptionType.AddImageTransform;
+                            this.ConstructAppBar(OptionType.AddImageTransform);
+
+                            this.CanvasAnimatedControl.Invalidate(true); // Invalidate
+                            this.CanvasVirtualControl.Invalidate(); // Invalidate
+                            this.CanvasControl.Invalidate(); // Invalidate
+                            break;
+                        }
+                    }
+                }
+            };
+            base.DragOver += (s, e) =>
+            {
+                e.AcceptedOperation = DataPackageOperation.Copy;
+                //e.DragUIOverride.Caption = 
+                e.DragUIOverride.IsCaptionVisible = e.DragUIOverride.IsContentVisible = e.DragUIOverride.IsGlyphVisible = true;
+            };
         }
 
         private void TryHideAppBar()

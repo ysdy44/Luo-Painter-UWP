@@ -1014,10 +1014,39 @@ namespace Luo_Painter
                     }
                     break;
 
+                case OptionType.AddImage:
+                    {
+                        var items = await FileUtil.PickMultipleImageFilesAsync(Windows.Storage.Pickers.PickerLocationId.Desktop);
+
+                        foreach (StorageFile item in items)
+                        {
+                            CanvasBitmap bitmap = await this.CreateBitmap(item);
+                            if (bitmap is null)
+                            {
+                                await TipType.NoSupport.ToDialog(item.Path).ShowAsync();
+                                continue;
+                            }
+
+                            this.AddImage = bitmap;
+                            this.AddImageId = this.LayerSelectedItem is ILayer layer ? layer.Id : null;
+
+                            this.ResetTransform(bitmap);
+
+                            this.OptionType = OptionType.AddImageTransform;
+                            this.ConstructAppBar(OptionType.AddImageTransform);
+
+                            this.CanvasAnimatedControl.Invalidate(true); // Invalidate
+                            this.CanvasVirtualControl.Invalidate(); // Invalidate
+                            this.CanvasControl.Invalidate(); // Invalidate
+                            break;
+                        }
+                    }
+                    break;
+
                 // Clipboard
                 case OptionType.CutLayer:
                     {
-                        var items = this.LayerSelectedItems;
+                       var items = this.LayerSelectedItems;
                         switch (items.Count)
                         {
                             case 0:
@@ -1055,7 +1084,7 @@ namespace Luo_Painter
                 case OptionType.CopyLayer:
                     {
                         // History
-                        var items = this.LayerSelectedItems;
+                       var items = this.LayerSelectedItems;
                         switch (items.Count)
                         {
                             case 0:
@@ -1111,7 +1140,7 @@ namespace Luo_Painter
                 // Layering
                 case OptionType.Remove:
                     {
-                        var items = this.LayerSelectedItems;
+                       var items = this.LayerSelectedItems;
                         switch (items.Count)
                         {
                             case 0:
@@ -1244,7 +1273,7 @@ namespace Luo_Painter
                 // Grouping
                 case OptionType.Group:
                     {
-                        var items = this.LayerSelectedItems;
+                       var items = this.LayerSelectedItems;
                         switch (items.Count)
                         {
                             case 0:
@@ -1301,7 +1330,7 @@ namespace Luo_Painter
 
                 case OptionType.Release:
                     {
-                        var items = this.LayerSelectedItems;
+                       var items = this.LayerSelectedItems;
                         switch (items.Count)
                         {
                             case 0:
