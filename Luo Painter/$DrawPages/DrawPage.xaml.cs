@@ -1,4 +1,5 @@
-﻿using Luo_Painter.Brushes;
+﻿using FanKit.Transformers;
+using Luo_Painter.Brushes;
 using Luo_Painter.Controls;
 using Luo_Painter.Elements;
 using Luo_Painter.HSVColorPickers;
@@ -16,6 +17,7 @@ using System.Windows.Input;
 using Windows.Devices.Input;
 using Windows.Foundation;
 using Windows.Graphics.Display;
+using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Popups;
@@ -123,17 +125,17 @@ namespace Luo_Painter
         readonly Symmetryer Symmetryer = new Symmetryer();
 
         // Transform
-        TransformMatrix Transform;
-        TransformBase CreateTransform;
-        TransformMatrix3D FreeTransform;
+        TransformMatrix Transform;  // Transform
+        TransformBase CreateTransform; // Create a Geometry or Pattern
+        TransformMatrix3D FreeTransform; // Free Transform
 
-        TransformBase CropTransform;
+        TransformBase CropTransform; // Crop
         Vector2 StartingPositionWithoutRadian;
         Vector2 PositionWithoutRadian;
 
-        TransformBase BorderTransform;
-        Rect StartingBorderCrop;
-        Rect BorderCrop;
+        TransformBase BorderTransform; // Border Effect
+        Rect StartingBorderCrop; // Crop
+        Rect BorderCrop; // Crop
 
         // Position
         Vector2 StartingPosition;
