@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Luo_Painter.Strings;
+using System;
 
 namespace Luo_Painter
 {
@@ -54,5 +55,69 @@ namespace Luo_Painter
         1. 应用程序上架应用商店
         */
         V100,
+    }
+
+    public class Version
+    {
+        public string VersionTitle { get; set; }
+        public DateTime UpdateTime { get; set; }
+        public string Description { get; set; }
+        public string Time => this.UpdateTime.ToShortDateString();
+
+        public static Version Create(VersionType type)
+        {
+            switch (type)
+            {
+                case VersionType.V130:
+                    return new Version
+                    {
+                        VersionTitle = "1.3.0",
+                        UpdateTime = new DateTime(2025, 2, 6),
+                        Description = type.GetString()
+                    };
+                case VersionType.V120:
+                    return new Version
+                    {
+                        VersionTitle = "1.2.0",
+                        UpdateTime = new DateTime(2023, 10, 29),
+                        Description = type.GetString()
+                    };
+                case VersionType.V103:
+                    return new Version
+                    {
+                        VersionTitle = "1.0.3",
+                        UpdateTime = new DateTime(2023, 3, 23),
+                        Description = type.GetString()
+                    };
+                case VersionType.V102:
+                    return new Version
+                    {
+                        VersionTitle = "1.0.2",
+                        UpdateTime = new DateTime(2023, 3, 21),
+                        Description = type.GetString()
+                    };
+                case VersionType.V101:
+                    return new Version
+                    {
+                        VersionTitle = "1.0.1",
+                        UpdateTime = new DateTime(2023, 3, 21),
+                        Description = type.GetString()
+                    };
+                case VersionType.V100:
+                    return new Version
+                    {
+                        VersionTitle = "1.0.0",
+                        UpdateTime = new DateTime(2023, 3, 17),
+                        Description = type.GetString()
+                    };
+                default:
+                    return new Version
+                    {
+                        VersionTitle = "0.0.0",
+                        UpdateTime = DateTime.MinValue,
+                        Description = type.ToString()
+                    };
+            }
+        }
     }
 }

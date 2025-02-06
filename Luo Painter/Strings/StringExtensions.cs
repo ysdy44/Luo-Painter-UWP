@@ -23,6 +23,10 @@ namespace Luo_Painter.Strings
         {
             return App.Resource.GetString(type.ToString());
         }
+        public static string GetString(this VersionType type)
+        {
+            return App.Resource.GetString(type.ToString());
+        }
 
         // 1
         public static string GetString(this BlendEffectMode type)
