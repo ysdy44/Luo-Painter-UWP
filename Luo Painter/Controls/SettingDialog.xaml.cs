@@ -1,6 +1,7 @@
 ﻿using Luo_Painter.Elements;
 using Luo_Painter.Models;
 using Luo_Painter.Strings;
+using Luo_Painter.UI;
 using System;
 using System.Globalization;
 using System.Linq;
@@ -58,12 +59,12 @@ namespace Luo_Painter.Controls
                 this.TB2.Text = UIType.Theme_Dark.GetString();
                 this.TB3.Text = UIType.Theme_UseSystem.GetString();
 
-                this.TB4.Text = UIType.Language.GetString();
-                this.TB5.Text = UIType.Language_Tip.GetString();
+                this.TB8.Text = UIType.Language.GetString();
+                this.TB9.Text = UIType.Language_Tip.GetString();
                 base.PrimaryButtonText = UIType.Back.GetString();
 
-                this.TB7.Text = UIType.LocalFolder.GetString();
-                this.TB8.Text = UIType.LocalFolder_Open.GetString();
+                this.TB11.Text = UIType.LocalFolder.GetString();
+                this.TB12.Text = UIType.LocalFolder_Open.GetString();
             };
             this.LanguageTipButton.Click += async (s, e) => await Windows.ApplicationModel.Core.CoreApplication.RequestRestartAsync(string.Empty);
             this.LocalFolderButton.Click += async (s, e) => await Windows.System.Launcher.LaunchFolderAsync(ApplicationData.Current.LocalFolder);

@@ -46,7 +46,7 @@
         <ComboBox x:Name="ThemeComboBox">
             <StackPanel Spacing="10" Orientation="Horizontal">
                 <FontIcon Glyph="&#xE706;" FontSize="20" FontWeight="Bold" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
-                <TextBlock x:Name="TB1" Text="{strings:UI Type=Theme_Light}"/> 
+                <TextBlock x:Name="TB1" Text="{strings:UI Type=Theme_Light}"/>
             </StackPanel>
             <StackPanel Spacing="10" Orientation="Horizontal">
                 <FontIcon Glyph="&#xE708;" FontSize="20" FontWeight="Bold" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
@@ -59,25 +59,25 @@
         </ComboBox>
 
         <!--Language-->
-        <TextBlock x:Name="TB4" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+        <TextBlock x:Name="TB8" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
                    Text="{strings:UI Type=Language}"/>
         <ComboBox x:Name="LanguageComboBox" >
             <!--ItemsSource-->
         </ComboBox>
 
         <HyperlinkButton x:Name="LanguageTipButton">
-            <TextBlock x:Name="TB5" Text="{strings:UI Type=Language_Tip}"/>
+            <TextBlock x:Name="TB9" Text="{strings:UI Type=Language_Tip}"/>
         </HyperlinkButton>
 
         <!--LocalFolder-->
-        <TextBlock x:Name="TB7" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+        <TextBlock x:Name="TB11" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
                    Text="{strings:UI Type=LocalFolder}"/>
         <Button x:Name="LocalFolderButton" Padding="12,2" Margin="0,6" Height="32" CornerRadius="16" BorderThickness="1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppOpacity}">
             <StackPanel Spacing="8" Orientation="Horizontal">
                 <SymbolIcon Symbol="NewWindow"/>
-                <TextBlock x:Name="TB8" VerticalAlignment="Center" Text="{strings:UI Type=LocalFolder_Open}"/>
+                <TextBlock x:Name="TB12" VerticalAlignment="Center" Text="{strings:UI Type=LocalFolder_Open}"/>
             </StackPanel>
         </Button>
-        
+
     </StackPanel>
 </ContentDialog>
