@@ -3,6 +3,7 @@ using Luo_Painter.Elements;
 using Luo_Painter.HSVColorPickers;
 using Luo_Painter.Layers;
 using Luo_Painter.UI;
+using Microsoft.Graphics.Canvas;
 using System.Numerics;
 
 namespace Luo_Painter
@@ -20,6 +21,24 @@ namespace Luo_Painter
 
             this.TSButton.Click += (s, e) => this.NumberShowAt(this.TSButton, NumberPickerMode.TransformSkew);
             this.TRButton.Click += (s, e) => this.NumberShowAt(this.TRButton, NumberPickerMode.TransformRotate);
+        }
+
+        private void ResetTransform(CanvasBitmap bitmap)
+        {
+            float w = bitmap.SizeInPixels.Width;
+            float h = bitmap.SizeInPixels.Height;
+
+            this.Transform = new TransformMatrix
+            {
+                Matrix = Matrix3x2.Identity,
+                X = 0,
+                Y = 0,
+                Width = w,
+                Height = h,
+                Transformer = new Transformer(0, 0, w, h)
+            };
+
+            this.SetTransformer(this.Transform.Transformer);
         }
 
         private void ResetTransform(PixelBounds bounds)

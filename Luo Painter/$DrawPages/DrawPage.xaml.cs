@@ -99,6 +99,8 @@ namespace Luo_Painter
         CanvasBitmap GrayAndWhiteMesh { get; set; }
         CanvasRenderTarget Mesh { get; set; }
 
+        string AddImageId { get; set; } // ID of the target
+        CanvasBitmap AddImage { get; set; } // Insert an image above the target
         ImageLayer ImageLayer { get; set; }
         BitmapLayer BitmapLayer { get; set; }
         BitmapLayer Clipboard { get; set; }
