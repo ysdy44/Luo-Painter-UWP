@@ -82,6 +82,9 @@ namespace Luo_Painter.Layers.Models
         public ICanvasImage Render(ICanvasImage background) => base.Render(background, this.GetRender());
         public ICanvasImage ReplaceRender(ICanvasImage background, string id, ICanvasImage mezzanine) => base.Render(background,
             (base.Id == id) ? mezzanine : this.GetRender());
+        public ICanvasImage AboveRender(ICanvasImage background, string id, ICanvasImage mezzanine) => (base.Id == id) ?
+            base.Render(background, this.GetRender(), mezzanine) :
+            base.Render(background, this.GetRender());
         public ICanvasImage Render(ICanvasImage background, Matrix3x2 matrix, CanvasImageInterpolation interpolationMode) => base.Render(background, new Transform2DEffect
         {
             InterpolationMode = interpolationMode,
@@ -94,6 +97,24 @@ namespace Luo_Painter.Layers.Models
             TransformMatrix = matrix,
             Source = (base.Id == id) ? mezzanine : this.GetRender()
         });
+        public ICanvasImage AboveRender(ICanvasImage background, Matrix3x2 matrix, CanvasImageInterpolation interpolationMode, string id, ICanvasImage mezzanine) => (base.Id == id) ?
+            base.Render(background, new Transform2DEffect
+            {
+                InterpolationMode = interpolationMode,
+                TransformMatrix = matrix,
+                Source = this.GetRender()
+            }, new Transform2DEffect
+            {
+                InterpolationMode = interpolationMode,
+                TransformMatrix = matrix,
+                Source = mezzanine
+            }) :
+            base.Render(background, new Transform2DEffect
+            {
+                InterpolationMode = interpolationMode,
+                TransformMatrix = matrix,
+                Source = this.GetRender()
+            });
         private ICanvasImage GetRender() => new CropEffect
         {
             SourceRectangle = this.Rect,

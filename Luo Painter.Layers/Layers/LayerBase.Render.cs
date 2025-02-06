@@ -147,6 +147,70 @@ namespace Luo_Painter.Layers
                     return previousImage;
             }
         }
+        public ICanvasImage Render(ICanvasImage previousImage, ICanvasImage currentImage, ICanvasImage nextImage)
+        {
+            switch (this.RenderMode)
+            {
+                case RenderMode.None:
+                    return new CompositeEffect
+                    {
+                        Sources =
+                        {
+                            previousImage,
+                            currentImage,
+                            nextImage
+                        }
+                    };
+                case RenderMode.NoneWithOpacity:
+                    return new CompositeEffect
+                    {
+                        Sources =
+                        {
+                            previousImage,
+                            new OpacityEffect
+                            {
+                                Opacity = this.Opacity,
+                                Source = currentImage
+                            },
+                            nextImage
+                        }
+                    };
+                case RenderMode.NoneWithBlendMode:
+                    return new CompositeEffect
+                    {
+                        Sources =
+                        {
+                            new BlendEffect
+                            {
+                                Mode = this.BlendMode,
+                                Foreground = previousImage,
+                                Background = currentImage
+                            },
+                            nextImage
+                        }
+                    };
+                case RenderMode.NoneWithOpacityAndBlendMode:
+                    return new CompositeEffect
+                    {
+                        Sources =
+                        {
+                            new BlendEffect
+                            {
+                                Mode = this.BlendMode,
+                                Foreground = previousImage,
+                                Background = new OpacityEffect
+                                {
+                                    Opacity = this.Opacity,
+                                    Source = currentImage
+                                }
+                            },
+                            nextImage
+                        }
+                    };
+                default:
+                    return previousImage;
+            }
+        }
 
         public void CopyWith(LayerBase layerBase)
         {
