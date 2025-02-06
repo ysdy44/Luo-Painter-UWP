@@ -593,4 +593,20 @@
   <data name='PatternSpotted_Radius' xml:space='preserve'> <value>반지름</value> </data>
   <data name='PatternSpotted_Span' xml:space='preserve'> <value>범위</value> </data>
   <data name='PatternSpotted_Fade' xml:space='preserve'> <value>사라지다</value> </data>
+  <!--Separator 14-->
+  <data name='V130' xml:space='preserve'> <value>"1. 16진수 색상 선택기는 세 자리 숫자를 지원합니다.
+2. 브러시 선택기를 클릭하면 충돌이 발생하는 문제 수정
+3. 프로젝트 이름 변경 시 아이콘 오류 수정
+4. 인터페이스의 독 버튼이 앱 바에 의해 차단되는 문제 수정
+5. 앱이 밝은 테마를 사용할 수 없는 문제 수정
+6. 앱이 충돌할 때 예외 보고서 보내기를 지원합니다.
+7. 자유롭게 변환할 때 숫자 선택기가 작동하지 않는 문제 수정
+8. 이미지 가져오기 지원
+9. 사용자가 터치 작업을 금지할 수 있도록 허용(마우스 또는 태블릿만 사용)"</value> </data>
+  <data name='V120' xml:space='preserve'> <value>1. UI는 오른쪽에서 왼쪽 레이아웃을 지원합니다(아랍어의 경우).</value> </data>
+  <data name='V103' xml:space='preserve'> <value>"1. 빈 프로젝트를 열 때 충돌이 발생하는 문제 수정
+2. 페인팅으로 인한 충돌 수정(페인팅 스레드가 레이어 개체를 찾을 수 없음)"</value> </data>
+  <data name='V102' xml:space='preserve'> <value>1. 그리기로 인한 충돌 문제 수정 (그리는 동안 스레드 일시 중지)</value> </data>
+  <data name='V101' xml:space='preserve'> <value>1. 디스플레이 인터페이스가 충돌하는 문제 수정(숫자 유형이 정수가 아니기 때문에 인터페이스가 충돌하는 문제)</value> </data>
+  <data name='V100' xml:space='preserve'> <value>1. 앱 스토어에 앱 등록하기</value> </data>
  </root>

@@ -593,4 +593,20 @@
   <data name='PatternSpotted_Radius' xml:space='preserve'> <value>Radius</value> </data>
   <data name='PatternSpotted_Span' xml:space='preserve'> <value>Span</value> </data>
   <data name='PatternSpotted_Fade' xml:space='preserve'> <value>Vervagen</value> </data>
+  <!--Separator 14-->
+  <data name='V130' xml:space='preserve'> <value>"1. De hexadecimale kleurkiezer ondersteunt drie cijfers
+2. Opgelost: het probleem dat klikken op de penseelkiezer een crash veroorzaakte
+3. De pictogramfout opgelost bij het hernoemen van een project
+4. Opgelost: het probleem dat de dock-knop op de interface werd geblokkeerd door de app-balk
+5. Los het probleem op dat de app het heldere thema niet kan gebruiken
+6. De app ondersteunt het verzenden van uitzonderingsrapporten wanneer deze crasht
+7. Probleem opgelost dat de nummerkiezer niet werkte bij het vrij converteren
+8. Ondersteuning voor het importeren van afbeeldingen
+9. Sta gebruikers toe om aanraakbewerkingen te verbieden (alleen met een muis of tablet)"</value> </data>
+  <data name='V120' xml:space='preserve'> <value>1. De gebruikersinterface ondersteunt lay-out van rechts naar links (voor Arabisch)</value> </data>
+  <data name='V103' xml:space='preserve'> <value>"1. De crash opgelost bij het openen van een leeg project
+2. De crash veroorzaakt door schilderen opgelost (de schilderdraad kan het laagobject niet vinden)"</value> </data>
+  <data name='V102' xml:space='preserve'> <value>1. Het crashprobleem opgelost dat werd veroorzaakt door tekenen (draadpauze tijdens het tekenen)</value> </data>
+  <data name='V101' xml:space='preserve'> <value>1. Het probleem opgelost dat de weergave-interface crashte (omdat het numerieke type geen geheel getal is, waardoor de interface crashte)</value> </data>
+  <data name='V100' xml:space='preserve'> <value>1. De app vermelden in de app store</value> </data>
  </root>

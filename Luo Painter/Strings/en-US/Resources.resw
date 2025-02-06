@@ -593,4 +593,20 @@
   <data name='PatternSpotted_Radius' xml:space='preserve'> <value>Radius</value> </data>
   <data name='PatternSpotted_Span' xml:space='preserve'> <value>Span</value> </data>
   <data name='PatternSpotted_Fade' xml:space='preserve'> <value>Fade</value> </data>
+  <!--Separator 14-->
+  <data name='V130' xml:space='preserve'> <value>"1. The hexadecimal color picker supports three digits
+2. Fixed the issue that clicking on the brush selector caused a crash
+3. Fixed the icon error when renaming a project
+4. Fixed the issue that the dock button on the interface was blocked by the app bar
+5. Fix the issue that the app can't use the bright theme
+6. The app supports sending exception reports when it crashes
+7. Fixed the issue that the number selector did not work when converting freely
+8. Support for importing images
+9. Allow users to prohibit touch operations (using only a mouse or tablet)"</value> </data>
+  <data name='V120' xml:space='preserve'> <value>1. The UI supports right-to-left layout (for Arabic)</value> </data>
+  <data name='V103' xml:space='preserve'> <value>"1. Fixed the crash when opening an empty project
+2. Fixed the crash caused by painting (the painting thread can't find the layer object)"</value> </data>
+  <data name='V102' xml:space='preserve'> <value>1. Fixed the crash issue caused by drawing (thread pause while drawing)</value> </data>
+  <data name='V101' xml:space='preserve'> <value>1. Fixed the problem that the display interface crashed (because the numeric type is not an integer, causing the interface to crash)</value> </data>
+  <data name='V100' xml:space='preserve'> <value>1. Listing the app on the app store</value> </data>
  </root>

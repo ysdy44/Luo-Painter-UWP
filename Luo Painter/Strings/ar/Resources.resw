@@ -593,4 +593,20 @@
   <data name='PatternSpotted_Radius' xml:space='preserve'> <value>نصف القطر</value> </data>
   <data name='PatternSpotted_Span' xml:space='preserve'> <value>تمتد</value> </data>
   <data name='PatternSpotted_Fade' xml:space='preserve'> <value>تتلاشي</value> </data>
+  <!--Separator 14-->
+  <data name='V130' xml:space='preserve'> <value>"1. منتقي الألوان السداسي العشري يدعم ثلاثة أرقام
+2. تم إصلاح مشكلة النقر فوق محدد الفرشاة في حدوث عطل
+3. إصلاح خطأ الرمز عند إعادة تسمية مشروع
+4. تم إصلاح مشكلة حظر زر قفص الاتهام على الواجهة بواسطة شريط التطبيقات
+5. إصلاح مشكلة عدم تمكن التطبيق من استخدام المظهر الساطع
+6. يدعم التطبيق إرسال تقارير الاستثناء عند تعطله
+7. تم إصلاح مشكلة عدم عمل محدد الأرقام عند التحويل بحرية
+8. دعم استيراد الصور
+9. السماح للمستخدمين بحظر عمليات اللمس (باستخدام الماوس أو الجهاز اللوحي فقط)"</value> </data>
+  <data name='V120' xml:space='preserve'> <value>1. تدعم واجهة المستخدم التخطيط من اليمين إلى اليسار (للغة العربية)</value> </data>
+  <data name='V103' xml:space='preserve'> <value>"1. إصلاح العطل عند فتح مشروع فارغ
+2. إصلاح الانهيار الناجم عن الطلاء (لا يمكن لخيط الطلاء العثور على كائن الطبقة)"</value> </data>
+  <data name='V102' xml:space='preserve'> <value>1. إصلاح مشكلة التعطل الناجمة عن الرسم (إيقاف الخيط مؤقتا أثناء الرسم)</value> </data>
+  <data name='V101' xml:space='preserve'> <value>1. تم إصلاح مشكلة تعطل واجهة العرض (لأن النوع الرقمي ليس عددا صحيحا ، مما يتسبب في تعطل الواجهة)</value> </data>
+  <data name='V100' xml:space='preserve'> <value>1. إدراج التطبيق في متجر التطبيقات</value> </data>
  </root>

@@ -593,4 +593,20 @@
   <data name='PatternSpotted_Radius' xml:space='preserve'> <value>Raggio</value> </data>
   <data name='PatternSpotted_Span' xml:space='preserve'> <value>Rotazione</value> </data>
   <data name='PatternSpotted_Fade' xml:space='preserve'> <value>Sbiadire</value> </data>
+  <!--Separator 14-->
+  <data name='V130' xml:space='preserve'> <value>"1. Il selettore di colori esadecimali supporta tre cifre
+2. Risolto il problema per cui facendo clic sul selettore del pennello si verificava un arresto anomalo
+3. Risolto l'errore dell'icona durante la ridenominazione di un progetto
+4. Risolto il problema per cui il pulsante del dock sull'interfaccia era bloccato dalla barra dell'app
+5. Risolvi il problema per cui l'app non può utilizzare il tema luminoso
+6. L'app supporta l'invio di segnalazioni di eccezioni in caso di arresto anomalo
+7. Risolto il problema per cui il selettore numerico non funzionava durante la conversione libera
+8. Supporto per l'importazione di immagini
+9. Consenti agli utenti di vietare le operazioni touch (utilizzando solo un mouse o un tablet)"</value> </data>
+  <data name='V120' xml:space='preserve'> <value>1. L'interfaccia utente supporta il layout da destra a sinistra (per l'arabo)</value> </data>
+  <data name='V103' xml:space='preserve'> <value>"1. Risolto il crash che si verificava all'apertura di un progetto vuoto
+2. Risolto il crash causato dalla pittura (il filo di pittura non riesce a trovare l'oggetto del livello)"</value> </data>
+  <data name='V102' xml:space='preserve'> <value>1. Risolto il problema di arresto anomalo causato dal disegno (pausa del thread durante il disegno)</value> </data>
+  <data name='V101' xml:space='preserve'> <value>1. Risolto il problema per cui l'interfaccia di visualizzazione si bloccava (perché il tipo numerico non è un numero intero, causando l'arresto anomalo dell'interfaccia)</value> </data>
+  <data name='V100' xml:space='preserve'> <value>1. Elencare l'app sull'app store</value> </data>
  </root>

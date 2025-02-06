@@ -593,4 +593,20 @@
   <data name='PatternSpotted_Radius' xml:space='preserve'> <value>Raio</value> </data>
   <data name='PatternSpotted_Span' xml:space='preserve'> <value>Palmo</value> </data>
   <data name='PatternSpotted_Fade' xml:space='preserve'> <value>Desvanecer</value> </data>
+  <!--Separator 14-->
+  <data name='V130' xml:space='preserve'> <value>"1. O seletor de cores hexadecimal suporta três dígitos
+2. Corrigido o problema em que clicar no seletor de pincel causava uma falha
+3. Corrigido o erro de ícone ao renomear um projeto
+4. Corrigido o problema em que o botão dock na interface era bloqueado pela barra de aplicativos
+5. Corrija o problema de que o aplicativo não pode usar o tema brilhante
+6. O aplicativo suporta o envio de relatórios de exceção quando trava
+7. Corrigido o problema em que o seletor de números não funcionava ao converter livremente
+8. Suporte para importação de imagens
+9. Permitir que os usuários proíbam operações de toque (usando apenas um mouse ou tablet)"</value> </data>
+  <data name='V120' xml:space='preserve'> <value>1. A interface do usuário oferece suporte ao layout da direita para a esquerda (para árabe)</value> </data>
+  <data name='V103' xml:space='preserve'> <value>"1. Corrigida a falha ao abrir um projeto vazio
+2. Corrigida a falha causada pela pintura (o fio de pintura não consegue encontrar o objeto de camada)"</value> </data>
+  <data name='V102' xml:space='preserve'> <value>1. Corrigido o problema de travamento causado pelo desenho (pausa de thread durante o desenho)</value> </data>
+  <data name='V101' xml:space='preserve'> <value>1. Corrigido o problema em que a interface de exibição travava (porque o tipo numérico não é um número inteiro, fazendo com que a interface travasse)</value> </data>
+  <data name='V100' xml:space='preserve'> <value>1. Listando o aplicativo na loja de aplicativos</value> </data>
  </root>

@@ -593,4 +593,20 @@
   <data name='PatternSpotted_Radius' xml:space='preserve'> <value>半径</value> </data>
   <data name='PatternSpotted_Span' xml:space='preserve'> <value>全長</value> </data>
   <data name='PatternSpotted_Fade' xml:space='preserve'> <value>剥げる</value> </data>
+  <!--Separator 14-->
+  <data name='V130' xml:space='preserve'> <value>"1. 16進数カラーピッカーは3桁をサポートしています
+2. ブラシセレクターをクリックするとクラッシュする問題を修正しました
+3. プロジェクトの名前を変更する際のアイコンエラーを修正しました
+4. インターフェースのドックボタンがアプリバーにブロックされていた問題を修正しました
+5. アプリが明るいテーマを使用できない問題を修正しました
+6. アプリがクラッシュした際に例外レポートを送信することをサポートします
+7. 自由に変換する際に数値セレクターが機能しなかった問題を修正しました
+8. 画像のインポートをサポートします
+9. ユーザーがタッチ操作を禁止できるようにします（マウスまたはタブレットのみを使用）"</value> </data>
+  <data name='V120' xml:space='preserve'> <value>1. UIが右から左へのレイアウトをサポート（アラビア語用）</value> </data>
+  <data name='V103' xml:space='preserve'> <value>"1. 空のプロジェクトを開くときのクラッシュを修正
+2. 描画によるクラッシュを修正（描画スレッドがレイヤーオブジェクトを見つけられない）"</value> </data>
+  <data name='V102' xml:space='preserve'> <value>1. 描画中のスレッドが一時停止することによるクラッシュ問題を修正</value> </data>
+  <data name='V101' xml:space='preserve'> <value>1. 数値型が整数でないために表示インターフェースがクラッシュする問題を修正</value> </data>
+  <data name='V100' xml:space='preserve'> <value>1. アプリをアプリストアに掲載</value> </data>
  </root>

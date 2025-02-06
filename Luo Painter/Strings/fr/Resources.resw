@@ -593,4 +593,20 @@
   <data name='PatternSpotted_Radius' xml:space='preserve'> <value>Rayon</value> </data>
   <data name='PatternSpotted_Span' xml:space='preserve'> <value>Empan</value> </data>
   <data name='PatternSpotted_Fade' xml:space='preserve'> <value>Se faner</value> </data>
+  <!--Separator 14-->
+  <data name='V130' xml:space='preserve'> <value>"1. Le sélecteur de couleurs hexadécimal prend en charge trois chiffres
+2. Correction du problème qui provoquait un plantage en cliquant sur le sélecteur de pinceau.
+3. Correction de l’erreur d’icône lors du renommage d’un projet
+4. Correction du problème où le bouton du dock sur l’interface était bloqué par la barre d’application
+5. Résoudre le problème selon lequel l’application ne peut pas utiliser le thème lumineux
+6. L’application prend en charge l’envoi de rapports d’exception lorsqu’elle se bloque
+7. Correction du problème où le sélecteur de numéro ne fonctionnait pas lors de la conversion libre
+8. Prise en charge de l’importation d’images
+9. Permettez aux utilisateurs d’interdire les opérations tactiles (en utilisant uniquement une souris ou une tablette)"</value> </data>
+  <data name='V120' xml:space='preserve'> <value>1. L’interface utilisateur prend en charge la mise en page de droite à gauche (pour l’arabe)</value> </data>
+  <data name='V103' xml:space='preserve'> <value>"1. Correction du crash lors de l’ouverture d’un projet vide
+2. Correction du crash causé par la peinture (le fil de peinture ne trouve pas l’objet calque)"</value> </data>
+  <data name='V102' xml:space='preserve'> <value>1. Correction du problème de plantage causé par le dessin (pause du fil pendant le dessin)</value> </data>
+  <data name='V101' xml:space='preserve'> <value>1. Correction du problème de plantage de l’interface d’affichage (car le type numérique n’est pas un entier, ce qui provoquait le plantage de l’interface)</value> </data>
+  <data name='V100' xml:space='preserve'> <value>1. Référencement de l’application sur l’App Store</value> </data>
  </root>

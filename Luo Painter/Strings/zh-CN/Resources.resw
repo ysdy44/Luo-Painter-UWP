@@ -593,4 +593,20 @@
   <data name='PatternSpotted_Radius' xml:space='preserve'> <value>半径</value> </data>
   <data name='PatternSpotted_Span' xml:space='preserve'> <value>跨度</value> </data>
   <data name='PatternSpotted_Fade' xml:space='preserve'> <value>渐隐</value> </data>
+  <!--Separator 14-->
+  <data name='V130' xml:space='preserve'> <value>"1. 十六进制颜色选择器支持三位数
+2. 修复点击笔刷选择器导致崩溃的问题
+3. 修复重命名项目时的图标错误
+4. 修复界面上的停靠按钮被应用栏挡住的问题
+5. 修复应用程序无法使用明亮主题的问题
+6. 应用支持崩溃时发送异常报告
+7. 修复在自由变换时，数字选择器不工作的问题
+8. 支持导入图像
+9. 允许用户禁止触摸操作（仅使用鼠标或者数位板）"</value> </data>
+  <data name='V120' xml:space='preserve'> <value>1. 界面支持从右到左的布局（适用于阿拉伯语）</value> </data>
+  <data name='V103' xml:space='preserve'> <value>"1. 修复打开空项目导致崩溃的问题
+2. 修复绘画导致崩溃问题（绘画线程找不到图层对象）"</value> </data>
+  <data name='V102' xml:space='preserve'> <value>1. 修复绘画导致崩溃问题（绘画时线程停顿）</value> </data>
+  <data name='V101' xml:space='preserve'> <value>1. 修复显示界面导致崩溃问题（因为数值类型不是整型导致界面崩溃）</value> </data>
+  <data name='V100' xml:space='preserve'> <value>1. 应用程序上架应用商店</value> </data>
  </root>

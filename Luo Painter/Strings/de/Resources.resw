@@ -593,4 +593,20 @@
   <data name='PatternSpotted_Radius' xml:space='preserve'> <value>Radius</value> </data>
   <data name='PatternSpotted_Span' xml:space='preserve'> <value>Spannweite</value> </data>
   <data name='PatternSpotted_Fade' xml:space='preserve'> <value>Verblassen</value> </data>
+  <!--Separator 14-->
+  <data name='V130' xml:space='preserve'> <value>"1. Der hexadezimale Farbwähler unterstützt drei Ziffern
+2. Es wurde das Problem behoben, dass das Klicken auf den Pinselwähler einen Absturz verursachte.
+3. Der Icon-Fehler beim Umbenennen eines Projekts wurde behoben
+4. Es wurde das Problem behoben, dass die Dock-Schaltfläche auf der Benutzeroberfläche durch die App-Leiste blockiert wurde.
+5. Beheben Sie das Problem, dass die App das helle Design nicht verwenden kann
+6. Die App unterstützt das Senden von Ausnahmeberichten, wenn sie abstürzt
+7. Es wurde das Problem behoben, dass die Zahlenauswahl beim freien Konvertieren nicht funktionierte.
+8. Unterstützung für den Import von Bildern
+9. Erlauben Sie Benutzern, Touch-Vorgänge zu verbieten (nur mit einer Maus oder einem Tablet)"</value> </data>
+  <data name='V120' xml:space='preserve'> <value>1. Die Benutzeroberfläche unterstützt das Layout von rechts nach links (für Arabisch)</value> </data>
+  <data name='V103' xml:space='preserve'> <value>"1. Der Absturz beim Öffnen eines leeren Projekts wurde behoben
+2. Absturz behoben, der durch das Malen verursacht wurde (der Malfaden kann das Ebenenobjekt nicht finden)"</value> </data>
+  <data name='V102' xml:space='preserve'> <value>1. Das durch das Zeichnen verursachte Absturzproblem wurde behoben (Threadpause während des Zeichnens)</value> </data>
+  <data name='V101' xml:space='preserve'> <value>1. Es wurde das Problem behoben, dass die Anzeigeschnittstelle abstürzte (da der numerische Typ keine Ganzzahl ist, was zum Absturz der Schnittstelle führte)</value> </data>
+  <data name='V100' xml:space='preserve'> <value>1. Listung der App im App Store</value> </data>
  </root>

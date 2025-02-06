@@ -593,4 +593,20 @@
   <data name='PatternSpotted_Radius' xml:space='preserve'> <value>Radio</value> </data>
   <data name='PatternSpotted_Span' xml:space='preserve'> <value>Envergadura</value> </data>
   <data name='PatternSpotted_Fade' xml:space='preserve'> <value>Desvanecerse</value> </data>
+  <!--Separator 14-->
+  <data name='V130' xml:space='preserve'> <value>"1. El selector de color hexadecimal admite tres dígitos
+2. Se solucionó el problema de que al hacer clic en el selector de pincel se bloqueaba
+3. Se corrigió el error del icono al cambiar el nombre de un proyecto
+4. Se solucionó el problema de que el botón de acoplamiento en la interfaz estaba bloqueado por la barra de la aplicación
+5. Solucione el problema de que la aplicación no puede usar el tema brillante
+6. La aplicación admite el envío de informes de excepción cuando se bloquea
+7. Se solucionó el problema de que el selector de números no funcionaba al convertir libremente
+8. Soporte para importar imágenes
+9. Permitir a los usuarios prohibir las operaciones táctiles (usando solo un mouse o tableta)"</value> </data>
+  <data name='V120' xml:space='preserve'> <value>1. La interfaz de usuario admite el diseño de derecha a izquierda (para árabe)</value> </data>
+  <data name='V103' xml:space='preserve'> <value>"1. Se corrigió el bloqueo al abrir un proyecto vacío
+2. Se corrigió el bloqueo causado por la pintura (el hilo de pintura no puede encontrar el objeto de la capa)"</value> </data>
+  <data name='V102' xml:space='preserve'> <value>1. Se corrigió el problema de bloqueo causado por el dibujo (pausa del hilo mientras se dibuja)</value> </data>
+  <data name='V101' xml:space='preserve'> <value>1. Se solucionó el problema de que la interfaz de visualización se bloqueaba (porque el tipo numérico no es un número entero, lo que provocaba que la interfaz se bloqueara)</value> </data>
+  <data name='V100' xml:space='preserve'> <value>1. Listar la aplicación en la tienda de aplicaciones</value> </data>
  </root>
