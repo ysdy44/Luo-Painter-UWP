@@ -457,6 +457,10 @@
   <data name='Theme_Light' xml:space='preserve'> <value>خفيفة</value> </data>
   <data name='Theme_Dark' xml:space='preserve'> <value>داكن</value> </data>
   <data name='Theme_UseSystem' xml:space='preserve'> <value>استخدم النظام</value> </data>
+  <data name='Touch' xml:space='preserve'> <value>خيار التشغيل باللمس</value> </data>
+  <data name='Touch_Draw' xml:space='preserve'> <value>اسحب بإصبع واحد للرسم</value> </data>
+  <data name='Touch_Move' xml:space='preserve'> <value>اسحب بإصبع واحد لتحريك اللوحة القماشية</value> </data>
+  <data name='Touch_Disable' xml:space='preserve'> <value>يحظر تشغيل اللمس</value> </data>
   <data name='Language' xml:space='preserve'> <value>لغة</value> </data>
   <data name='Language_Tip' xml:space='preserve'> <value>أعد تشغيل التطبيق لمشاهدة التغييرات.</value> </data>
   <data name='Language_UseSystemSetting' xml:space='preserve'> <value>استخدم إعدادات النظام</value> </data>

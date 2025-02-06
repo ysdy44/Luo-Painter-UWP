@@ -457,6 +457,10 @@
   <data name='Theme_Light' xml:space='preserve'> <value>Light</value> </data>
   <data name='Theme_Dark' xml:space='preserve'> <value>Dark</value> </data>
   <data name='Theme_UseSystem' xml:space='preserve'> <value>Use System</value> </data>
+  <data name='Touch' xml:space='preserve'> <value>Option for Touch Operation</value> </data>
+  <data name='Touch_Draw' xml:space='preserve'> <value>Drag with one finger to paint</value> </data>
+  <data name='Touch_Move' xml:space='preserve'> <value>Drag with one finger to move the canvas</value> </data>
+  <data name='Touch_Disable' xml:space='preserve'> <value>Touch operation is prohibited</value> </data>
   <data name='Language' xml:space='preserve'> <value>Language</value> </data>
   <data name='Language_Tip' xml:space='preserve'> <value>Restart the app to see your changes.</value> </data>
   <data name='Language_UseSystemSetting' xml:space='preserve'> <value>Use system setting</value> </data>

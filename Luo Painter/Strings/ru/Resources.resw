@@ -457,6 +457,10 @@
   <data name='Theme_Light' xml:space='preserve'> <value>Свет</value> </data>
   <data name='Theme_Dark' xml:space='preserve'> <value>Тьма</value> </data>
   <data name='Theme_UseSystem' xml:space='preserve'> <value>Использовать систему</value> </data>
+  <data name='Touch' xml:space='preserve'> <value>Возможность сенсорного управления</value> </data>
+  <data name='Touch_Draw' xml:space='preserve'> <value>Перетащите одним пальцем для рисования</value> </data>
+  <data name='Touch_Move' xml:space='preserve'> <value>Перетащите одним пальцем, чтобы переместить холст</value> </data>
+  <data name='Touch_Disable' xml:space='preserve'> <value>Сенсорное управление запрещено</value> </data>
   <data name='Language' xml:space='preserve'> <value>Язык</value> </data>
   <data name='Language_Tip' xml:space='preserve'> <value>Перезапустите приложение, чтобы увидеть изменения.</value> </data>
   <data name='Language_UseSystemSetting' xml:space='preserve'> <value>Использовать системные настройки</value> </data>

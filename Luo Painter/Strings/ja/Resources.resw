@@ -457,6 +457,10 @@
   <data name='Theme_Light' xml:space='preserve'> <value>光</value> </data>
   <data name='Theme_Dark' xml:space='preserve'> <value>闇</value> </data>
   <data name='Theme_UseSystem' xml:space='preserve'> <value>システムを使用する</value> </data>
+  <data name='Touch' xml:space='preserve'> <value>タッチ操作のオプション</value> </data>
+  <data name='Touch_Draw' xml:space='preserve'> <value>1本の指でドラッグして描画</value> </data>
+  <data name='Touch_Move' xml:space='preserve'> <value>1本の指でドラッグしてキャンバスを移動</value> </data>
+  <data name='Touch_Disable' xml:space='preserve'> <value>タッチ操作は禁止されています</value> </data>
   <data name='Language' xml:space='preserve'> <value>言語</value> </data>
   <data name='Language_Tip' xml:space='preserve'> <value>アプリを再起動して変更内容を表示します。</value> </data>
   <data name='Language_UseSystemSetting' xml:space='preserve'> <value>システム設定を使用する</value> </data>

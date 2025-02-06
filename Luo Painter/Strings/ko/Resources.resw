@@ -457,6 +457,10 @@
   <data name='Theme_Light' xml:space='preserve'> <value>빛</value> </data>
   <data name='Theme_Dark' xml:space='preserve'> <value>어두운</value> </data>
   <data name='Theme_UseSystem' xml:space='preserve'> <value>사용 시스템</value> </data>
+  <data name='Touch' xml:space='preserve'> <value>터치 조작을 위한 옵션</value> </data>
+  <data name='Touch_Draw' xml:space='preserve'> <value>한 손가락으로 드래그하여 페인팅합니다.</value> </data>
+  <data name='Touch_Move' xml:space='preserve'> <value>한 손가락으로 드래그하여 캔버스를 이동합니다</value> </data>
+  <data name='Touch_Disable' xml:space='preserve'> <value>터치 조작은 금지되어 있습니다.</value> </data>
   <data name='Language' xml:space='preserve'> <value>언어</value> </data>
   <data name='Language_Tip' xml:space='preserve'> <value>앱을 다시 시작하여 변경 내용을 확인하세요.</value> </data>
   <data name='Language_UseSystemSetting' xml:space='preserve'> <value>시스템 설정 사용</value> </data>

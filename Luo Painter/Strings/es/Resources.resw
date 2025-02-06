@@ -457,6 +457,10 @@
   <data name='Theme_Light' xml:space='preserve'> <value>Ligero</value> </data>
   <data name='Theme_Dark' xml:space='preserve'> <value>Oscuro</value> </data>
   <data name='Theme_UseSystem' xml:space='preserve'> <value>Usar sistema</value> </data>
+  <data name='Touch' xml:space='preserve'> <value>Opción de operación táctil</value> </data>
+  <data name='Touch_Draw' xml:space='preserve'> <value>Arrastra con un dedo para pintar</value> </data>
+  <data name='Touch_Move' xml:space='preserve'> <value>Arrastra con un dedo para mover el lienzo</value> </data>
+  <data name='Touch_Disable' xml:space='preserve'> <value>Está prohibida la operación táctil</value> </data>
   <data name='Language' xml:space='preserve'> <value>Idioma</value> </data>
   <data name='Language_Tip' xml:space='preserve'> <value>Reinicie la aplicación para ver los cambios.</value> </data>
   <data name='Language_UseSystemSetting' xml:space='preserve'> <value>Usar configuración del sistema</value> </data>

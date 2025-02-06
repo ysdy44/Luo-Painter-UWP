@@ -457,6 +457,10 @@
   <data name='Theme_Light' xml:space='preserve'> <value>浅色</value> </data>
   <data name='Theme_Dark' xml:space='preserve'> <value>深色</value> </data>
   <data name='Theme_UseSystem' xml:space='preserve'> <value>跟随系统</value> </data>
+  <data name='Touch' xml:space='preserve'> <value>触摸操作选项</value> </data>
+  <data name='Touch_Draw' xml:space='preserve'> <value>单指拖动以绘画</value> </data>
+  <data name='Touch_Move' xml:space='preserve'> <value>单指拖动以移动画布</value> </data>
+  <data name='Touch_Disable' xml:space='preserve'> <value>禁止触摸操作</value> </data>
   <data name='Language' xml:space='preserve'> <value>语言</value> </data>
   <data name='Language_Tip' xml:space='preserve'> <value>重启应用以查看更改。</value> </data>
   <data name='Language_UseSystemSetting' xml:space='preserve'> <value>使用系统设置</value> </data>

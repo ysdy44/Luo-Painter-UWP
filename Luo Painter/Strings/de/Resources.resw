@@ -457,6 +457,10 @@
   <data name='Theme_Light' xml:space='preserve'> <value>Licht</value> </data>
   <data name='Theme_Dark' xml:space='preserve'> <value>Dunkel</value> </data>
   <data name='Theme_UseSystem' xml:space='preserve'> <value>Verwenden Sie System</value> </data>
+  <data name='Touch' xml:space='preserve'> <value>Option für Touch-Bedienung</value> </data>
+  <data name='Touch_Draw' xml:space='preserve'> <value>Ziehen Sie mit einem Finger, um zu malen</value> </data>
+  <data name='Touch_Move' xml:space='preserve'> <value>Ziehen Sie mit einem Finger, um die Leinwand zu verschieben</value> </data>
+  <data name='Touch_Disable' xml:space='preserve'> <value>Touch-Bedienung ist verboten</value> </data>
   <data name='Language' xml:space='preserve'> <value>Sprache</value> </data>
   <data name='Language_Tip' xml:space='preserve'> <value>Starten Sie die App neu, um Ihre Änderungen anzuzeigen.</value> </data>
   <data name='Language_UseSystemSetting' xml:space='preserve'> <value>Verwenden Sie die Systemeinstellung</value> </data>

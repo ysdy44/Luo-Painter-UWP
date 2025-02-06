@@ -457,6 +457,10 @@
   <data name='Theme_Light' xml:space='preserve'> <value>Lumière</value> </data>
   <data name='Theme_Dark' xml:space='preserve'> <value>Foncé</value> </data>
   <data name='Theme_UseSystem' xml:space='preserve'> <value>Utiliser le système</value> </data>
+  <data name='Touch' xml:space='preserve'> <value>Option de fonctionnement tactile</value> </data>
+  <data name='Touch_Draw' xml:space='preserve'> <value>Faites glisser avec un doigt pour peindre</value> </data>
+  <data name='Touch_Move' xml:space='preserve'> <value>Faites glisser avec un doigt pour déplacer le canevas</value> </data>
+  <data name='Touch_Disable' xml:space='preserve'> <value>L’utilisation tactile est interdite</value> </data>
   <data name='Language' xml:space='preserve'> <value>Langue</value> </data>
   <data name='Language_Tip' xml:space='preserve'> <value>Relancez l’application pour voir vos modifications.</value> </data>
   <data name='Language_UseSystemSetting' xml:space='preserve'> <value>Utiliser les paramètres du système</value> </data>
