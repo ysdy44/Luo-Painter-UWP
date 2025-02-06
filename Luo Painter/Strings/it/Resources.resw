@@ -138,6 +138,7 @@
   <data name='AddImageLayer' xml:space='preserve'> <value>Aggiungere un livello immagine</value> </data>
   <data name='AddCurveLayer' xml:space='preserve'> <value>Aggiungere un livello di curva</value> </data>
   <data name='AddFillLayer' xml:space='preserve'> <value>Aggiungere un livello di riempimento</value> </data>
+  <data name='AddImage' xml:space='preserve'> <value>Aggiungere un'immagine</value> </data>
   <data name='CutLayer' xml:space='preserve'> <value>Strato di taglio</value> </data>
   <data name='CopyLayer' xml:space='preserve'> <value>Copia livello</value> </data>
   <data name='PasteLayer' xml:space='preserve'> <value>Incolla livello</value> </data>

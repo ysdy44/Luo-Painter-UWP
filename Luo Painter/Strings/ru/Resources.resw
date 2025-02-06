@@ -138,6 +138,7 @@
   <data name='AddImageLayer' xml:space='preserve'> <value>Добавление слоя изображения</value> </data>
   <data name='AddCurveLayer' xml:space='preserve'> <value>Добавление слоя кривой</value> </data>
   <data name='AddFillLayer' xml:space='preserve'> <value>Добавление слоя заливки</value> </data>
+  <data name='AddImage' xml:space='preserve'> <value>Добавить изображение</value> </data>
   <data name='CutLayer' xml:space='preserve'> <value>Разрезанный слой</value> </data>
   <data name='CopyLayer' xml:space='preserve'> <value>Копировать слой</value> </data>
   <data name='PasteLayer' xml:space='preserve'> <value>Вставить слой</value> </data>

@@ -138,6 +138,7 @@
   <data name='AddImageLayer' xml:space='preserve'> <value>画像レイヤーの追加</value> </data>
   <data name='AddCurveLayer' xml:space='preserve'> <value>カーブレイヤーの追加</value> </data>
   <data name='AddFillLayer' xml:space='preserve'> <value>塗りつぶしレイヤーの追加</value> </data>
+  <data name='AddImage' xml:space='preserve'> <value>画像を追加</value> </data>
   <data name='CutLayer' xml:space='preserve'> <value>カット層</value> </data>
   <data name='CopyLayer' xml:space='preserve'> <value>レイヤーのコピー</value> </data>
   <data name='PasteLayer' xml:space='preserve'> <value>レイヤーの貼り付け</value> </data>

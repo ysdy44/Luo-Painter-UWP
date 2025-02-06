@@ -138,6 +138,7 @@
   <data name='AddImageLayer' xml:space='preserve'> <value>Een afbeeldingslaag toevoegen</value> </data>
   <data name='AddCurveLayer' xml:space='preserve'> <value>Een curvelaag toevoegen</value> </data>
   <data name='AddFillLayer' xml:space='preserve'> <value>Een vullaag toevoegen</value> </data>
+  <data name='AddImage' xml:space='preserve'> <value>Voeg een afbeelding toe</value> </data>
   <data name='CutLayer' xml:space='preserve'> <value>Kniplaag</value> </data>
   <data name='CopyLayer' xml:space='preserve'> <value>Laag kopiëren</value> </data>
   <data name='PasteLayer' xml:space='preserve'> <value>Laag plakken</value> </data>

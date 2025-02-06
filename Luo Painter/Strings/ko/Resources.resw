@@ -138,6 +138,7 @@
   <data name='AddImageLayer' xml:space='preserve'> <value>이미지 레이어 추가</value> </data>
   <data name='AddCurveLayer' xml:space='preserve'> <value>곡선 레이어 추가</value> </data>
   <data name='AddFillLayer' xml:space='preserve'> <value>칠 레이어 추가</value> </data>
+  <data name='AddImage' xml:space='preserve'> <value>이미지 추가</value> </data>
   <data name='CutLayer' xml:space='preserve'> <value>절단 레이어</value> </data>
   <data name='CopyLayer' xml:space='preserve'> <value>레이어 복사</value> </data>
   <data name='PasteLayer' xml:space='preserve'> <value>레이어 붙여넣기</value> </data>

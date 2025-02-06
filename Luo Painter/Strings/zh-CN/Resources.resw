@@ -138,6 +138,7 @@
   <data name='AddImageLayer' xml:space='preserve'> <value>添加图像图层</value> </data>
   <data name='AddCurveLayer' xml:space='preserve'> <value>添加曲线图层</value> </data>
   <data name='AddFillLayer' xml:space='preserve'> <value>添加填充图层</value> </data>
+  <data name='AddImage' xml:space='preserve'> <value>添加图像</value> </data>
   <data name='CutLayer' xml:space='preserve'> <value>剪切图层</value> </data>
   <data name='CopyLayer' xml:space='preserve'> <value>复制图层</value> </data>
   <data name='PasteLayer' xml:space='preserve'> <value>粘贴图层</value> </data>

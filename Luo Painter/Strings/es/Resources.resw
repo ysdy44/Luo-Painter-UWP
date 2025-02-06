@@ -138,6 +138,7 @@
   <data name='AddImageLayer' xml:space='preserve'> <value>Agregar una capa de imagen</value> </data>
   <data name='AddCurveLayer' xml:space='preserve'> <value>Agregar una capa de curva</value> </data>
   <data name='AddFillLayer' xml:space='preserve'> <value>Agregar una capa de relleno</value> </data>
+  <data name='AddImage' xml:space='preserve'> <value>Añadir una imagen</value> </data>
   <data name='CutLayer' xml:space='preserve'> <value>Capa de corte</value> </data>
   <data name='CopyLayer' xml:space='preserve'> <value>Copiar capa</value> </data>
   <data name='PasteLayer' xml:space='preserve'> <value>Pegar capa</value> </data>

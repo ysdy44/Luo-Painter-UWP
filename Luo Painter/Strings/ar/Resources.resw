@@ -138,6 +138,7 @@
   <data name='AddImageLayer' xml:space='preserve'> <value>إضافة طبقة صورة</value> </data>
   <data name='AddCurveLayer' xml:space='preserve'> <value>إضافة طبقة منحنى</value> </data>
   <data name='AddFillLayer' xml:space='preserve'> <value>إضافة طبقة تعبئة</value> </data>
+  <data name='AddImage' xml:space='preserve'> <value>إضافة صورة</value> </data>
   <data name='CutLayer' xml:space='preserve'> <value>قطع طبقة</value> </data>
   <data name='CopyLayer' xml:space='preserve'> <value>نسخ الطبقة</value> </data>
   <data name='PasteLayer' xml:space='preserve'> <value>لصق طبقة</value> </data>

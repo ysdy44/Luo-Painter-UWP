@@ -138,6 +138,7 @@
   <data name='AddImageLayer' xml:space='preserve'> <value>Add an image layer</value> </data>
   <data name='AddCurveLayer' xml:space='preserve'> <value>Add a curve layer</value> </data>
   <data name='AddFillLayer' xml:space='preserve'> <value>Add a fill layer</value> </data>
+  <data name='AddImage' xml:space='preserve'> <value>Add an image</value> </data>
   <data name='CutLayer' xml:space='preserve'> <value>Cut layer</value> </data>
   <data name='CopyLayer' xml:space='preserve'> <value>Copy layer</value> </data>
   <data name='PasteLayer' xml:space='preserve'> <value>Paste layer</value> </data>
