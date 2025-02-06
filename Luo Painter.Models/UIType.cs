@@ -5,6 +5,7 @@
         Name,
 
         Version,
+        Log,
 
         InputText,
         Untitled,
