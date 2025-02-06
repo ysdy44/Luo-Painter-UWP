@@ -245,6 +245,9 @@
     <Compile Include="Controls\LayerSwiper.xaml.cs">
       <DependentUpon>LayerSwiper.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\LogDialog.xaml.cs">
+      <DependentUpon>LogDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MovePicker.xaml.cs">
       <DependentUpon>MovePicker.xaml</DependentUpon>
     </Compile>
@@ -495,6 +498,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\LayerSwiper.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\LogDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
