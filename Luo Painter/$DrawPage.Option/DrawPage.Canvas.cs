@@ -4,6 +4,7 @@ using Luo_Painter.Elements;
 using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Models;
+using Luo_Painter.UI;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
@@ -220,10 +221,21 @@ namespace Luo_Painter
 
                         // Mesh
                         // Layer
-                        if (this.BitmapLayer is null || this.OptionType.IsMarquees())
-                            ds.DrawImage(this.Nodes.Render(mesh, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor));
-                        else
-                            ds.DrawImage(this.Nodes.ReplaceRender(mesh, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor, this.BitmapLayer.Id, this.GetMezzanine()));
+                        switch (this.OptionTarget)
+                        {
+                            case OptionTarget.BitmapLayer:
+                                if (this.BitmapLayer is null)
+                                    goto case OptionTarget.Marquee;
+
+                                ds.DrawImage(this.Nodes.ReplaceRender(mesh, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor, BitmapLayer.Id, this.GetMezzanine()));
+                                break;
+                            case OptionTarget.Marquee:
+                                // Normal
+                                ds.DrawImage(this.Nodes.Render(mesh, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor));
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 }
             };
@@ -275,61 +287,63 @@ namespace Luo_Painter
 
         private ICanvasImage GetMezzanine()
         {
-            // 1. Geometry Tool
-            if (this.OptionType.IsGeometry())
+            switch (this.OptionType)
             {
-                return new CompositeEffect { Sources = { this.BitmapLayer[BitmapType.Source], this.BitmapLayer[BitmapType.Temp] } };
-            }
-
-            // 2. Others Tool
-            if (this.OptionType.IsEffect() is false)
-            {
-                switch (this.OptionType)
-                {
-                    case OptionType.Brush:
-                        return this.GetBrushPreview();
-                    case OptionType.Transparency:
-                        return this.GetTransparencyPreview();
-                    default:
-                        return this.InkPresenter.GetPreview(this.InkType, this.BitmapLayer[BitmapType.Source], this.BitmapLayer[BitmapType.Temp]);
-                }
-            }
-
-
-            // 3. Marquee Preview
-            if (this.SelectionType is SelectionType.MarqueePixelBounds is false)
-            {
-                return this.GetPreview(this.OptionType, this.BitmapLayer[BitmapType.Source]);
-            }
-            // 3. Difference Preview
-            else if (this.OptionType.HasDifference())
-            {
-                return new CompositeEffect
-                {
-                    Sources =
+                case OptionType.Brush:
+                    return this.GetBrushPreview();
+                case OptionType.Transparency:
+                    return this.GetTransparencyPreview();
+                default:
+                    // 1. Geometry Tool
+                    if (this.OptionType.IsGeometry())
                     {
-                        new PixelShaderEffect(this.RalphaMaskShaderCodeBytes)
-                        {
-                            Source1 = this.Marquee[BitmapType.Source],
-                            Source2 = this.BitmapLayer[BitmapType.Source],
-                        },
-                        this.GetPreview(this.OptionType, new AlphaMaskEffect
-                        {
-                            AlphaMask = this.Marquee[BitmapType.Source],
-                            Source = this.BitmapLayer[BitmapType.Source]
-                        })
+                        return new CompositeEffect { Sources = { this.BitmapLayer[BitmapType.Source], this.BitmapLayer[BitmapType.Temp] } };
                     }
-                };
-            }
-            // 3. Mask Preview
-            else
-            {
-                return new PixelShaderEffect(this.LalphaMaskShaderCodeBytes)
-                {
-                    Source1 = this.Marquee[BitmapType.Source],
-                    Source2 = this.BitmapLayer[BitmapType.Origin],
-                    Source3 = this.GetPreview(this.OptionType, this.BitmapLayer[BitmapType.Origin])
-                };
+                    // 2. Others Tool
+                    else if (this.OptionType.IsEffect())
+                    {
+                        // 3. Marquee Preview
+                        switch (this.SelectionType)
+                        {
+                            case SelectionType.MarqueePixelBounds:
+                                if (this.OptionType.HasDifference())
+                                {
+                                    return new CompositeEffect
+                                    {
+                                        Sources =
+                                        {
+                                            new PixelShaderEffect(this.RalphaMaskShaderCodeBytes)
+                                            {
+                                                Source1 = this.Marquee[BitmapType.Source],
+                                                Source2 = this.BitmapLayer[BitmapType.Source],
+                                            },
+                                            this.GetPreview(this.OptionType, new AlphaMaskEffect
+                                            {
+                                                AlphaMask = this.Marquee[BitmapType.Source],
+                                                Source = this.BitmapLayer[BitmapType.Source]
+                                            })
+                                        }
+                                    };
+                                }
+                                // 3. Mask Preview
+                                else
+                                {
+                                    return new PixelShaderEffect(this.LalphaMaskShaderCodeBytes)
+                                    {
+                                        Source1 = this.Marquee[BitmapType.Source],
+                                        Source2 = this.BitmapLayer[BitmapType.Origin],
+                                        Source3 = this.GetPreview(this.OptionType, this.BitmapLayer[BitmapType.Origin])
+                                    };
+                                }
+                            default:
+                                // 3. Difference Preview
+                                return this.GetPreview(this.OptionType, this.BitmapLayer[BitmapType.Source]);
+                        }
+                    }
+                    else
+                    {
+                        return this.InkPresenter.GetPreview(this.InkType, this.BitmapLayer[BitmapType.Source], this.BitmapLayer[BitmapType.Temp]);
+                    }
             }
         }
 

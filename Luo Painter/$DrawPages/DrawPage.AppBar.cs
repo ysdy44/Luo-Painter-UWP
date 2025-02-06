@@ -2,6 +2,7 @@
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Models;
 using Luo_Painter.Strings;
+using Luo_Painter.UI;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using Windows.UI;
@@ -81,34 +82,44 @@ namespace Luo_Painter
 
             this.AppBarPrimaryButton.Click += (s, e) =>
             {
-                if (this.OptionType.HasPreview())
+                switch (this.OptionTarget)
                 {
-                    if (this.OptionType is OptionType.CropCanvas)
-                    {
-                        this.PrimaryCropCanvas();
-                    }
-                    else if (this.OptionType.IsGeometry())
-                    {
-                        this.PrimaryGeometryTransform();
-                    }
-                    else if (this.OptionType.IsPattern())
-                    {
-                        this.PrimaryPatternTransform();
-                    }
-                    else
-                    {
-                        Color[] InterpolationColors = this.Marquee.GetInterpolationColorsBySource();
-                        PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(InterpolationColors);
-
-                        if (this.OptionType.IsMarquees())
+                    case OptionTarget.Marquee:
                         {
+                            Color[] InterpolationColors = this.Marquee.GetInterpolationColorsBySource();
+                            PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(InterpolationColors);
+
                             this.Primary(this.OptionType, mode, InterpolationColors, this.Marquee);
                         }
-                        else
+                        break;
+                    default:
+                        if (this.OptionType.HasPreview() || this.OptionType == OptionType.AddImageLayer)
                         {
-                            this.Primary(this.OptionType, mode, InterpolationColors, this.BitmapLayer);
+                            switch (this.OptionType)
+                            {
+                                case OptionType.CropCanvas:
+                                    this.PrimaryCropCanvas();
+                                    break;
+                                default:
+                                    if (this.OptionType.IsGeometry())
+                                    {
+                                        this.PrimaryGeometryTransform();
+                                    }
+                                    else if (this.OptionType.IsPattern())
+                                    {
+                                        this.PrimaryPatternTransform();
+                                    }
+                                    else
+                                    {
+                                        Color[] InterpolationColors = this.Marquee.GetInterpolationColorsBySource();
+                                        PixelBoundsMode mode = this.Marquee.GetInterpolationBoundsMode(InterpolationColors);
+
+                                        this.Primary(this.OptionType, mode, InterpolationColors, this.BitmapLayer);
+                                    }
+                                    break;
+                            }
                         }
-                    }
+                        break;
                 }
             };
         }
@@ -175,6 +186,7 @@ namespace Luo_Painter
                     break;
             }
 
+            this.ImageLayer = null;
             this.BitmapLayer = null;
             this.OptionType = this.ToolListView.SelectedType;
             this.ConstructAppBar(this.OptionType);

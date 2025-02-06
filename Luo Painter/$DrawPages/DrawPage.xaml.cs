@@ -106,8 +106,24 @@ namespace Luo_Painter
         BitmapLayer Displacement { get; set; }
         CurveLayer CurveLayer { get; set; }
 
+        OptionType optionType = OptionType.PaintBrush;
+        OptionTarget OptionTarget { get; set; }
         SelectionType SelectionType { get; set; } = SelectionType.None;
-        OptionType OptionType { get; set; } = OptionType.PaintBrush;
+        OptionType OptionType
+        {
+            get => this.optionType;
+            set
+            {
+                this.optionType = value;
+                switch (value)
+                {
+                    case OptionType.Marquee: this.OptionTarget = OptionTarget.Marquee; break;
+                    case OptionType.MarqueeTransform: this.OptionTarget = OptionTarget.Marquee; break;
+                    case OptionType.AddImageTransform: this.OptionTarget = OptionTarget.Image; break;
+                    default: this.OptionTarget = value.IsMarquee() ? OptionTarget.Marquee : OptionTarget.BitmapLayer; break;
+                }
+            }
+        }
 
         bool IsReferenceImageResizing { get; set; }
         ReferenceImage ReferenceImage { get; set; }
