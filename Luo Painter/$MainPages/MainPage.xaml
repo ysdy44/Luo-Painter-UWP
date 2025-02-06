@@ -468,6 +468,27 @@
                 <ColumnDefinition Width="1*" MinWidth="50" MaxWidth="80"/>
             </Grid.ColumnDefinitions>
 
+            <Button
+                x:Name="TitleButton"
+                Grid.Column="1" 
+                HorizontalAlignment="Center"
+                Foreground="{ThemeResource AppForeground}" 
+                Style="{StaticResource TextBlockButtonStyle}" 
+                >
+                <!--Transitions-->
+                <UIElement.Transitions>
+                    <TransitionCollection>
+                        <EntranceThemeTransition FromHorizontalOffset="50" FromVerticalOffset="0"/>
+                    </TransitionCollection>
+                </UIElement.Transitions>
+                <TextBlock>
+                    <Run FontSize="32" FontWeight="Light" Text="{strings:UI Type=Name}"/><Run>
+                        ・
+                    </Run><Run FontSize="12" FontWeight="Bold" Text="{strings:UI Type=Version}"/>
+                </TextBlock>
+            </Button>
+
+            <!--
             <TextBlock 
                 x:Name="TitleTextBlock"
                 Grid.Column="1" 
@@ -475,14 +496,15 @@
                 Style="{StaticResource SubheaderTextBlockStyle}"
                 Text="{strings:UI Type=Name}"
                 >
-                <!--Transitions-->
+                Transitions
                 <UIElement.Transitions>
                     <TransitionCollection>
                         <EntranceThemeTransition FromHorizontalOffset="50" FromVerticalOffset="0"/>
                     </TransitionCollection>               
                 </UIElement.Transitions>
-                <!--Luo Painter-->
+                Luo Painter
             </TextBlock>
+            -->
 
             <Button x:Name="DocumentationButton" Width="Auto" Height="50" HorizontalAlignment="Stretch" Foreground="{ThemeResource AppForeground}" Style="{StaticResource TextBlockButtonStyle}" 
                     IsEnabled="{x:Bind AppBarListView.IsItemClickEnabled, Mode=OneWay}">
@@ -594,6 +616,7 @@
 
 
         <!--Dialog-->
+        <controls:LogDialog x:Name="LogDialog"/>
         <controls:AboutDialog x:Name="AboutDialog"/>
         <controls:SettingDialog x:Name="SettingDialog"/>
 

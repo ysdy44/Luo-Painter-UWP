@@ -82,6 +82,7 @@ namespace Luo_Painter
                 this.ListView.Resizing(e.NewSize);
             };
 
+            this.TitleButton.Click += async (s, e) => await this.LogDialog.ShowInstance();
             this.DocumentationButton.Click += async (s, e) => await this.AboutDialog.ShowInstance();
             this.SettingButton.Click += async (s, e) => await this.SettingDialog.ShowInstance();
 
