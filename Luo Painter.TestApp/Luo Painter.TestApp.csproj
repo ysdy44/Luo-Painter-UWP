@@ -191,6 +191,9 @@
     <Compile Include="InkStabilizerPage.xaml.cs">
       <DependentUpon>InkStabilizerPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="InkTouchModePage.xaml.cs">
+      <DependentUpon>InkTouchModePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LayerManagerPage.xaml.cs">
       <DependentUpon>LayerManagerPage.xaml</DependentUpon>
     </Compile>
@@ -456,6 +459,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="InkStabilizerPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="InkTouchModePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
