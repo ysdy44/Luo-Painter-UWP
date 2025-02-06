@@ -80,6 +80,12 @@ namespace Luo_Painter
                     else
                         return this.GetTransformCursorMode(this.CropTransform.Mode);
 
+                case OptionType.AddImageTransform:
+                    if (this.Transform.IsMove)
+                        return CursorMode.OneTime;
+                    else
+                        return this.GetTransformCursorMode(this.Transform.Mode);
+
                 case OptionType.Move:
                     return CursorMode.OneTime;
                 case OptionType.Transform:
@@ -196,6 +202,13 @@ namespace Luo_Painter
                         this.CursorType = CoreCursorType.SizeAll;
                     else
                         this.SetTransformCursorType(this.CropTransform.Mode, this.CropTransform.Transformer);
+                    break;
+
+                case OptionType.AddImageTransform:
+                    if (this.Transform.IsMove)
+                        this.CursorType = CoreCursorType.SizeAll;
+                    else
+                        this.SetTransformCursorType(this.Transform.Mode, this.Transform.Transformer);
                     break;
 
                 case OptionType.Move:

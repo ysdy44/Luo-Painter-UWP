@@ -26,6 +26,10 @@ namespace Luo_Painter
                     this.CropCanvas_Start();
                     break;
 
+                case OptionType.AddImageTransform:
+                    this.Transform_Start();
+                    break;
+
                 case OptionType.Move:
                     this.Move_Start();
                     break;
@@ -149,6 +153,10 @@ namespace Luo_Painter
 
                 case OptionType.CropCanvas:
                     this.CropCanvas_Delta();
+                    break;
+
+                case OptionType.AddImageTransform:
+                    this.Transform_Delta();
                     break;
 
                 case OptionType.Move:
@@ -275,6 +283,10 @@ namespace Luo_Painter
 
                 case OptionType.CropCanvas:
                     this.CropCanvas_Complete();
+                    break;
+
+                case OptionType.AddImageTransform:
+                    this.Transform_Complete();
                     break;
 
                 case OptionType.Move:

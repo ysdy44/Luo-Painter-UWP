@@ -229,6 +229,7 @@ namespace Luo_Painter
                     };
                 case OptionType.Transform:
                 case OptionType.MarqueeTransform:
+                case OptionType.AddImageTransform:
                     return new Transform2DEffect
                     {
                         BorderMode = EffectBorderMode.Hard,

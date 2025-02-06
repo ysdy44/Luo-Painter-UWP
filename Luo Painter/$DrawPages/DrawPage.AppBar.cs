@@ -29,6 +29,8 @@ namespace Luo_Painter
             switch (type)
             {
                 case OptionType.MarqueeTransform:
+                case OptionType.AddImageTransform:
+                case OptionType.Transform:
                     this.SwitchPresenter.Value = OptionType.Transform;
                     break;
 
@@ -91,6 +93,9 @@ namespace Luo_Painter
 
                             this.Primary(this.OptionType, mode, InterpolationColors, this.Marquee);
                         }
+                        break;
+                    case OptionTarget.Image:
+                        this.PrimaryAddImageTransform(this.AddImage);
                         break;
                     default:
                         if (this.OptionType.HasPreview() || this.OptionType == OptionType.AddImageLayer)

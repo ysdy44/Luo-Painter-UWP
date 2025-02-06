@@ -98,6 +98,10 @@ namespace Luo_Painter
                         this.DrawCropCanvas(sender, args.DrawingSession);
                         break;
 
+                    case OptionType.AddImageTransform:
+                        args.DrawingSession.DrawBoundNodes(this.Transform.Transformer, matrix);
+                        break;
+
                     case OptionType.Move:
                         break;
                     case OptionType.Transform:
@@ -233,6 +237,23 @@ namespace Luo_Painter
                                 // Normal
                                 ds.DrawImage(this.Nodes.Render(mesh, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor));
                                 break;
+                            case OptionTarget.Image:
+                                if (string.IsNullOrEmpty(this.AddImageId))
+                                {
+                                    // Normal
+                                    ds.DrawImage(this.Nodes.Render(mesh, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor));
+                                    ds.DrawImage(new Transform2DEffect
+                                    {
+                                        InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
+                                        TransformMatrix = this.Transformer.GetMatrix(),
+                                        Source = this.GetPreview(OptionType.AddImageTransform, this.AddImage)
+                                    });
+                                }
+                                else
+                                {
+                                    ds.DrawImage(this.Nodes.AboveRender(mesh, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor, this.AddImageId, this.GetPreview(OptionType.AddImageTransform, this.AddImage)));
+                                }
+                                break;
                             default:
                                 break;
                         }
@@ -293,6 +314,18 @@ namespace Luo_Painter
                     return this.GetBrushPreview();
                 case OptionType.Transparency:
                     return this.GetTransparencyPreview();
+                case OptionType.Transform:
+                case OptionType.AddImageTransform:
+                case OptionType.MarqueeTransform:
+                    switch (this.OptionTarget)
+                    {
+                        case OptionTarget.Marquee:
+                            return this.GetPreview(this.OptionType, this.Marquee[BitmapType.Source]);
+                        case OptionTarget.Image:
+                            return this.GetPreview(this.OptionType, this.AddImage);
+                        default:
+                            return this.GetPreview(this.OptionType, this.BitmapLayer[BitmapType.Source]);
+                    }
                 default:
                     // 1. Geometry Tool
                     if (this.OptionType.IsGeometry())
