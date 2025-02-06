@@ -315,6 +315,7 @@
     <Compile Include="UI\InkGrouping.cs" />
     <Compile Include="UI\InkGroupingList.cs" />
     <Compile Include="UI\InkGroupingType.cs" />
+    <Compile Include="UI\InkTouchMode.cs" />
     <Compile Include="UI\KeyboardShortcut.cs" />
     <Compile Include="UI\LayerCommand.cs" />
     <Compile Include="UI\MorphologyNumberSlider.cs" />
