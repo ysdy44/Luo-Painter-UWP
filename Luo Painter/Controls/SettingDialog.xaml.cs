@@ -34,6 +34,12 @@ namespace Luo_Painter.Controls
                 case ElementTheme.Dark: this.ThemeComboBox.SelectedIndex = 1; break;
                 default: this.ThemeComboBox.SelectedIndex = 2; break;
             }
+            switch (this.GetTouch())
+            {
+                case InkTouchMode.Draw: this.TouchComboBox.SelectedIndex = 0; break;
+                case InkTouchMode.Move: this.TouchComboBox.SelectedIndex = 1; break;
+                default: this.TouchComboBox.SelectedIndex = 2; break;
+            }
 
             this.ThemeComboBox.SelectionChanged += (s, e) =>
             {
@@ -42,6 +48,15 @@ namespace Luo_Painter.Controls
                     case 0: this.SetTheme(ElementTheme.Light); break;
                     case 1: this.SetTheme(ElementTheme.Dark); break;
                     default: this.SetTheme(ElementTheme.Default); break;
+                }
+            };
+            this.TouchComboBox.SelectionChanged += (s, e) =>
+            {
+                switch (this.TouchComboBox.SelectedIndex)
+                {
+                    case 0: this.SetTouch(InkTouchMode.Draw); break;
+                    case 1: this.SetTouch(InkTouchMode.Move); break;
+                    default: this.SetTouch(InkTouchMode.Disable); break;
                 }
             };
 
@@ -58,6 +73,11 @@ namespace Luo_Painter.Controls
                 this.TB1.Text = UIType.Theme_Light.GetString();
                 this.TB2.Text = UIType.Theme_Dark.GetString();
                 this.TB3.Text = UIType.Theme_UseSystem.GetString();
+
+                this.TB4.Text = UIType.Touch.GetString();
+                this.TB5.Text = UIType.Touch_Draw.GetString();
+                this.TB6.Text = UIType.Touch_Move.GetString();
+                this.TB7.Text = UIType.Touch_Disable.GetString();
 
                 this.TB8.Text = UIType.Language.GetString();
                 this.TB9.Text = UIType.Language_Tip.GetString();
@@ -89,6 +109,22 @@ namespace Luo_Painter.Controls
                 }
             }
             return ElementTheme.Dark;
+        }
+
+        public void SetTouch(InkTouchMode value)
+        {
+            this.LocalSettings.Values["Touch"] = (int)value;
+        }
+        public InkTouchMode GetTouch()
+        {
+            if (this.LocalSettings.Values.ContainsKey("Touch"))
+            {
+                if (this.LocalSettings.Values["Touch"] is int item)
+                {
+                    return (InkTouchMode)item;
+                }
+            }
+            return InkTouchMode.Draw;
         }
     }
 }

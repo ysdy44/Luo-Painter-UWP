@@ -73,6 +73,9 @@ namespace Luo_Painter
             }
         }
 
+        //@Setting
+        private readonly ApplicationDataContainer LocalSettings = ApplicationData.Current.LocalSettings;
+
         // Range
         readonly InverseProportionRange SizeRange = new InverseProportionRange(12, 1, 400, 100000);
         readonly InverseProportionRange SpacingRange = new InverseProportionRange(25, 10, 400, 1000000);
@@ -451,6 +454,22 @@ namespace Luo_Painter
                     break;
                 default:
                     break;
+            }
+
+            if (this.LocalSettings.Values["Touch"] is int touch)
+            {
+                InkTouchMode mode = (InkTouchMode)touch;
+                switch (mode)
+                {
+                    case InkTouchMode.Draw: this.Operator.TouchMode = TouchMode.SingleFinger; break;
+                    case InkTouchMode.Move: this.Operator.TouchMode = TouchMode.RightButton; break;
+                    case InkTouchMode.Disable: this.Operator.TouchMode = TouchMode.Disable; break;
+                    default: this.Operator.TouchMode = TouchMode.SingleFinger; break;
+                }
+            }
+            else
+            {
+                this.Operator.TouchMode = TouchMode.SingleFinger;
             }
 
             DisplayInformation display = DisplayInformation.GetForCurrentView();

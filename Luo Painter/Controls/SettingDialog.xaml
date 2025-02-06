@@ -58,6 +58,24 @@
             </StackPanel>
         </ComboBox>
 
+        <!--Touch-->
+        <TextBlock x:Name="TB4" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
+                   Text="{strings:UI Type=Touch}"/>
+        <ComboBox x:Name="TouchComboBox">
+            <StackPanel Spacing="10" Orientation="Horizontal">
+                <FontIcon Glyph="&#xE815;" FontSize="20" FontWeight="Bold" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
+                <TextBlock x:Name="TB5" Text="{strings:UI Type=Touch_Draw}"/>
+            </StackPanel>
+            <StackPanel Spacing="10" Orientation="Horizontal">
+                <FontIcon Glyph="&#xE927;" FontSize="20" FontWeight="Bold" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
+                <TextBlock x:Name="TB6" Text="{strings:UI Type=Touch_Move}"/>
+            </StackPanel>
+            <StackPanel Spacing="10" Orientation="Horizontal">
+                <FontIcon Glyph="&#xEBFC;" FontSize="20" FontWeight="Bold" FontFamily="{StaticResource SymbolThemeFontFamily}"/>
+                <TextBlock x:Name="TB7" Text="{strings:UI Type=Touch_Disable}"/>
+            </StackPanel>
+        </ComboBox>
+
         <!--Language-->
         <TextBlock x:Name="TB8" Margin="2,4" Foreground="{ThemeResource AppForeground}" Style="{StaticResource BaseTextBlockStyle}"
                    Text="{strings:UI Type=Language}"/>
