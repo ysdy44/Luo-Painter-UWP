@@ -22,9 +22,9 @@ namespace Luo_Painter.Layers.Models
 
 
         public ICanvasImage Render(ICanvasImage background) => base.Children.Render(background);
-        public ICanvasImage Render(ICanvasImage background, string id, ICanvasImage mezzanine) => base.Children.Render(background, id, mezzanine);
+        public ICanvasImage ReplaceRender(ICanvasImage background, string id, ICanvasImage mezzanine) => base.Children.ReplaceRender(background, id, mezzanine);
         public ICanvasImage Render(ICanvasImage background, Matrix3x2 matrix, CanvasImageInterpolation interpolationMode) => base.Children.Render(background, matrix, interpolationMode);
-        public ICanvasImage Render(ICanvasImage background, Matrix3x2 matrix, CanvasImageInterpolation interpolationMode, string id, ICanvasImage mezzanine) => base.Children.Render(background, matrix, interpolationMode, id, mezzanine);
+        public ICanvasImage ReplaceRender(ICanvasImage background, Matrix3x2 matrix, CanvasImageInterpolation interpolationMode, string id, ICanvasImage mezzanine) => base.Children.ReplaceRender(background, matrix, interpolationMode, id, mezzanine);
 
 
         public bool FillContainsPoint(Vector2 point)

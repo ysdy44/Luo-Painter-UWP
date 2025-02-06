@@ -223,7 +223,7 @@ namespace Luo_Painter
                         if (this.BitmapLayer is null || this.OptionType.IsMarquees())
                             ds.DrawImage(this.Nodes.Render(mesh, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor));
                         else
-                            ds.DrawImage(this.Nodes.Render(mesh, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor, this.BitmapLayer.Id, this.GetMezzanine()));
+                            ds.DrawImage(this.Nodes.ReplaceRender(mesh, this.Transformer.GetMatrix(), CanvasImageInterpolation.NearestNeighbor, this.BitmapLayer.Id, this.GetMezzanine()));
                     }
                 }
             };

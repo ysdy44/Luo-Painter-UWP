@@ -32,7 +32,7 @@ namespace Luo_Painter.Layers
             }
             return background;
         }
-        public ICanvasImage Render(ICanvasImage background, string id, ICanvasImage mezzanine)
+        public ICanvasImage ReplaceRender(ICanvasImage background, string id, ICanvasImage mezzanine)
         {
             for (int i = base.Count - 1; i >= 0; i--)
             {
@@ -40,7 +40,7 @@ namespace Luo_Painter.Layers
                 switch (item.Visibility)
                 {
                     case Visibility.Visible:
-                        background = item.Render(background, id, mezzanine);
+                        background = item.ReplaceRender(background, id, mezzanine);
                         break;
                 }
             }
@@ -60,7 +60,7 @@ namespace Luo_Painter.Layers
             }
             return background;
         }
-        public ICanvasImage Render(ICanvasImage background, Matrix3x2 matrix, CanvasImageInterpolation interpolationMode, string id, ICanvasImage mezzanine)
+        public ICanvasImage ReplaceRender(ICanvasImage background, Matrix3x2 matrix, CanvasImageInterpolation interpolationMode, string id, ICanvasImage mezzanine)
         {
             for (int i = base.Count - 1; i >= 0; i--)
             {
@@ -68,7 +68,7 @@ namespace Luo_Painter.Layers
                 switch (item.Visibility)
                 {
                     case Visibility.Visible:
-                        background = item.Render(background, matrix, interpolationMode, id, mezzanine);
+                        background = item.ReplaceRender(background, matrix, interpolationMode, id, mezzanine);
                         break;
                 }
             }

@@ -66,7 +66,7 @@ namespace Luo_Painter.Layers.Models
 
 
         public ICanvasImage Render(ICanvasImage background) => base.Render(background, this.Source);
-        public ICanvasImage Render(ICanvasImage background, string id, ICanvasImage mezzanine) => base.Render(background,
+        public ICanvasImage ReplaceRender(ICanvasImage background, string id, ICanvasImage mezzanine) => base.Render(background,
             (base.Id == id) ? mezzanine : this.Source);
         public ICanvasImage Render(ICanvasImage background, Matrix3x2 matrix, CanvasImageInterpolation interpolationMode) => base.Render(background, new Transform2DEffect
         {
@@ -74,7 +74,7 @@ namespace Luo_Painter.Layers.Models
             TransformMatrix = matrix,
             Source = this.Source
         });
-        public ICanvasImage Render(ICanvasImage background, Matrix3x2 matrix, CanvasImageInterpolation interpolationMode, string id, ICanvasImage mezzanine) => base.Render(background, new Transform2DEffect
+        public ICanvasImage ReplaceRender(ICanvasImage background, Matrix3x2 matrix, CanvasImageInterpolation interpolationMode, string id, ICanvasImage mezzanine) => base.Render(background, new Transform2DEffect
         {
             InterpolationMode = interpolationMode,
             TransformMatrix = matrix,
