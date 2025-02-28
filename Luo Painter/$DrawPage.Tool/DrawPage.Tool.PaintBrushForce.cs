@@ -42,7 +42,7 @@ namespace Luo_Painter
                 Rect? region = RectExtensions.TryGetRect(this.StartingPoint, this.CanvasVirtualControl.Size, this.CanvasVirtualControl.Dpi.ConvertPixelsToDips(cap.StartingSize * this.Transformer.Scale));
                 if (region.HasValue)
                 {
-                    await CanvasVirtualControl.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                    await this.CanvasVirtualControl.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
                     {
                         this.CanvasVirtualControl.Invalidate(region.Value); // Invalidate
                     });

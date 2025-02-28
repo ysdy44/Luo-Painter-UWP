@@ -105,10 +105,10 @@ namespace Luo_Painter.Models
             try { item = await StorageFolder.GetFolderFromPathAsync(this.Path); }
             catch (Exception) { return null; }
 
-            return await Load(this.Path, this.Name, this.DisplayName, item);
+            return await Load(this.Path, this.Name, this.DisplayName, item, true);
         }
 
-        private static async Task<ProjectParameter> Load(string path, string name, string displayName, StorageFolder folder)
+        private static async Task<ProjectParameter> Load(string path, string name, string displayName, StorageFolder folder, bool isCopyToTemporaryFolder)
         {
             // 1. Load xml
             string docProject = null;
@@ -133,10 +133,11 @@ namespace Luo_Painter.Models
             if (docProject is null) return null;
 
             // Copy
-            foreach (StorageFile file in files)
-            {
-                await file.CopyAsync(ApplicationData.Current.TemporaryFolder, file.Name, NameCollisionOption.ReplaceExisting);
-            }
+            if (isCopyToTemporaryFolder)
+                foreach (StorageFile file in files)
+                {
+                    await file.CopyAsync(ApplicationData.Current.TemporaryFolder, file.Name, NameCollisionOption.ReplaceExisting);
+                }
 
             // 2. Load Project.xml
             int width = 0;

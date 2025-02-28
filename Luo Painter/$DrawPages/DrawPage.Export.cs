@@ -21,7 +21,7 @@ namespace Luo_Painter
     {
         // UI Thread:
         // Save all files to TemporaryFolder, then move to Path
-        public async Task SaveAsync(string path = null) => await Save(path, this.LayerSelectedIndex);
+        public async Task SaveAsync(string path) => await this.Save(path, this.LayerSelectedIndex);
 
         private async Task Save(string path, int index)
         {
@@ -191,7 +191,7 @@ namespace Luo_Painter
                     // Photos
                     if (item.Photos is null is false)
                     {
-                        foreach (var item2 in item.Photos)
+                        foreach (KeyValuePair<string, SoftwareBitmap> item2 in item.Photos)
                         {
                             SoftwareBitmap softwareBitmap = item2.Value;
                             if (softwareBitmap is null) continue;
