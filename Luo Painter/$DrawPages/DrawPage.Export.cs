@@ -19,6 +19,27 @@ namespace Luo_Painter
 {
     public sealed partial class DrawPage
     {
+        //@Debug: Auto Save & Load
+        // Timer Thread:
+        // Save all files to TemporaryFolder
+        public async Task SaveTemporaryFolderAsync()
+        {
+            int index = -1;
+
+            for (int i = 0; i < ObservableCollection.Count; i++)
+            {
+                ILayer item = this.ObservableCollection[i];
+
+                if (item.Type is LayerType.Bitmap)
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            await this.Save(string.Empty, index);
+        }
+
         // UI Thread:
         // Save all files to TemporaryFolder, then move to Path
         public async Task SaveAsync(string path) => await this.Save(path, this.LayerSelectedIndex);
@@ -164,6 +185,8 @@ namespace Luo_Painter
             LayerDictionary.Instance.Clear();
             this.Nodes.Clear();
             this.ObservableCollection.Clear();
+
+            this.LocalSettings.Values.Remove(Project.PathOfProject);
         }
 
         public void Load(ProjectParameter item)

@@ -15,6 +15,7 @@ namespace Luo_Painter.Models
 {
     partial class Project
     {
+        public const string PathOfProject = "PathOfProject";
 
         public async Task<ProjectParameter> SaveAsync(StorageFolder item, System.Drawing.Size size)
         {
@@ -107,6 +108,14 @@ namespace Luo_Painter.Models
 
             return await Load(this.Path, this.Name, this.DisplayName, item, true);
         }
+
+        //@Static
+        // Load a Project from the TemporaryFolder
+        public static Task<ProjectParameter> LoadTemporaryFolderAsync(string path) => Load(path,
+            System.IO.Path.GetFileName(path),
+            System.IO.Path.GetFileNameWithoutExtension(path),
+            ApplicationData.Current.TemporaryFolder,
+            false);
 
         private static async Task<ProjectParameter> Load(string path, string name, string displayName, StorageFolder folder, bool isCopyToTemporaryFolder)
         {
