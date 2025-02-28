@@ -9,7 +9,7 @@ namespace Luo_Painter.TestApp
 {
     public sealed partial class ToastPage : Page
     {
-        
+
         //@Converter
         private ToastAudioType AudioTypeConverter(int value) => value < 0 ? ToastAudioType.Default : (ToastAudioType)value;
 
@@ -49,13 +49,14 @@ namespace Luo_Painter.TestApp
 
         private async void Toast_Activated(ToastNotification sender, object args)
         {
-            await base.Dispatcher.RunAsync(default, async () =>
-            {
-                await new MessageDialog(this.Subtitle, this.Title).ShowAsync();
-            });
+            await base.Dispatcher.RunAsync(default, this.ShowDialog);
 
             sender.Activated -= this.Toast_Activated;
         }
 
+        private async void ShowDialog()
+        {
+            await new MessageDialog(this.Subtitle, this.Title).ShowAsync();
+        }
     }
 }

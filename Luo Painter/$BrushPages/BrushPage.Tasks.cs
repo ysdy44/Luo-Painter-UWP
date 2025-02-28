@@ -87,15 +87,16 @@ namespace Luo_Painter
                 this.BitmapLayer.Clear(Colors.Transparent, BitmapType.Temp);
             }
 
-            await this.CanvasControl.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
-            {
-                // History
-                this.BitmapLayer.Flush();
-                this.BitmapLayer.RenderThumbnail();
-
-                this.CanvasControl.Invalidate(); // Invalidate
-            });
+            await this.CanvasControl.Dispatcher.RunAsync(CoreDispatcherPriority.Low, this.Completed);
         }
 
+        private void Completed()
+        {
+            // History
+            this.BitmapLayer.Flush();
+            this.BitmapLayer.RenderThumbnail();
+
+            this.CanvasControl.Invalidate(); // Invalidate
+        }
     }
 }

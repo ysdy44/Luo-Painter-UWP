@@ -127,29 +127,7 @@ namespace Luo_Painter
             e.Handled = true;
             Debugger debug = new Debugger(e);
 
-            await Window.Current.Content.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
-            {
-                ContentDialog contentDialog = new ContentDialog
-                {
-                    Title = debug.Title,
-                    Content = debug.Content,
-
-                    PrimaryButtonText = UIType.Feedback.GetString(),
-                    PrimaryButtonCommandParameter = ContentDialogButton.Primary,
-                    PrimaryButtonCommand = debug,
-
-                    SecondaryButtonText = OptionType.Copy.GetString(),
-                    SecondaryButtonCommandParameter = ContentDialogButton.Secondary,
-                    SecondaryButtonCommand = debug,
-
-                    CloseButtonText = OptionType.Close.GetString(),
-                    CloseButtonCommandParameter = ContentDialogButton.Close,
-                    CloseButtonCommand = debug,
-
-                    DefaultButton = ContentDialogButton.Close,
-                };
-                await contentDialog.ShowAsync();
-            });
+            await Window.Current.Content.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, debug.ShowDialog);
         }
     }
 }

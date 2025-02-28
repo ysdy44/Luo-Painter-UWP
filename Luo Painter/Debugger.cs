@@ -92,5 +92,29 @@ namespace Luo_Painter
                 }
             }
         }
+
+        public async void ShowDialog()
+        {
+            ContentDialog contentDialog = new ContentDialog
+            {
+                Title = this.Title,
+                Content = this.Content,
+
+                PrimaryButtonText = UIType.Feedback.GetString(),
+                PrimaryButtonCommandParameter = ContentDialogButton.Primary,
+                PrimaryButtonCommand = this,
+
+                SecondaryButtonText = OptionType.Copy.GetString(),
+                SecondaryButtonCommandParameter = ContentDialogButton.Secondary,
+                SecondaryButtonCommand = this,
+
+                CloseButtonText = OptionType.Close.GetString(),
+                CloseButtonCommandParameter = ContentDialogButton.Close,
+                CloseButtonCommand = this,
+
+                DefaultButton = ContentDialogButton.Close,
+            };
+            await contentDialog.ShowAsync();
+        }
     }
 }
