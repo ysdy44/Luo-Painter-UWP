@@ -19,8 +19,11 @@ namespace Luo_Painter
 {
     public sealed partial class DrawPage
     {
+        // UI Thread:
+        // Save all files to TemporaryFolder, then move to Path
+        public async Task SaveAsync(string path = null) => await Save(path, this.LayerSelectedIndex);
 
-        public async Task SaveAsync(string path = null)
+        private async Task Save(string path, int index)
         {
             // 1. Save Thumbnail.png
             float scaleX = 256f / this.Transformer.Width;
@@ -48,7 +51,7 @@ namespace Luo_Painter
                 new XDocument(new XElement("Root",
                     new XElement("Width", this.Transformer.Width),
                     new XElement("Height", this.Transformer.Height),
-                    new XElement("Index", this.LayerSelectedIndex),
+                    new XElement("Index", index),
                     new XElement("Layerages", this.Nodes.Save()))).Save(stream.AsStream());
             }
 

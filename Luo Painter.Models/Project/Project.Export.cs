@@ -98,19 +98,25 @@ namespace Luo_Painter.Models
             };
         }
 
+        // Load a Project from a folder
         public async Task<ProjectParameter> LoadAsync()
         {
             StorageFolder item;
             try { item = await StorageFolder.GetFolderFromPathAsync(this.Path); }
             catch (Exception) { return null; }
 
+            return await Load(this.Path, this.Name, this.DisplayName, item);
+        }
+
+        private static async Task<ProjectParameter> Load(string path, string name, string displayName, StorageFolder folder)
+        {
             // 1. Load xml
             string docProject = null;
             string docLayers = null;
             string docBitmaps = null;
             string docPhotos = null;
 
-            IReadOnlyList<StorageFile> files = await item.GetFilesAsync();
+            IReadOnlyList<StorageFile> files = await folder.GetFilesAsync();
             foreach (StorageFile file in files)
             {
                 string id = file.Name;
@@ -163,9 +169,9 @@ namespace Luo_Painter.Models
                 {
                     Type = ProjectParameterType.NewProject,
 
-                    Path = this.Path,
-                    Name = this.Name,
-                    DisplayName = this.DisplayName,
+                    Path = path,
+                    Name = name,
+                    DisplayName = displayName,
 
                     Width = width,
                     Height = height,
@@ -244,9 +250,9 @@ namespace Luo_Painter.Models
             {
                 Type = ProjectParameterType.OpenProject,
 
-                Path = this.Path,
-                Name = this.Name,
-                DisplayName = this.DisplayName,
+                Path = path,
+                Name = name,
+                DisplayName = displayName,
 
                 Width = width,
                 Height = height,
