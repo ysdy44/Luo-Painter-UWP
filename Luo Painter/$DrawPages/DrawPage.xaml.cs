@@ -294,12 +294,48 @@ namespace Luo_Painter
             };
             this.AutoSaveTimer.Elapsed += async delegate
             {
+                // 1. Storyboard.Begin()
+                await base.Dispatcher.RunAsync(CoreDispatcherPriority.Low, this.AnimationIcon.Begin); // Storyboard
+
+                string pathOfProject = this.AutoSavePathOfProject;
+                if (string.IsNullOrEmpty(pathOfProject))
+                    return;
+
+                // 2. Save all files to TemporaryFolder
+                await this.SaveTemporaryFolderAsync();
+
+                // 3. Save the PathOfProject file
+                this.LocalSettings.Values[Project.PathOfProject] = pathOfProject;
             };
             Windows.ApplicationModel.Core.CoreApplication.Exiting += async delegate // Windows 8.0 API
             {
+                // 1. Storyboard.Begin()
+                //await base.Dispatcher.RunAsync(CoreDispatcherPriority.Low, this.AnimationIcon.Begin); // Storyboard
+
+                string pathOfProject = this.AutoSavePathOfProject;
+                if (string.IsNullOrEmpty(pathOfProject))
+                    return;
+
+                // 2. Save all files to TemporaryFolder
+                await this.SaveTemporaryFolderAsync();
+
+                // 3. Save the PathOfProject file
+                this.LocalSettings.Values[Project.PathOfProject] = pathOfProject;
             };
             AppDomain.CurrentDomain.UnhandledException += delegate
             {
+                // 1. Storyboard.Begin()
+                //await base.Dispatcher.RunAsync(CoreDispatcherPriority.Low, this.AnimationIcon.Begin); // Storyboard
+
+                string pathOfProject = this.AutoSavePathOfProject;
+                if (string.IsNullOrEmpty(pathOfProject))
+                    return;
+
+                // 2. Save all files to TemporaryFolder
+                //await this.SaveTemporaryFolderAsync();
+
+                // 3. Save the PathOfProject file
+                this.LocalSettings.Values[Project.PathOfProject] = pathOfProject;
             };
 
             this.CanvasDevice.DeviceLost += async (s, e) =>

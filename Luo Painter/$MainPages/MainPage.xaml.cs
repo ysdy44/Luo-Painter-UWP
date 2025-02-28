@@ -25,6 +25,9 @@ namespace Luo_Painter
         private ListViewSelectionMode BooleanToSelectionModeConverter(bool value) => value ? ListViewSelectionMode.None : ListViewSelectionMode.Multiple;
         private ListViewReorderMode BooleanToReorderModeConverter(bool value) => value ? ListViewReorderMode.Enabled : ListViewReorderMode.Disabled;
 
+        //@Setting
+        private readonly ApplicationDataContainer LocalSettings = ApplicationData.Current.LocalSettings;
+
         public int SelectedCount { get; private set; }
         public BreadcrumbObservableCollection Paths { get; } = new BreadcrumbObservableCollection();
         public ProjectObservableCollection ObservableCollection { get; } = new ProjectObservableCollection();
@@ -80,6 +83,22 @@ namespace Luo_Painter
 
                 this.AlignmentGrid.RebuildWithInterpolation(e.NewSize);
                 this.ListView.Resizing(e.NewSize);
+            };
+
+            //@Debug: Auto Save & Load
+            base.Loaded += async delegate
+            {
+                if (this.LocalSettings.Values.ContainsKey(Project.PathOfProject))
+                {
+                    if (this.LocalSettings.Values[Project.PathOfProject] is string path)
+                    {
+                        ProjectParameter parameter = await Project.LoadTemporaryFolderAsync(path);
+                        if (parameter is null)
+                            return;
+
+                        base.Frame.Navigate(typeof(DrawPage), parameter);
+                    }
+                }
             };
 
             this.TitleButton.Click += async (s, e) => await this.LogDialog.ShowInstance();
