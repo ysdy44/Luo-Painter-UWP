@@ -136,6 +136,10 @@ namespace Luo_Painter
 
         //@Debug: Auto Save & Load
         string AutoSavePathOfProject;
+        readonly Timer AutoSaveTimer = new Timer
+        {
+            Interval = 1000 * 60 // 1 Minute
+        };
 
         //@Task
         readonly object Locker = new object();
@@ -280,6 +284,23 @@ namespace Luo_Painter
             this.ConstructMove();
             this.ConstructTransform();
             this.ConstructFreeTransform();
+
+            //@Debug: Auto Save & Load
+            base.Unloaded += delegate { this.AutoSaveTimer.Stop(); };
+            base.Loaded += delegate
+            {
+                this.AutoSaveTimer.Stop();
+                this.AutoSaveTimer.Start();
+            };
+            this.AutoSaveTimer.Elapsed += async delegate
+            {
+            };
+            Windows.ApplicationModel.Core.CoreApplication.Exiting += async delegate // Windows 8.0 API
+            {
+            };
+            AppDomain.CurrentDomain.UnhandledException += delegate
+            {
+            };
 
             this.CanvasDevice.DeviceLost += async (s, e) =>
             {
