@@ -13,12 +13,14 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Input;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Devices.Input;
 using Windows.Foundation;
 using Windows.Graphics.Display;
 using Windows.Storage;
+using Windows.Storage.Streams;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Popups;
@@ -131,6 +133,9 @@ namespace Luo_Painter
         bool IsReferenceImageResizing { get; set; }
         ReferenceImage ReferenceImage { get; set; }
         IList<ReferenceImage> ReferenceImages { get; } = new List<ReferenceImage>();
+
+        //@Debug: Auto Save & Load
+        string AutoSavePathOfProject;
 
         //@Task
         readonly object Locker = new object();
@@ -476,6 +481,7 @@ namespace Luo_Painter
 
                         this.ApplicationView.Title = item.DisplayName;
                         this.ApplicationView.PersistedStateId = item.Path;
+                        this.AutoSavePathOfProject = item.Path;
 
                         this.Load(item);
 
@@ -491,6 +497,7 @@ namespace Luo_Painter
                     {
                         this.ApplicationView.Title = string.Empty;
                         this.ApplicationView.PersistedStateId = string.Empty;
+                        this.AutoSavePathOfProject = string.Empty;
 
                         if (base.Frame.CanGoBack)
                         {
