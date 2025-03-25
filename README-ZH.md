@@ -4,7 +4,7 @@
 
  
  Windows 10 app 应用商店地址: 
-[购置 洛画 - 微软商店](https://www.microsoft.com/store/productId/9NWRWGKW5MK3)   
+[购置 洛画 - 微软商店](https://apps.microsoft.com/detail/9nwrwgkw5mk3)   
 
 
 <br/>

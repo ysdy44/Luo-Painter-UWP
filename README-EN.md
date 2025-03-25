@@ -4,7 +4,7 @@
 
  
  Windows 10 app store address: 
-[Buy Luo-Painter - Microsoft Store](https://www.microsoft.com/store/productId/9NWRWGKW5MK3)   
+[Buy Luo-Painter - Microsoft Store](https://apps.microsoft.com/detail/9nwrwgkw5mk3)   
 
 
 <br/>
