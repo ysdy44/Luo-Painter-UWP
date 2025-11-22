@@ -16,34 +16,38 @@
         </Flyout>
     </FrameworkElement.Resources>
 
-    <StackPanel 
-        Padding="12"
+    <StackPanel
         Spacing="12"
         Width="320"
         HorizontalAlignment="Center" 
-        VerticalAlignment="Center"   
-        Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}"
+        VerticalAlignment="Center" 
         >
 
-        <TextBlock x:Name="TextBlock" HorizontalAlignment="Center" Style="{StaticResource HeaderTextBlockStyle}">
-            0
-        </TextBlock>
-
         <!--Button-->
-        <TextBlock Margin="10,0" Foreground="{ThemeResource SystemColorControlAccentBrush}" Style="{StaticResource BaseTextBlockStyle}">
-            Button
-        </TextBlock>
-        <hsvColorPickers:NumberButton x:Name="NumberButton" Margin="8,0" Value="0" Minimum="0" Maximum="100" Unit="º"/>
-      
+        <StackPanel Padding="12" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+            <TextBlock x:Name="TextBlock" HorizontalAlignment="Center" Style="{StaticResource HeaderTextBlockStyle}">
+                0
+            </TextBlock>
+
+            <TextBlock Margin="10,0" Foreground="{ThemeResource SystemColorControlAccentBrush}" Style="{StaticResource BaseTextBlockStyle}">
+                Button
+            </TextBlock>
+            <hsvColorPickers:NumberButton x:Name="NumberButton" Margin="8,0" Value="0" Minimum="0" Maximum="100" Unit="º"/>
+        </StackPanel>
+
         <!--Slider-->
-        <hsvColorPickers:NumberSlider x:Name="NumberSlider" Minimum="0" Maximum="100" Unit="º">
-            <Slider.Header>
-                Slider
-            </Slider.Header>
-        </hsvColorPickers:NumberSlider>
+        <Border Padding="12" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+            <hsvColorPickers:NumberSlider x:Name="NumberSlider" Minimum="0" Maximum="100" Unit="º">
+                <Slider.Header>
+                    Slider
+                </Slider.Header>
+            </hsvColorPickers:NumberSlider>
+        </Border>
 
         <!--Protractor-->
-        <hsvColorPickers:NumberProtractor x:Name="NumberProtractor"/>
-        
+        <Border Padding="12" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+            <hsvColorPickers:NumberProtractor x:Name="NumberProtractor"/>
+        </Border>
+
     </StackPanel>
 </Page>
