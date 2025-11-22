@@ -6,13 +6,6 @@ using Windows.UI.Xaml.Controls;
 
 namespace Luo_Painter.Layers
 {
-    public sealed class BlendResourceUri : Uri
-    {
-        public BlendResourceUri(BlendEffectMode type) : base($"ms-appx:///Luo Painter.Blends/Icons/{type.GetTitle()}Icon.xaml")
-        {
-        }
-    }
-
     public static class BlendExtensions
     {
         public static BlendEffectMode None = (BlendEffectMode)(-1); // None
@@ -20,8 +13,5 @@ namespace Luo_Painter.Layers
 
         public static string GetTitle(this BlendEffectMode type) => type.IsDefined() ? type.ToString() : "None";
         public static string GetIcon(this BlendEffectMode type) => type.IsDefined() ? type.ToString().First().ToString() : "N";
-
-        //@Resource
-        public static ControlTemplate GetTemplate(this BlendEffectMode type, ResourceDictionary resource) => resource[$"{type.GetTitle()}Icon"] as ControlTemplate;
     }
 }
