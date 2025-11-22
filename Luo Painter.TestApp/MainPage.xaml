@@ -9,130 +9,27 @@
     >
 
     <FrameworkElement.Resources>
-        <CollectionViewSource x:Name="Collection" IsSourceGrouped="True" Source="{x:Bind Groupings}">
-            <!--Source-->
-        </CollectionViewSource>
+        <TransitionCollection x:Key="Entrance">
+            <EntranceThemeTransition IsStaggeringEnabled="True"/>
+        </TransitionCollection>
     </FrameworkElement.Resources>
 
-    <SplitView x:Name="SplitView" DisplayMode="CompactInline" 
-               IsPaneOpen="{x:Bind BooleanNullableConverter(SplitButton.IsChecked), Mode=OneWay}" >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-
-        <!--VisualState-->
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
-
-                <!--Phone-->
-                <VisualState x:Name="Phone">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="SplitView.DisplayMode" Value="CompactOverlay"/>
-                        <Setter Target="SplitView.IsPaneOpen" Value="False"/>
-                    </VisualState.Setters>
-                </VisualState>
-
-                <!--Pad-->
-                <VisualState x:Name="Pad">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="600"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="SplitView.DisplayMode" Value="CompactOverlay"/>
-                        <Setter Target="SplitView.IsPaneOpen" Value="False"/>
-                    </VisualState.Setters>
-                </VisualState>
-
-                <!--PC-->
-                <VisualState x:Name="PC">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="900"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="SplitView.DisplayMode" Value="CompactInline"/>
-                        <Setter Target="SplitView.IsPaneOpen" Value="True"/>
-                    </VisualState.Setters>
-                </VisualState>
-
-
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
-
-
-        <SplitView.Pane>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="50"/>
-                    <RowDefinition Height="50"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <StackPanel Height="50" Orientation="Horizontal">
-                    <ToggleButton x:Name="SplitButton" IsChecked="True" Width="50" Style="{StaticResource TextBlockButtonStyle}">
-                        <SymbolIcon Symbol="GlobalNavigationButton" />
-                    </ToggleButton>
-                    <TextBlock x:Name="TextBlock" Margin="12,0" Style="{StaticResource SubheaderTextBlockStyle}" >
-                        Pages
-                    </TextBlock>
-                </StackPanel>
-                <AutoSuggestBox x:Name="AutoSuggestBox" Grid.Row="1" Margin="12,0" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" 
-                                   Visibility="{x:Bind BooleanNullableToVisibilityConverter(SplitButton.IsChecked), Mode=OneWay}" >
-                    <!--ItemsSource-->
-                </AutoSuggestBox>
-                <SemanticZoom x:Name="SemanticZoom" Grid.Row="2" >
-                    <SemanticZoom.ZoomedInView>
-                        <ListView ItemsSource="{x:Bind Collection.View}" x:Name="ListView" IsItemClickEnabled="True" >
-                            <ListViewBase.Footer>
-                                <Image Width="50" Height="50" HorizontalAlignment="Left">
-                                    <Image.Source>
-                                        ms-appx:///Assets/SplashScreen.scale-200.png
-                                    </Image.Source>
-                                </Image>
-                            </ListViewBase.Footer>
-                            <ItemsControl.ItemContainerStyle>
-                                <Style TargetType="ListViewItem" >
-                                    <Setter Property="Height" Value="50" />
-                                </Style>
-                            </ItemsControl.ItemContainerStyle>
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate x:DataType="x:String" >
-                                    <StackPanel Height="50" Orientation="Horizontal" >
-                                        <Border CornerRadius="18" Width="26" Height="26" Background="{ThemeResource SystemColorControlAccentBrush}" >
-                                            <TextBlock Margin="8,2,0,0" Text="{x:Bind}" CharacterSpacing="1024" FontWeight="Bold" Foreground="White" />
-                                        </Border>
-                                        <ContentControl Width="12" />
-                                        <TextBlock LineHeight="12" VerticalAlignment="Center" Style="{StaticResource SubtitleTextBlockStyle}" >
-                                            <Run Text="{x:Bind}" />
-                                            <LineBreak/>
-                                            <Run FontSize="10" Text="{x:Bind}" Foreground="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}" />
-                                        </TextBlock>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                            <ItemsControl.GroupStyle>
-                                <GroupStyle/>
-                            </ItemsControl.GroupStyle>
-                        </ListView>
-                    </SemanticZoom.ZoomedInView>
-                    <SemanticZoom.ZoomedOutView>
-                        <GridView FontSize="122" Margin="20" HorizontalAlignment="Center" VerticalAlignment="Center" ItemsSource="{x:Bind Collection.View.CollectionGroups}" >
-                            <ItemsControl.ItemContainerStyle>
-                                <Style TargetType="GridViewItem" >
-                                    <Setter Property="FontSize" Value="22" />
-                                </Style>
-                            </ItemsControl.ItemContainerStyle>
-                        </GridView>
-                    </SemanticZoom.ZoomedOutView>
-                </SemanticZoom>
-            </Grid>
-        </SplitView.Pane>
-
-
-        <Frame x:Name="Frame" >
-            <Page>
-                <TextBlock FontSize="22" Foreground="White"
-                   TextWrapping="Wrap" MaxWidth="700"
-                   HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Frame x:Name="ContentFrame" Grid.Row="1">
+            <Page x:Name="ContentPage">
+                <TextBlock
+                    FontSize="22"
+                    Foreground="White"
+                    TextWrapping="Wrap"
+                    MaxWidth="700"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    >
                     <Run FontSize="100" Text="&#xED59;" FontFamily="Segoe MDL2 Assets"/>
                     <LineBreak/>
                     <LineBreak/>
@@ -170,6 +67,1893 @@
             </Page>
         </Frame>
 
+        <ListView
+            x:Name="ListView"
+            ScrollViewer.VerticalScrollMode="Disabled"
+            ScrollViewer.HorizontalScrollMode="Enabled"
+            ScrollViewer.VerticalScrollBarVisibility="Disabled"
+            ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+            ItemContainerTransitions="{StaticResource Entrance}"
+            Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}"
+            >
+            <ListView.Header>
+                <Button Width="50" Style="{StaticResource TextBlockButtonStyle}">
+                    <Button.Flyout>
+                        <MenuFlyout x:Name="MenuFlyout">
+                            <!--Items-->
+                        </MenuFlyout>
+                    </Button.Flyout>
+                    <SymbolIcon Symbol="GlobalNavigationButton"/>
+                </Button>
+            </ListView.Header>
+            <ListView.Footer>
+                <AutoSuggestBox x:Name="AutoSuggestBox" Margin="12,0" MinWidth="220" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" >
+                    <AutoSuggestBox.PlaceholderText>
+                        Search
+                    </AutoSuggestBox.PlaceholderText>
+                </AutoSuggestBox>
+            </ListView.Footer>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="MinWidth" Value="64"/>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            <!--ItemsSource-->
+        </ListView>
 
-    </SplitView>
+        <Grid x:Name="Overlay" Grid.Row="1" Visibility="Collapsed" Background="#44000000">
+            <ScrollViewer Visibility="Collapsed" MinHeight="178" MaxHeight="338" VerticalAlignment="Top" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+                <FrameworkElement.Tag>
+                    Color
+                </FrameworkElement.Tag>
+                <StackPanel Margin="8">
+
+                    <TextBlock Margin="14,4" Transitions="{StaticResource Entrance}">
+                        Color
+                    </TextBlock>
+
+                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="156" ItemHeight="134" ChildrenTransitions="{StaticResource Entrance}">
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                ColorPicker
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Ellipse Canvas.Left="26" Canvas.Top="3" Width="76" Height="76" Fill="DeepSkyBlue"/>
+                                    <Ellipse Canvas.Left="33" Canvas.Top="10" Width="62" Height="62" Fill="#F3F3F3"/>
+                                    <Rectangle Canvas.Left="44" Canvas.Top="21" Width="40" Height="40" Fill="DeepSkyBlue"/>
+
+                                    <Ellipse Canvas.Left="59" Canvas.Top="49" Width="8" Height="8" Fill="White"/>
+
+                                    <Line X1="94" Y1="41" X2="100" Y2="41" StrokeThickness="8" StrokeStartLineCap="Triangle" StrokeEndLineCap="Square" Stroke="DeepSkyBlue"/>
+                                    <Line X1="94" Y1="41" X2="100" Y2="41" StrokeThickness="6" StrokeStartLineCap="Triangle" StrokeEndLineCap="Square" Stroke="White"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Color Picker
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                ColorValuePicker
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Rectangle Canvas.Left="24" Canvas.Top="34" Width="80" Height="20" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="32" Canvas.Top="42" RadiusX="2" RadiusY="2" Width="64" Height="4" Fill="White"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Color Value Picker
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                ColorHarmonyPicker
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Ellipse Canvas.Left="26" Canvas.Top="3" Width="76" Height="76" Fill="DeepSkyBlue"/>
+
+                                    <Polygon StrokeThickness="2" StrokeDashArray="3 1" Stroke="White">
+                                        <Polygon.Points>
+                                            38, 27
+                                            90, 27
+                                            64, 71
+                                        </Polygon.Points>
+                                    </Polygon>
+
+                                    <Ellipse Canvas.Left="33" Canvas.Top="22" Width="10" Height="10" Fill="White"/>
+                                    <Ellipse Canvas.Left="85" Canvas.Top="22" Width="10" Height="10" Fill="White"/>
+                                    <Ellipse Canvas.Left="59" Canvas.Top="64" Width="10" Height="10" Fill="White"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Color Harmony Picker
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                    </VariableSizedWrapGrid>
+
+                    <TextBlock Margin="14,4" Transitions="{StaticResource Entrance}">
+                        Background
+                    </TextBlock>
+
+                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="156" ItemHeight="134" ChildrenTransitions="{StaticResource Entrance}">
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                AlignmentGrid
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="DeepSkyBlue">
+                                    <Line X1="14" Y1="0" X2="14" Y2="82" StrokeThickness="1" Stroke="White"/>
+                                    <Line X1="34" Y1="0" X2="34" Y2="82" StrokeThickness="1" Stroke="White"/>
+                                    <Line X1="54" Y1="0" X2="54" Y2="82" StrokeThickness="1" Stroke="White"/>
+                                    <Line X1="74" Y1="0" X2="74" Y2="82" StrokeThickness="1" Stroke="White"/>
+                                    <Line X1="94" Y1="0" X2="94" Y2="82" StrokeThickness="1" Stroke="White"/>
+                                    <Line X1="114" Y1="0" X2="114" Y2="82" StrokeThickness="1" Stroke="White"/>
+
+                                    <Line X1="0" Y1="11" X2="128" Y2="11" StrokeThickness="1" Stroke="White"/>
+                                    <Line X1="0" Y1="31" X2="128" Y2="31" StrokeThickness="1" Stroke="White"/>
+                                    <Line X1="0" Y1="51" X2="128" Y2="51" StrokeThickness="1" Stroke="White"/>
+                                    <Line X1="0" Y1="71" X2="128" Y2="71" StrokeThickness="1" Stroke="White"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Alignment Grid
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                NightSkyTimeLapse
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="DeepSkyBlue">
+                                    <Path StrokeThickness="1" Stroke="White">
+                                        <Path.Data>
+                                            <PathGeometry>
+                                                <PathGeometry.Figures>
+                                                    <PathFigureCollection>
+                                                        <PathFigure StartPoint="12,74">
+                                                            <PathFigure.Segments>
+                                                                <ArcSegment Size="54,54" Point="116,74" IsLargeArc="True" SweepDirection="Clockwise"/>
+                                                            </PathFigure.Segments>
+                                                        </PathFigure>
+                                                        <PathFigure StartPoint="24,74">
+                                                            <PathFigure.Segments>
+                                                                <ArcSegment Size="42,42" Point="104,74" IsLargeArc="True" SweepDirection="Clockwise"/>
+                                                            </PathFigure.Segments>
+                                                        </PathFigure>
+                                                        <PathFigure StartPoint="34,74">
+                                                            <PathFigure.Segments>
+                                                                <ArcSegment Size="32,32" Point="94,74" IsLargeArc="True" SweepDirection="Clockwise"/>
+                                                            </PathFigure.Segments>
+                                                        </PathFigure>
+                                                    </PathFigureCollection>
+                                                </PathGeometry.Figures>
+                                            </PathGeometry>
+                                        </Path.Data>
+                                    </Path>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Night Sky Time Lapse
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                SpottedPattern
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="DeepSkyBlue">
+                                    <Line X1="22" Y1="2" X2="2" Y2="52" StrokeThickness="2" StrokeDashArray="1 8" Stroke="White"/>
+                                    <Line X1="42" Y1="2" X2="6" Y2="82" StrokeThickness="2" StrokeDashArray="1 8" Stroke="White"/>
+                                    <Line X1="62" Y1="2" X2="26" Y2="82" StrokeThickness="3" StrokeDashArray="1 6" Stroke="White"/>
+                                    <Line X1="82" Y1="2" X2="46" Y2="82" StrokeThickness="3" StrokeDashArray="1 6" Stroke="White"/>
+                                    <Line X1="102" Y1="2" X2="66" Y2="82" StrokeThickness="4" StrokeDashArray="1 4" Stroke="White"/>
+                                    <Line X1="122" Y1="2" X2="86" Y2="82" StrokeThickness="4" StrokeDashArray="1 4" Stroke="White"/>
+                                    <Line X1="124" Y1="38" X2="106" Y2="82" StrokeThickness="5" StrokeDashArray="1 3" Stroke="White"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Spotted Pattern
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                SolarSystem
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="DeepSkyBlue">
+                                    <Ellipse Canvas.Left="22" Canvas.Top="25" Width="32" Height="32" Fill="#7ADEFF"/>
+                                    <Ellipse Canvas.Left="62" Canvas.Top="30" Width="22" Height="22" Fill="#B8EDFF"/>
+                                    <Ellipse Canvas.Left="92" Canvas.Top="35" Width="12" Height="12" Fill="White"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Solar System
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                    </VariableSizedWrapGrid>
+
+                </StackPanel>
+            </ScrollViewer>
+
+            <ScrollViewer Visibility="Collapsed" MinHeight="178" MaxHeight="338" VerticalAlignment="Top" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+                <FrameworkElement.Tag>
+                    Input
+                </FrameworkElement.Tag>
+                <StackPanel Margin="8">
+
+                    <TextBlock Margin="14,4" Transitions="{StaticResource Entrance}">
+                        General
+                    </TextBlock>
+
+                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="156" ItemHeight="134" ChildrenTransitions="{StaticResource Entrance}">
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                TextLayouts
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <TextBlock Canvas.Left="42" FontSize="64" Foreground="DeepSkyBlue">
+                                        A
+                                    </TextBlock>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Text Layouts
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                CustomEditor
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <TextBlock Canvas.Left="14" FontSize="64" Foreground="DeepSkyBlue">
+                                        abc
+                                    </TextBlock>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Custom Editor
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                    </VariableSizedWrapGrid>
+
+                    <TextBlock Margin="14,4" Transitions="{StaticResource Entrance}">
+                        Thumb
+                    </TextBlock>
+
+                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="156" ItemHeight="134" ChildrenTransitions="{StaticResource Entrance}">
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                Eyedropper
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Rectangle Canvas.Left="46" Canvas.Top="22" Width="36" Height="36" Fill="White"/>
+                                    <FontIcon Canvas.Left="52" Canvas.Top="28" Glyph="&#xEF3C;" FontSize="24" FontFamily="Segoe MDL2 Assets" Foreground="DeepSkyBlue"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Eyedropper
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                Number
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Rectangle Canvas.Left="32" Canvas.Top="28" RadiusX="4" RadiusY="4" Width="64" Height="24" Fill="DeepSkyBlue"/>
+                                    <Ellipse Canvas.Left="58" Canvas.Top="31" Width="12" Height="18" StrokeThickness="2" Stroke="White"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Number
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                SliderToolTip
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Rectangle Canvas.Left="32" Canvas.Top="8" RadiusX="4" RadiusY="4" Width="64" Height="64" Fill="DeepSkyBlue"/>
+                                    <Ellipse Canvas.Left="48" Canvas.Top="24" Width="32" Height="32" Fill="White"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Slider Tool Tip
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                    </VariableSizedWrapGrid>
+
+                </StackPanel>
+            </ScrollViewer>
+
+            <ScrollViewer Visibility="Collapsed" MinHeight="178" MaxHeight="338" VerticalAlignment="Top" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+                <FrameworkElement.Tag>
+                    Transform
+                </FrameworkElement.Tag>
+                <StackPanel Margin="8">
+
+                    <TextBlock Margin="14,4" Transitions="{StaticResource Entrance}">
+                        General
+                    </TextBlock>
+
+                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="156" ItemHeight="134" ChildrenTransitions="{StaticResource Entrance}">
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                Transform
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Rectangle Canvas.Left="37" Canvas.Top="13" Width="54" Height="54" StrokeThickness="2" Stroke="DeepSkyBlue" Fill="White"/>
+
+                                    <Rectangle Canvas.Left="35" Canvas.Top="11" Width="6" Height="6" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="87" Canvas.Top="11" Width="6" Height="6" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="87" Canvas.Top="63" Width="6" Height="6" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="35" Canvas.Top="63" Width="6" Height="6" Fill="DeepSkyBlue"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Transform
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                FreeTransform
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Polygon StrokeThickness="2" Stroke="DeepSkyBlue" Fill="White">
+                                        <Polygon.Points>
+                                            38, 18
+                                            90, 10
+                                            90, 70
+                                            38, 62
+                                        </Polygon.Points>
+                                    </Polygon>
+
+                                    <Rectangle Canvas.Left="35" Canvas.Top="15" Width="6" Height="6" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="87" Canvas.Top="7" Width="6" Height="6" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="87" Canvas.Top="67" Width="6" Height="6" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="35" Canvas.Top="59" Width="6" Height="6" Fill="DeepSkyBlue"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Free Transform
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                MarqueeTool
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Rectangle Canvas.Left="32" Canvas.Top="8" Width="64" Height="64" StrokeThickness="2" StrokeDashArray="4 4" Stroke="DeepSkyBlue"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Marquee Tool
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                    </VariableSizedWrapGrid>
+
+                    <TextBlock Margin="14,4" Transitions="{StaticResource Entrance}">
+                        Canvas
+                    </TextBlock>
+
+                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="156" ItemHeight="134" ChildrenTransitions="{StaticResource Entrance}">
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                CanvasTransformer
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Rectangle Canvas.Left="20" Canvas.Top="10" Width="88" Height="62" Fill="#F3F3F3"/>
+                                    <Rectangle Canvas.Left="42" Canvas.Top="18" Width="44" Height="44" StrokeThickness="2" Stroke="DeepSkyBlue" Fill="White"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                Canvas Transformer
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                CanvasTransformer2
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Rectangle Canvas.Left="20" Canvas.Top="10" Width="88" Height="62" Fill="#F3F3F3"/>
+                                    <Rectangle Canvas.Left="42" Canvas.Top="18" Width="44" Height="44" StrokeThickness="2" Stroke="DeepSkyBlue" Fill="White"/>
+
+                                    <Rectangle Canvas.Left="40" Canvas.Top="16" Width="6" Height="6" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="82" Canvas.Top="16" Width="6" Height="6" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="82" Canvas.Top="58" Width="6" Height="6" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="40" Canvas.Top="58" Width="6" Height="6" Fill="DeepSkyBlue"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Canvas Transformer 2
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                CanvasTransformer3
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Rectangle Canvas.Left="20" Canvas.Top="10" Width="88" Height="62" Fill="#F3F3F3"/>
+                                    <Rectangle Canvas.Left="42" Canvas.Top="18" Width="44" Height="44" StrokeThickness="2" Stroke="DeepSkyBlue" Fill="White"/>
+
+                                    <Rectangle Canvas.Left="40" Canvas.Top="16" Width="6" Height="6" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="82" Canvas.Top="16" Width="6" Height="6" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="82" Canvas.Top="58" Width="6" Height="6" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="40" Canvas.Top="58" Width="6" Height="6" Fill="DeepSkyBlue"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Canvas Transformer 3
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                MarqueeToolTransform
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Rectangle Canvas.Left="32" Canvas.Top="8" Width="64" Height="64" StrokeThickness="2" StrokeDashArray="4 4" Stroke="DeepSkyBlue"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Marquee Tool Transform
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                    </VariableSizedWrapGrid>
+
+                </StackPanel>
+            </ScrollViewer>
+
+            <ScrollViewer Visibility="Collapsed" MinHeight="178" MaxHeight="338" VerticalAlignment="Top" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+                <FrameworkElement.Tag>
+                    Control
+                </FrameworkElement.Tag>
+                <StackPanel Margin="8">
+
+                    <TextBlock Margin="14,4" Transitions="{StaticResource Entrance}">
+                        General
+                    </TextBlock>
+
+                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="156" ItemHeight="134" ChildrenTransitions="{StaticResource Entrance}">
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                Breadcrumb
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Polygon Fill="White">
+                                        <Polygon.Points>
+                                            10,47
+                                            15,41
+                                            10,35
+                                            110,35
+                                            115,41
+                                            110,47
+                                        </Polygon.Points>
+                                    </Polygon>
+                                    <Polygon Fill="DeepSkyBlue">
+                                        <Polygon.Points>
+                                            10,47
+                                            15,41
+                                            10,35
+                                            40,35
+                                            45,41
+                                            40,47
+                                        </Polygon.Points>
+                                    </Polygon>
+                                    <Polygon Fill="DeepSkyBlue">
+                                        <Polygon.Points>
+                                            45,47
+                                            50,41
+                                            45,35
+                                            75,35
+                                            80,41
+                                            75,47
+                                        </Polygon.Points>
+                                    </Polygon>
+                                    <Polygon Fill="DeepSkyBlue">
+                                        <Polygon.Points>
+                                            80,47
+                                            85,41
+                                            80,35
+                                            110,35
+                                            115,41
+                                            110,47
+                                        </Polygon.Points>
+                                    </Polygon>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Breadcrumb
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                Marble
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Ellipse Canvas.Left="40" Canvas.Top="17" Width="48" Height="48" Fill="White"/>
+                                    <Ellipse Canvas.Left="42" Canvas.Top="19" Width="44" Height="44" Fill="DeepSkyBlue"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Marble
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                Scroller
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Rectangle Canvas.Left="98" Canvas.Top="52" Width="30" Height="30" Fill="White"/>
+                                    <Polygon Fill="DeepSkyBlue">
+                                        <Polygon.Points>
+                                            98,82
+                                            98,52
+                                            128,52
+                                        </Polygon.Points>
+                                    </Polygon>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Scroller
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                    </VariableSizedWrapGrid>
+
+                    <TextBlock Margin="14,4" Transitions="{StaticResource Entrance}">
+                        Panel
+                    </TextBlock>
+
+                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="156" ItemHeight="134" ChildrenTransitions="{StaticResource Entrance}">
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                Expander
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Rectangle Canvas.Left="34" Canvas.Top="8" RadiusX="4" RadiusY="4" Width="60" Height="64" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="48" Canvas.Top="14" RadiusX="2" RadiusY="2" Width="32" Height="4" Fill="White"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Expander
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                ShyHeader
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Rectangle Canvas.Left="34" Canvas.Top="8" Width="60" Height="24" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="34" Canvas.Top="38" Width="60" Height="14" StrokeThickness="2" Stroke="DeepSkyBlue" Fill="White"/>
+                                    <Rectangle Canvas.Left="34" Canvas.Top="58" Width="60" Height="14" StrokeThickness="2" Stroke="DeepSkyBlue" Fill="White"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Shy Header
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                SwitchPresenter
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Rectangle Canvas.Left="34" Canvas.Top="8" RadiusX="4" RadiusY="4" Width="60" Height="48" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="34" Canvas.Top="60" RadiusX="4" RadiusY="4" Width="16" Height="16" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="56" Canvas.Top="60" RadiusX="4" RadiusY="4" Width="16" Height="16" StrokeThickness="2" Stroke="DeepSkyBlue" Fill="White"/>
+                                    <Rectangle Canvas.Left="78" Canvas.Top="60" RadiusX="4" RadiusY="4" Width="16" Height="16" Fill="DeepSkyBlue"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Switch Presenter
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                    </VariableSizedWrapGrid>
+
+                </StackPanel>
+            </ScrollViewer>
+
+            <ScrollViewer Visibility="Collapsed" MinHeight="178" MaxHeight="338" VerticalAlignment="Top" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+                <FrameworkElement.Tag>
+                    Pen
+                </FrameworkElement.Tag>
+                <StackPanel Margin="8">
+
+                    <TextBlock Margin="14,4" Transitions="{StaticResource Entrance}">
+                        General
+                    </TextBlock>
+
+                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="156" ItemHeight="134" ChildrenTransitions="{StaticResource Entrance}">
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                PenBSplines
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Path StrokeThickness="2" Stroke="DeepSkyBlue" StrokeDashArray="6 1">
+                                        <Path.Data>
+                                            <PathGeometry>
+                                                <PathGeometry.Figures>
+                                                    <PathFigure StartPoint="27.84882,6.350075">
+                                                        <BezierSegment Point1="27.84882,6.350075" Point2="61.8441,7.750126" Point3="67.34488,17.15042"/>
+                                                        <BezierSegment Point1="72.84567,26.55072" Point2="55.38583,53.00195" Point3="60.85354,62.75186"/>
+                                                        <BezierSegment Point1="66.32126,72.50178" Point2="100.1512,75.64993" Point3="100.1512,75.64993"/>
+                                                    </PathFigure>
+                                                </PathGeometry.Figures>
+                                            </PathGeometry>
+                                        </Path.Data>
+                                    </Path>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Pen B Splines
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                PenCurve2
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Path StrokeThickness="2" Stroke="DeepSkyBlue" StrokeDashArray="6 1">
+                                        <Path.Data>
+                                            <PathGeometry>
+                                                <PathGeometry.Figures>
+                                                    <PathFigure StartPoint="27.84882,6.350075">
+                                                        <BezierSegment Point1="27.84882,6.350075" Point2="61.8441,7.750126" Point3="67.34488,17.15042"/>
+                                                        <BezierSegment Point1="72.84567,26.55072" Point2="55.38583,53.00195" Point3="60.85354,62.75186"/>
+                                                        <BezierSegment Point1="66.32126,72.50178" Point2="100.1512,75.64993" Point3="100.1512,75.64993"/>
+                                                    </PathFigure>
+                                                </PathGeometry.Figures>
+                                            </PathGeometry>
+                                        </Path.Data>
+                                    </Path>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Pen Curve 2
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                PenCurve
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Path StrokeThickness="2" Stroke="DeepSkyBlue" StrokeDashArray="6 1">
+                                        <Path.Data>
+                                            <PathGeometry>
+                                                <PathGeometry.Figures>
+                                                    <PathFigure StartPoint="27.84882,6.350075">
+                                                        <BezierSegment Point1="27.84882,6.350075" Point2="61.8441,7.750126" Point3="67.34488,17.15042"/>
+                                                        <BezierSegment Point1="72.84567,26.55072" Point2="55.38583,53.00195" Point3="60.85354,62.75186"/>
+                                                        <BezierSegment Point1="66.32126,72.50178" Point2="100.1512,75.64993" Point3="100.1512,75.64993"/>
+                                                    </PathFigure>
+                                                </PathGeometry.Figures>
+                                            </PathGeometry>
+                                        </Path.Data>
+                                    </Path>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Pen Curve
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                PenStabilizer
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Path StrokeThickness="2" Stroke="DeepSkyBlue" StrokeDashArray="6 1">
+                                        <Path.Data>
+                                            <PathGeometry>
+                                                <PathGeometry.Figures>
+                                                    <PathFigure StartPoint="27.84882,6.350075">
+                                                        <BezierSegment Point1="27.84882,6.350075" Point2="61.8441,7.750126" Point3="67.34488,17.15042"/>
+                                                        <BezierSegment Point1="72.84567,26.55072" Point2="55.38583,53.00195" Point3="60.85354,62.75186"/>
+                                                        <BezierSegment Point1="66.32126,72.50178" Point2="100.1512,75.64993" Point3="100.1512,75.64993"/>
+                                                    </PathFigure>
+                                                </PathGeometry.Figures>
+                                            </PathGeometry>
+                                        </Path.Data>
+                                    </Path>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Pen Stabilizer
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                    </VariableSizedWrapGrid>
+
+                    <TextBlock Margin="14,4" Transitions="{StaticResource Entrance}">
+                        Geometry
+                    </TextBlock>
+
+                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="156" ItemHeight="134" ChildrenTransitions="{StaticResource Entrance}">
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                PenCutter
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Path StrokeThickness="2" Stroke="DeepSkyBlue" StrokeDashArray="6 1">
+                                        <Path.Data>
+                                            <PathGeometry>
+                                                <PathGeometry.Figures>
+                                                    <PathFigure StartPoint="27.84882,6.350075">
+                                                        <BezierSegment Point1="27.84882,6.350075" Point2="61.8441,7.750126" Point3="67.34488,17.15042"/>
+                                                        <BezierSegment Point1="72.84567,26.55072" Point2="55.38583,53.00195" Point3="60.85354,62.75186"/>
+                                                        <BezierSegment Point1="66.32126,72.50178" Point2="100.1512,75.64993" Point3="100.1512,75.64993"/>
+                                                    </PathFigure>
+                                                </PathGeometry.Figures>
+                                            </PathGeometry>
+                                        </Path.Data>
+                                    </Path>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Pen Cutter
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                PenHitter
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Path StrokeThickness="2" Stroke="DeepSkyBlue" StrokeDashArray="6 1">
+                                        <Path.Data>
+                                            <PathGeometry>
+                                                <PathGeometry.Figures>
+                                                    <PathFigure StartPoint="27.84882,6.350075">
+                                                        <BezierSegment Point1="27.84882,6.350075" Point2="61.8441,7.750126" Point3="67.34488,17.15042"/>
+                                                        <BezierSegment Point1="72.84567,26.55072" Point2="55.38583,53.00195" Point3="60.85354,62.75186"/>
+                                                        <BezierSegment Point1="66.32126,72.50178" Point2="100.1512,75.64993" Point3="100.1512,75.64993"/>
+                                                    </PathFigure>
+                                                </PathGeometry.Figures>
+                                            </PathGeometry>
+                                        </Path.Data>
+                                    </Path>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Pen Hitter
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                Pen
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Path StrokeThickness="2" Stroke="DeepSkyBlue" StrokeDashArray="6 1">
+                                        <Path.Data>
+                                            <PathGeometry>
+                                                <PathGeometry.Figures>
+                                                    <PathFigure StartPoint="27.84882,6.350075">
+                                                        <BezierSegment Point1="27.84882,6.350075" Point2="61.8441,7.750126" Point3="67.34488,17.15042"/>
+                                                        <BezierSegment Point1="72.84567,26.55072" Point2="55.38583,53.00195" Point3="60.85354,62.75186"/>
+                                                        <BezierSegment Point1="66.32126,72.50178" Point2="100.1512,75.64993" Point3="100.1512,75.64993"/>
+                                                    </PathFigure>
+                                                </PathGeometry.Figures>
+                                            </PathGeometry>
+                                        </Path.Data>
+                                    </Path>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Pen
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                PenPreview
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Path StrokeThickness="2" Stroke="DeepSkyBlue" StrokeDashArray="6 1">
+                                        <Path.Data>
+                                            <PathGeometry>
+                                                <PathGeometry.Figures>
+                                                    <PathFigure StartPoint="27.84882,6.350075">
+                                                        <BezierSegment Point1="27.84882,6.350075" Point2="61.8441,7.750126" Point3="67.34488,17.15042"/>
+                                                        <BezierSegment Point1="72.84567,26.55072" Point2="55.38583,53.00195" Point3="60.85354,62.75186"/>
+                                                        <BezierSegment Point1="66.32126,72.50178" Point2="100.1512,75.64993" Point3="100.1512,75.64993"/>
+                                                    </PathFigure>
+                                                </PathGeometry.Figures>
+                                            </PathGeometry>
+                                        </Path.Data>
+                                    </Path>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Pen Preview
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                    </VariableSizedWrapGrid>
+
+                </StackPanel>
+            </ScrollViewer>
+
+            <ScrollViewer Visibility="Collapsed" MinHeight="178" MaxHeight="338" VerticalAlignment="Top" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+                <FrameworkElement.Tag>
+                    Ink
+                </FrameworkElement.Tag>
+                <StackPanel Margin="8">
+
+                    <TextBlock Margin="14,4" Transitions="{StaticResource Entrance}">
+                        General
+                    </TextBlock>
+
+                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="156" ItemHeight="134" ChildrenTransitions="{StaticResource Entrance}">
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                InkBrownian
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Path StrokeThickness="2" Stroke="DeepSkyBlue" StrokeDashArray="6 1">
+                                        <Path.Data>
+                                            <PathGeometry>
+                                                <PathGeometry.Figures>
+                                                    <PathFigure StartPoint="27.84882,6.350075">
+                                                        <BezierSegment Point1="27.84882,6.350075" Point2="61.8441,7.750126" Point3="67.34488,17.15042"/>
+                                                        <BezierSegment Point1="72.84567,26.55072" Point2="55.38583,53.00195" Point3="60.85354,62.75186"/>
+                                                        <BezierSegment Point1="66.32126,72.50178" Point2="100.1512,75.64993" Point3="100.1512,75.64993"/>
+                                                    </PathFigure>
+                                                </PathGeometry.Figures>
+                                            </PathGeometry>
+                                        </Path.Data>
+                                    </Path>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Ink Brownian
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                InkForce
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Path StrokeThickness="2" Stroke="DeepSkyBlue" StrokeDashArray="6 1">
+                                        <Path.Data>
+                                            <PathGeometry>
+                                                <PathGeometry.Figures>
+                                                    <PathFigure StartPoint="27.84882,6.350075">
+                                                        <BezierSegment Point1="27.84882,6.350075" Point2="61.8441,7.750126" Point3="67.34488,17.15042"/>
+                                                        <BezierSegment Point1="72.84567,26.55072" Point2="55.38583,53.00195" Point3="60.85354,62.75186"/>
+                                                        <BezierSegment Point1="66.32126,72.50178" Point2="100.1512,75.64993" Point3="100.1512,75.64993"/>
+                                                    </PathFigure>
+                                                </PathGeometry.Figures>
+                                            </PathGeometry>
+                                        </Path.Data>
+                                    </Path>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Ink Force
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                InkInertia
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Path StrokeThickness="2" Stroke="DeepSkyBlue" StrokeDashArray="6 1">
+                                        <Path.Data>
+                                            <PathGeometry>
+                                                <PathGeometry.Figures>
+                                                    <PathFigure StartPoint="27.84882,6.350075">
+                                                        <BezierSegment Point1="27.84882,6.350075" Point2="61.8441,7.750126" Point3="67.34488,17.15042"/>
+                                                        <BezierSegment Point1="72.84567,26.55072" Point2="55.38583,53.00195" Point3="60.85354,62.75186"/>
+                                                        <BezierSegment Point1="66.32126,72.50178" Point2="100.1512,75.64993" Point3="100.1512,75.64993"/>
+                                                    </PathFigure>
+                                                </PathGeometry.Figures>
+                                            </PathGeometry>
+                                        </Path.Data>
+                                    </Path>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Ink Inertia
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                InkStabilizer
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Path StrokeThickness="2" Stroke="DeepSkyBlue" StrokeDashArray="6 1">
+                                        <Path.Data>
+                                            <PathGeometry>
+                                                <PathGeometry.Figures>
+                                                    <PathFigure StartPoint="27.84882,6.350075">
+                                                        <BezierSegment Point1="27.84882,6.350075" Point2="61.8441,7.750126" Point3="67.34488,17.15042"/>
+                                                        <BezierSegment Point1="72.84567,26.55072" Point2="55.38583,53.00195" Point3="60.85354,62.75186"/>
+                                                        <BezierSegment Point1="66.32126,72.50178" Point2="100.1512,75.64993" Point3="100.1512,75.64993"/>
+                                                    </PathFigure>
+                                                </PathGeometry.Figures>
+                                            </PathGeometry>
+                                        </Path.Data>
+                                    </Path>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Ink Stabilizer
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                    </VariableSizedWrapGrid>
+
+                    <TextBlock Margin="14,4" Transitions="{StaticResource Entrance}">
+                        Parameter
+                    </TextBlock>
+
+                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="156" ItemHeight="134" ChildrenTransitions="{StaticResource Entrance}">
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                InkTouchMode
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Path StrokeThickness="2" Stroke="DeepSkyBlue" StrokeDashArray="6 1">
+                                        <Path.Data>
+                                            <PathGeometry>
+                                                <PathGeometry.Figures>
+                                                    <PathFigure StartPoint="27.84882,6.350075">
+                                                        <BezierSegment Point1="27.84882,6.350075" Point2="61.8441,7.750126" Point3="67.34488,17.15042"/>
+                                                        <BezierSegment Point1="72.84567,26.55072" Point2="55.38583,53.00195" Point3="60.85354,62.75186"/>
+                                                        <BezierSegment Point1="66.32126,72.50178" Point2="100.1512,75.64993" Point3="100.1512,75.64993"/>
+                                                    </PathFigure>
+                                                </PathGeometry.Figures>
+                                            </PathGeometry>
+                                        </Path.Data>
+                                    </Path>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Ink Touch Mode
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                InkMixer
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="Yellow">
+                                    <Rectangle Canvas.Left="20" Canvas.Top="25" Width="44" Height="32" Fill="Fuchsia"/>
+                                    <Rectangle Canvas.Left="64" Canvas.Top="0" Width="64" Height="25" Fill="Fuchsia"/>
+                                    <Rectangle Canvas.Left="64" Canvas.Top="57" Width="64" Height="25" Fill="Fuchsia"/>
+                                    <Rectangle Canvas.Left="108" Canvas.Top="25" Width="20" Height="32" Fill="Fuchsia"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Ink Mixer
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                InverseProportion
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Polyline StrokeThickness="2" Stroke="DeepSkyBlue">
+                                        <Polyline.Points>
+                                            14,76
+                                            24,76
+                                            34,75
+                                            44,74
+                                            54,71
+                                            64,68
+                                            74,62
+                                            84,56
+                                            94,46
+                                            104,32
+                                            114,16
+                                        </Polyline.Points>
+                                    </Polyline>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Inverse Proportion
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                    </VariableSizedWrapGrid>
+
+                </StackPanel>
+            </ScrollViewer>
+
+            <ScrollViewer Visibility="Collapsed" MinHeight="178" MaxHeight="338" VerticalAlignment="Top" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+                <FrameworkElement.Tag>
+                    Brush
+                </FrameworkElement.Tag>
+                <StackPanel Margin="8">
+
+                    <TextBlock Margin="14,4" Transitions="{StaticResource Entrance}">
+                        General
+                    </TextBlock>
+
+                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="156" ItemHeight="134" ChildrenTransitions="{StaticResource Entrance}">
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                BitmapPixelBrush
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Path StrokeThickness="2" Stroke="DeepSkyBlue">
+                                        <Path.Data>
+                                            <PathGeometry>
+                                                <PathGeometry.Figures>
+                                                    <PathFigure StartPoint="27.84882,6.350075">
+                                                        <BezierSegment Point1="27.84882,6.350075" Point2="61.8441,7.750126" Point3="67.34488,17.15042"/>
+                                                        <BezierSegment Point1="72.84567,26.55072" Point2="55.38583,53.00195" Point3="60.85354,62.75186"/>
+                                                        <BezierSegment Point1="66.32126,72.50178" Point2="100.1512,75.64993" Point3="100.1512,75.64993"/>
+                                                    </PathFigure>
+                                                </PathGeometry.Figures>
+                                            </PathGeometry>
+                                        </Path.Data>
+                                    </Path>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Bitmap Pixel Brush
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                BrushShader
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Path StrokeThickness="2" Stroke="DeepSkyBlue">
+                                        <Path.Data>
+                                            <PathGeometry>
+                                                <PathGeometry.Figures>
+                                                    <PathFigure StartPoint="27.84882,6.350075">
+                                                        <BezierSegment Point1="27.84882,6.350075" Point2="61.8441,7.750126" Point3="67.34488,17.15042"/>
+                                                        <BezierSegment Point1="72.84567,26.55072" Point2="55.38583,53.00195" Point3="60.85354,62.75186"/>
+                                                        <BezierSegment Point1="66.32126,72.50178" Point2="100.1512,75.64993" Point3="100.1512,75.64993"/>
+                                                    </PathFigure>
+                                                </PathGeometry.Figures>
+                                            </PathGeometry>
+                                        </Path.Data>
+                                    </Path>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Brush Shader
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                BrushEasePressure
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Polyline StrokeThickness="2" Stroke="DeepSkyBlue" Fill="White">
+                                        <Polyline.Points>
+                                            14, 75
+                                            27.09, 72.654
+                                            39.8, 65.6296
+                                            52.14, 55.3684
+                                            64.045, 41
+                                            76.645, 26.0876
+                                            89.9, 14.9594
+                                            101.88, 9.1148
+                                            114.09, 7
+                                            114, 75
+                                        </Polyline.Points>
+                                    </Polyline>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Brush Ease Pressure
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                BrushEdgeHardness
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Polyline StrokeThickness="2" Stroke="DeepSkyBlue" Fill="White">
+                                        <Polyline.Points>
+                                            14, 75
+                                            27.09, 72.654
+                                            39.8, 65.6296
+                                            52.14, 55.3684
+                                            64.045, 41
+                                            76.645, 26.0876
+                                            89.9, 14.9594
+                                            101.88, 9.1148
+                                            114.09, 7
+                                            114, 75
+                                        </Polyline.Points>
+                                    </Polyline>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Brush Edge Hardness
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                    </VariableSizedWrapGrid>
+
+                    <TextBlock Margin="14,4" Transitions="{StaticResource Entrance}">
+                        Pixel
+                    </TextBlock>
+
+                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="156" ItemHeight="134" ChildrenTransitions="{StaticResource Entrance}">
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                BitmapRegion
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#4D4D4D">
+                                    <Line X1="14" Y1="0" X2="14" Y2="82" StrokeThickness="1" Stroke="OrangeRed"/>
+                                    <Line X1="34" Y1="0" X2="34" Y2="82" StrokeThickness="1" Stroke="OrangeRed"/>
+                                    <Line X1="54" Y1="0" X2="54" Y2="82" StrokeThickness="1" Stroke="OrangeRed"/>
+                                    <Line X1="74" Y1="0" X2="74" Y2="82" StrokeThickness="1" Stroke="OrangeRed"/>
+                                    <Line X1="94" Y1="0" X2="94" Y2="82" StrokeThickness="1" Stroke="OrangeRed"/>
+                                    <Line X1="114" Y1="0" X2="114" Y2="82" StrokeThickness="1" Stroke="OrangeRed"/>
+
+                                    <Line X1="0" Y1="11" X2="128" Y2="11" StrokeThickness="1" Stroke="OrangeRed"/>
+                                    <Line X1="0" Y1="31" X2="128" Y2="31" StrokeThickness="1" Stroke="OrangeRed"/>
+                                    <Line X1="0" Y1="51" X2="128" Y2="51" StrokeThickness="1" Stroke="OrangeRed"/>
+                                    <Line X1="0" Y1="71" X2="128" Y2="71" StrokeThickness="1" Stroke="OrangeRed"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Bitmap Region
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                RegionsInvalidated
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#4D4D4D">
+                                    <Line X1="14" Y1="0" X2="14" Y2="82" StrokeThickness="1" Stroke="OrangeRed"/>
+                                    <Line X1="34" Y1="0" X2="34" Y2="82" StrokeThickness="1" Stroke="OrangeRed"/>
+                                    <Line X1="54" Y1="0" X2="54" Y2="82" StrokeThickness="1" Stroke="OrangeRed"/>
+                                    <Line X1="74" Y1="0" X2="74" Y2="82" StrokeThickness="1" Stroke="OrangeRed"/>
+                                    <Line X1="94" Y1="0" X2="94" Y2="82" StrokeThickness="1" Stroke="OrangeRed"/>
+                                    <Line X1="114" Y1="0" X2="114" Y2="82" StrokeThickness="1" Stroke="OrangeRed"/>
+
+                                    <Line X1="0" Y1="11" X2="128" Y2="11" StrokeThickness="1" Stroke="OrangeRed"/>
+                                    <Line X1="0" Y1="31" X2="128" Y2="31" StrokeThickness="1" Stroke="OrangeRed"/>
+                                    <Line X1="0" Y1="51" X2="128" Y2="51" StrokeThickness="1" Stroke="OrangeRed"/>
+                                    <Line X1="0" Y1="71" X2="128" Y2="71" StrokeThickness="1" Stroke="OrangeRed"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Regions Invalidated
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                PixelBounds
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#4D4D4D">
+                                    <Line X1="14" Y1="0" X2="14" Y2="82" StrokeThickness="1" Stroke="OrangeRed"/>
+                                    <Line X1="34" Y1="0" X2="34" Y2="82" StrokeThickness="1" Stroke="OrangeRed"/>
+                                    <Line X1="54" Y1="0" X2="54" Y2="82" StrokeThickness="1" Stroke="OrangeRed"/>
+                                    <Line X1="74" Y1="0" X2="74" Y2="82" StrokeThickness="1" Stroke="OrangeRed"/>
+                                    <Line X1="94" Y1="0" X2="94" Y2="82" StrokeThickness="1" Stroke="OrangeRed"/>
+                                    <Line X1="114" Y1="0" X2="114" Y2="82" StrokeThickness="1" Stroke="OrangeRed"/>
+
+                                    <Line X1="0" Y1="11" X2="128" Y2="11" StrokeThickness="1" Stroke="OrangeRed"/>
+                                    <Line X1="0" Y1="31" X2="128" Y2="31" StrokeThickness="1" Stroke="OrangeRed"/>
+                                    <Line X1="0" Y1="51" X2="128" Y2="51" StrokeThickness="1" Stroke="OrangeRed"/>
+                                    <Line X1="0" Y1="71" X2="128" Y2="71" StrokeThickness="1" Stroke="OrangeRed"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Pixel Bounds
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                    </VariableSizedWrapGrid>
+
+                </StackPanel>
+            </ScrollViewer>
+
+            <ScrollViewer Visibility="Collapsed" MinHeight="178" MaxHeight="338" VerticalAlignment="Top" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+                <FrameworkElement.Tag>
+                    Effect
+                </FrameworkElement.Tag>
+                <StackPanel Margin="8">
+
+                    <TextBlock Margin="14,4" Transitions="{StaticResource Entrance}">
+                        General
+                    </TextBlock>
+
+                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="156" ItemHeight="134" ChildrenTransitions="{StaticResource Entrance}">
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                ArithmeticCompositeEffect
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Rectangle Canvas.Left="20" Canvas.Top="25" Width="44" Height="32" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="64" Canvas.Top="0" Width="64" Height="25" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="64" Canvas.Top="57" Width="64" Height="25" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="108" Canvas.Top="25" Width="20" Height="32" Fill="DeepSkyBlue"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Arithmetic Composite Effect
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                AtlasEffect
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Rectangle Canvas.Left="20" Canvas.Top="25" Width="44" Height="32" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="64" Canvas.Top="0" Width="64" Height="25" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="64" Canvas.Top="57" Width="64" Height="25" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="108" Canvas.Top="25" Width="20" Height="32" Fill="DeepSkyBlue"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Atlas Effect
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                GradientMapping
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Rectangle Canvas.Left="20" Canvas.Top="25" Width="44" Height="32" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="64" Canvas.Top="0" Width="64" Height="25" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="64" Canvas.Top="57" Width="64" Height="25" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="108" Canvas.Top="25" Width="20" Height="32" Fill="DeepSkyBlue"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Gradient Mapping
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                ShaderTest
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Rectangle Canvas.Left="20" Canvas.Top="25" Width="44" Height="32" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="64" Canvas.Top="0" Width="64" Height="25" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="64" Canvas.Top="57" Width="64" Height="25" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="108" Canvas.Top="25" Width="20" Height="32" Fill="DeepSkyBlue"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Shader Test
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                    </VariableSizedWrapGrid>
+
+                    <TextBlock Margin="14,4" Transitions="{StaticResource Entrance}">
+                        Comparison
+                    </TextBlock>
+
+                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="156" ItemHeight="134" ChildrenTransitions="{StaticResource Entrance}">
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                FloodSelect
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Rectangle Canvas.Left="20" Canvas.Top="25" Width="44" Height="32" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="64" Canvas.Top="0" Width="64" Height="25" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="64" Canvas.Top="57" Width="64" Height="25" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="108" Canvas.Top="25" Width="20" Height="32" Fill="DeepSkyBlue"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Flood Select
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                RippleEffect
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Rectangle Canvas.Left="20" Canvas.Top="25" Width="44" Height="32" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="64" Canvas.Top="0" Width="64" Height="25" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="64" Canvas.Top="57" Width="64" Height="25" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="108" Canvas.Top="25" Width="20" Height="32" Fill="DeepSkyBlue"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Ripple Effect
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                Threshold
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Rectangle Canvas.Left="20" Canvas.Top="25" Width="44" Height="32" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="64" Canvas.Top="0" Width="64" Height="25" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="64" Canvas.Top="57" Width="64" Height="25" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="108" Canvas.Top="25" Width="20" Height="32" Fill="DeepSkyBlue"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Threshold
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                MagicWand
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Rectangle Canvas.Left="20" Canvas.Top="25" Width="44" Height="32" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="64" Canvas.Top="0" Width="64" Height="25" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="64" Canvas.Top="57" Width="64" Height="25" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="108" Canvas.Top="25" Width="20" Height="32" Fill="DeepSkyBlue"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Magic Wand
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                    </VariableSizedWrapGrid>
+
+                </StackPanel>
+            </ScrollViewer>
+
+            <ScrollViewer Visibility="Collapsed" MinHeight="178" MaxHeight="338" VerticalAlignment="Top" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+                <FrameworkElement.Tag>
+                    Displacement
+                </FrameworkElement.Tag>
+                <StackPanel Margin="8">
+
+                    <TextBlock Margin="14,4" Transitions="{StaticResource Entrance}">
+                        General
+                    </TextBlock>
+
+                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="156" ItemHeight="134" ChildrenTransitions="{StaticResource Entrance}">
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                LiquefactionShader
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="OrangeRed">
+                                    <Rectangle Canvas.Left="20" Canvas.Top="25" Width="44" Height="32" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="64" Canvas.Top="0" Width="64" Height="25" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="64" Canvas.Top="57" Width="64" Height="25" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="108" Canvas.Top="25" Width="20" Height="32" Fill="DeepSkyBlue"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Liquefaction Shader
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                DisplacementLiquefaction
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="OrangeRed">
+                                    <Rectangle Canvas.Left="20" Canvas.Top="25" Width="44" Height="32" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="64" Canvas.Top="0" Width="64" Height="25" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="64" Canvas.Top="57" Width="64" Height="25" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="108" Canvas.Top="25" Width="20" Height="32" Fill="DeepSkyBlue"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Displacement Liquefaction
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                DisplacementMap
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="OrangeRed">
+                                    <Rectangle Canvas.Left="20" Canvas.Top="25" Width="44" Height="32" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="64" Canvas.Top="0" Width="64" Height="25" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="64" Canvas.Top="57" Width="64" Height="25" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="108" Canvas.Top="25" Width="20" Height="32" Fill="DeepSkyBlue"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Displacement Map
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                DirectionDistance
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="OrangeRed">
+                                    <Rectangle Canvas.Left="20" Canvas.Top="25" Width="44" Height="32" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="64" Canvas.Top="0" Width="64" Height="25" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="64" Canvas.Top="57" Width="64" Height="25" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="108" Canvas.Top="25" Width="20" Height="32" Fill="DeepSkyBlue"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Direction Distance
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                    </VariableSizedWrapGrid>
+
+                    <TextBlock Margin="14,4" Transitions="{StaticResource Entrance}">
+                        Lighting
+                    </TextBlock>
+
+                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="156" ItemHeight="134" ChildrenTransitions="{StaticResource Entrance}">
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                LightingDistant
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="OrangeRed">
+                                    <Ellipse Canvas.Left="42" Canvas.Top="19" Width="44" Height="44" Fill="DeepSkyBlue"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Lighting Distant
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                LightingPoint
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="OrangeRed">
+                                    <Ellipse Canvas.Left="42" Canvas.Top="19" Width="44" Height="44" Fill="DeepSkyBlue"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Lighting Point
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                LightingSpot
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="OrangeRed">
+                                    <Ellipse Canvas.Left="42" Canvas.Top="19" Width="44" Height="44" Fill="DeepSkyBlue"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Lighting Spot
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                    </VariableSizedWrapGrid>
+
+                </StackPanel>
+            </ScrollViewer>
+
+            <ScrollViewer Visibility="Collapsed" MinHeight="178" MaxHeight="338" VerticalAlignment="Top" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+                <FrameworkElement.Tag>
+                    Layer
+                </FrameworkElement.Tag>
+                <StackPanel Margin="8">
+
+                    <TextBlock Margin="14,4" Transitions="{StaticResource Entrance}">
+                        General
+                    </TextBlock>
+
+                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="156" ItemHeight="134" ChildrenTransitions="{StaticResource Entrance}">
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                LayerManager
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Line X1="24" Y1="16" X2="24" Y2="66" StrokeThickness="3" Stroke="Gray"/>
+                                    <Line X1="24" Y1="32" X2="38" Y2="32" StrokeThickness="3" Stroke="Gray"/>
+                                    <Line X1="24" Y1="48" X2="48" Y2="48" StrokeThickness="3" Stroke="Gray"/>
+                                    <Line X1="24" Y1="66" X2="48" Y2="66" StrokeThickness="3" Stroke="Gray"/>
+
+                                    <Rectangle Canvas.Left="20" Canvas.Top="12" Width="8" Height="8" Fill="Gray"/>
+                                    <Rectangle Canvas.Left="30" Canvas.Top="28" Width="8" Height="8" Fill="Gray"/>
+                                    <Rectangle Canvas.Left="40" Canvas.Top="44" Width="8" Height="8" Fill="Gray"/>
+                                    <Rectangle Canvas.Left="40" Canvas.Top="62" Width="8" Height="8" Fill="Gray"/>
+
+                                    <Rectangle Canvas.Left="32" Canvas.Top="12" Width="64" Height="8" Fill="Gray"/>
+                                    <Rectangle Canvas.Left="42" Canvas.Top="28" Width="54" Height="8" Fill="Gray"/>
+                                    <Rectangle Canvas.Left="52" Canvas.Top="44" Width="44" Height="8" Fill="Gray"/>
+                                    <Rectangle Canvas.Left="52" Canvas.Top="62" Width="44" Height="8" Fill="Gray"/>
+
+                                    <Rectangle Canvas.Left="100" Canvas.Top="12" Width="8" Height="8" Fill="Gray"/>
+                                    <Rectangle Canvas.Left="100" Canvas.Top="28" Width="8" Height="8" Fill="Gray"/>
+                                    <Rectangle Canvas.Left="100" Canvas.Top="44" Width="8" Height="8" Fill="Gray"/>
+                                    <Rectangle Canvas.Left="100" Canvas.Top="62" Width="8" Height="8" Fill="Gray"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Layer Manager
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                Layer
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Line X1="24" Y1="16" X2="24" Y2="66" StrokeThickness="3" Stroke="Gray"/>
+                                    <Line X1="24" Y1="32" X2="38" Y2="32" StrokeThickness="3" Stroke="Gray"/>
+                                    <Line X1="24" Y1="48" X2="48" Y2="48" StrokeThickness="3" Stroke="Gray"/>
+                                    <Line X1="24" Y1="66" X2="48" Y2="66" StrokeThickness="3" Stroke="Gray"/>
+
+                                    <Rectangle Canvas.Left="20" Canvas.Top="12" Width="8" Height="8" Fill="Gray"/>
+                                    <Rectangle Canvas.Left="30" Canvas.Top="28" Width="8" Height="8" Fill="Gray"/>
+                                    <Rectangle Canvas.Left="40" Canvas.Top="44" Width="8" Height="8" Fill="Gray"/>
+                                    <Rectangle Canvas.Left="40" Canvas.Top="62" Width="8" Height="8" Fill="Gray"/>
+
+                                    <Rectangle Canvas.Left="32" Canvas.Top="12" Width="64" Height="8" Fill="Gray"/>
+                                    <Rectangle Canvas.Left="42" Canvas.Top="28" Width="54" Height="8" Fill="Gray"/>
+                                    <Rectangle Canvas.Left="52" Canvas.Top="44" Width="44" Height="8" Fill="Gray"/>
+                                    <Rectangle Canvas.Left="52" Canvas.Top="62" Width="44" Height="8" Fill="Gray"/>
+
+                                    <Rectangle Canvas.Left="100" Canvas.Top="12" Width="8" Height="8" Fill="Gray"/>
+                                    <Rectangle Canvas.Left="100" Canvas.Top="28" Width="8" Height="8" Fill="Gray"/>
+                                    <Rectangle Canvas.Left="100" Canvas.Top="44" Width="8" Height="8" Fill="Gray"/>
+                                    <Rectangle Canvas.Left="100" Canvas.Top="62" Width="8" Height="8" Fill="Gray"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Layer
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                Historian
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Polyline StrokeThickness="2" Stroke="DodgerBlue">
+                                        <Polyline.Points>
+                                            10,45
+                                            10,75
+                                            80,75
+                                    
+                                            70,70
+                                        </Polyline.Points>
+                                    </Polyline>
+                                    <Polyline StrokeThickness="2" Stroke="OrangeRed">
+                                        <Polyline.Points>
+                                            118,37
+                                            118,7
+                                            48,7
+                                     
+                                            58,12
+                                        </Polyline.Points>
+                                    </Polyline>
+
+                                    <Rectangle Canvas.Left="8" Canvas.Top="5" Width="32" Height="32" Fill="OrangeRed"/>
+                                    <Rectangle Canvas.Left="48" Canvas.Top="25" Width="32" Height="32" Fill="Gray"/>
+                                    <Rectangle Canvas.Left="88" Canvas.Top="45" Width="32" Height="32" Fill="DodgerBlue"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Historian
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                    </VariableSizedWrapGrid>
+
+                    <TextBlock Margin="14,4" Transitions="{StaticResource Entrance}">
+                        Selected
+                    </TextBlock>
+
+                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="156" ItemHeight="134" ChildrenTransitions="{StaticResource Entrance}">
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                SelectedButton
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Rectangle Canvas.Left="20" Canvas.Top="12" Width="76" Height="8" Fill="Gray"/>
+                                    <Rectangle Canvas.Left="20" Canvas.Top="28" Width="76" Height="8" Fill="DodgerBlue"/>
+                                    <Rectangle Canvas.Left="20" Canvas.Top="44" Width="76" Height="8" Fill="#881E90FF"/>
+                                    <Rectangle Canvas.Left="20" Canvas.Top="62" Width="76" Height="8" Fill="#881E90FF"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Selected Button
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                SelectedSwiper
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Rectangle Canvas.Left="20" Canvas.Top="12" Width="76" Height="8" Fill="Gray"/>
+                                    <Rectangle Canvas.Left="20" Canvas.Top="28" Width="76" Height="8" Fill="DodgerBlue"/>
+                                    <Rectangle Canvas.Left="20" Canvas.Top="44" Width="56" Height="8" Fill="#881E90FF"/>
+                                    <Rectangle Canvas.Left="76" Canvas.Top="44" Width="20" Height="8" Fill="OrangeRed"/>
+                                    <Rectangle Canvas.Left="20" Canvas.Top="62" Width="76" Height="8" Fill="#881E90FF"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Selected Swiper
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                    </VariableSizedWrapGrid>
+
+                </StackPanel>
+            </ScrollViewer>
+
+            <ScrollViewer Visibility="Collapsed" MinHeight="178" MaxHeight="338" VerticalAlignment="Top" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}">
+                <FrameworkElement.Tag>
+                    System
+                </FrameworkElement.Tag>
+                <StackPanel Margin="8">
+
+                    <TextBlock Margin="14,4" Transitions="{StaticResource Entrance}">
+                        General
+                    </TextBlock>
+
+                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="156" ItemHeight="134" ChildrenTransitions="{StaticResource Entrance}">
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                Battery
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Rectangle Canvas.Left="96" Canvas.Top="34" RadiusX="4" RadiusY="4" Width="12" Height="18" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="24" Canvas.Top="20" RadiusX="8" RadiusY="8" Width="76" Height="46" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="29" Canvas.Top="26" RadiusX="2" RadiusY="2" Width="66" Height="34" Fill="White"/>
+
+                                    <Rectangle Canvas.Left="34" Canvas.Top="28" RadiusX="2" RadiusY="2" Width="8" Height="30" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="46" Canvas.Top="28" RadiusX="2" RadiusY="2" Width="8" Height="30" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="58" Canvas.Top="28" RadiusX="2" RadiusY="2" Width="8" Height="30" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="70" Canvas.Top="28" RadiusX="2" RadiusY="2" Width="8" Height="30" Fill="OrangeRed"/>
+                                    <Rectangle Canvas.Left="82" Canvas.Top="28" RadiusX="2" RadiusY="2" Width="8" Height="30" Fill="OrangeRed"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Battery
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                Toast
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Rectangle Canvas.Left="58" Canvas.Top="54" RadiusX="4" RadiusY="4" Width="64" Height="22" Fill="DeepSkyBlue"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Toast
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                CanvasManipulations
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Polygon Fill="DeepSkyBlue">
+                                        <Polygon.Points>
+                                            44, 14
+                                            90, 20
+                                            84, 66
+                                            38, 60
+                                        </Polygon.Points>
+                                    </Polygon>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Canvas Manipulations
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                PointerWheelChanged
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Rectangle Canvas.Left="44" Canvas.Top="18" RadiusX="4" RadiusY="4" Width="40" Height="54" Fill="DeepSkyBlue"/>
+                                    <Rectangle Canvas.Left="62" Canvas.Top="18" Width="4" Height="16" Fill="White"/>
+                                    <Rectangle Canvas.Left="44" Canvas.Top="42" Width="40" Height="4" Fill="#D2D2D2"/>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Pointer Wheel Changed
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                    </VariableSizedWrapGrid>
+
+                    <TextBlock Margin="14,4" Transitions="{StaticResource Entrance}">
+                        Image
+                    </TextBlock>
+
+                    <VariableSizedWrapGrid Orientation="Horizontal" ItemWidth="156" ItemHeight="134" ChildrenTransitions="{StaticResource Entrance}">
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                ListView
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Polygon Canvas.Left="50" Canvas.Top="20" StrokeThickness="2" Stroke="DeepSkyBlue" Fill="White">
+                                        <Polygon.Points>
+                                            0,0 0,46 12,32 32,30
+                                        </Polygon.Points>
+                                    </Polygon>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    List View
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                FileImageSource
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Rectangle Canvas.Left="40" Canvas.Top="21" Width="49" Height="40" Fill="DeepSkyBlue"/>
+                                    <Path Canvas.Left="42" Canvas.Top="24" Fill="White">
+                                        <Path.Data>
+                                            M45.268,33.830l-45.268,0l0,-33.830l45.268,0l0,33.830Zm-42.304,-16.916l0,4.252l9.842,-9.08l19.112,18.446l3.802,0l-6.656,-6.704l3.662,-3.662l9.650,10.366l0,-4.898l-10.032,-9.888l-5.134,5.8l-14.404,-13.882l-9.842,9.250l0,0Zm32.348,-8.708c0.874,0 1.586,0.712 1.586,1.586c0,0.874 -0.712,1.586 -1.586,1.586c-0.874,0 -1.588,-0.712 -1.588,-1.596c0,-0.874 0.714,-1.596 1.598,-1.596Z
+                                        </Path.Data>
+                                    </Path>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    File Image Source
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Width="156" Height="134" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Command="{x:Bind Command}">
+                            <ButtonBase.CommandParameter>
+                                WriteableBitmapSource
+                            </ButtonBase.CommandParameter>
+                            <StackPanel>
+                                <Canvas IsHitTestVisible="False" Width="128" Height="82" Background="#D2D2D2">
+                                    <Rectangle Canvas.Left="40" Canvas.Top="21" Width="49" Height="40" Fill="DeepSkyBlue"/>
+                                    <Path Canvas.Left="42" Canvas.Top="24" Fill="White">
+                                        <Path.Data>
+                                            M45.268,33.830l-45.268,0l0,-33.830l45.268,0l0,33.830Zm-42.304,-16.916l0,4.252l9.842,-9.08l19.112,18.446l3.802,0l-6.656,-6.704l3.662,-3.662l9.650,10.366l0,-4.898l-10.032,-9.888l-5.134,5.8l-14.404,-13.882l-9.842,9.250l0,0Zm32.348,-8.708c0.874,0 1.586,0.712 1.586,1.586c0,0.874 -0.712,1.586 -1.586,1.586c-0.874,0 -1.588,-0.712 -1.588,-1.596c0,-0.874 0.714,-1.596 1.598,-1.596Z
+                                        </Path.Data>
+                                    </Path>
+                                </Canvas>
+                                <TextBlock Margin="0,8,0,0" TextWrapping="Wrap" VerticalAlignment="Center">
+                                    Writeable Bitmap Source
+                                </TextBlock>
+                            </StackPanel>
+                        </Button>
+
+                    </VariableSizedWrapGrid>
+
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+
+    </Grid>
 </Page>
