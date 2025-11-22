@@ -91,6 +91,9 @@ namespace Luo_Painter.TestApp
                 });
                 args.DrawingSession.Blend = CanvasBlend.Min;
                 args.DrawingSession.FillRectangle(0, 0, (float)sender.Size.Width, (float)sender.Size.Height, this.Brush);
+      
+                args.DrawingSession.Blend = CanvasBlend.Copy;
+                args.DrawingSession.DrawRectangle(0f, 0f, 512f, 512f, Windows.UI.Colors.Gray);
             };
             this.CanvasAnimatedControl.Update += (sender, args) =>
             {
