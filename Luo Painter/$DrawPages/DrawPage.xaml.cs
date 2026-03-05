@@ -124,6 +124,8 @@ namespace Luo_Painter
                 {
                     case OptionType.Marquee: this.OptionTarget = OptionTarget.Marquee; break;
                     case OptionType.MarqueeTransform: this.OptionTarget = OptionTarget.Marquee; break;
+                    case OptionType.Grow: this.OptionTarget = OptionTarget.Marquee; break;
+                    case OptionType.Shrink: this.OptionTarget = OptionTarget.Marquee; break;
                     case OptionType.AddImageTransform: this.OptionTarget = OptionTarget.Image; break;
                     default: this.OptionTarget = value.IsMarquee() ? OptionTarget.Marquee : OptionTarget.BitmapLayer; break;
                 }
