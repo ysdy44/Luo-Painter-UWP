@@ -81,10 +81,26 @@ namespace Luo_Painter
             if (hasLayers)
                 using (IRandomAccessStream stream = await ApplicationData.Current.TemporaryFolder.OpenAsync("Layers.xml"))
                 {
+                    //@Debug: Crash if the two layer IDs are the same in LayerDictionary
+                    //Error caught in app.xaml.cs (UnhandleExceptio)
+                    //Windows.UI.Xaml.Controls.Frame.NavigationFailed was unhandled.
+                    var dic = new Dictionary<string, ILayer>();
+                    foreach (var layer in this.ObservableCollection)
+                    {
+                        if (dic.ContainsKey(layer.Id))
+                        {
+                            //[Error: Duplicate Key]
+                        }
+                        else
+                        {
+                            dic.Add(layer.Id, layer);
+                        }
+                    }
+
                     new XDocument(new XElement("Root",
                         from l
-                        in this.ObservableCollection
-                        select l.Save())).Save(stream.AsStream());
+                        in dic
+                        select l.Value.Save())).Save(stream.AsStream());
                 }
 
             // 4. Save Bitmaps
@@ -244,6 +260,11 @@ namespace Luo_Painter
                                 string id = id2.Value;
                                 if (string.IsNullOrEmpty(id)) continue;
 
+                                //@Debug: Crash if the two layer IDs are the same in LayerDictionary
+                                //Error caught in app.xaml.cs (UnhandleExceptio)
+                                //Windows.UI.Xaml.Controls.Frame.NavigationFailed was unhandled.
+                                if (LayerDictionary.Instance.ContainsKey(id)) continue;
+
                                 string type = type2.Value;
                                 if (string.IsNullOrEmpty(id)) continue;
 
@@ -266,6 +287,38 @@ namespace Luo_Painter
                     {
                         item2.Arrange(0);
                         this.ObservableCollection.AddChild(item2);
+                    }
+
+                    //@Debug: Crash if the two layer IDs are the same in LayerDictionary
+                    //Error caught in app.xaml.cs (UnhandleExceptio)
+                    //Windows.UI.Xaml.Controls.Frame.NavigationFailed was unhandled.
+                    for (int i = 1; i < this.ObservableCollection.Count; i++)
+                    {
+                        ILayer layer = this.ObservableCollection[i];
+
+                        bool isDuplicate = false;
+                        for (int j = 0; j < i; j++)
+                        {
+                            ILayer jayer = this.ObservableCollection[j];
+
+                            if (jayer.Id == layer.Id)
+                            {
+                                isDuplicate = true;
+                                break;
+                            }
+                        }
+
+                        if (isDuplicate)
+                        {
+                            string error = "[Error: Duplicate Key]";
+                            string name = layer.Name;
+
+                            layer.TagType = TagType.Red;
+                            if (string.IsNullOrEmpty(name))
+                                layer.Name = error;
+                            else
+                                layer.Name = $"{name} {error}";
+                        }
                     }
 
                     if (docProject.Root.Element("Index") is XElement index)
