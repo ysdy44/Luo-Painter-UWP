@@ -26,6 +26,9 @@ namespace Luo_Painter
         private ListViewReorderMode BooleanToReorderModeConverter(bool value) => value ? ListViewReorderMode.Enabled : ListViewReorderMode.Disabled;
 
         //@Setting
+        const int OrderByType = 0;
+        const int OrderByTime = 1;
+        const int OrderByName = 2;
         private readonly ApplicationDataContainer LocalSettings = ApplicationData.Current.LocalSettings;
 
         public int SelectedCount { get; private set; }
@@ -146,13 +149,13 @@ namespace Luo_Painter
 
                 switch (this.OrderListBox.SelectedIndex)
                 {
-                    case 0:
+                    case OrderByType:
                         this.ObservableCollection.OrderByType();
                         break;
-                    case 1:
+                    case OrderByTime:
                         this.ObservableCollection.OrderByTime();
                         break;
-                    case 2:
+                    case OrderByName:
                         this.ObservableCollection.OrderByName();
                         break;
                     default:
