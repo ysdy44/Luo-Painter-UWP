@@ -60,7 +60,7 @@
   </resheader>
   <!--Separator 0-->
   <data name='Name' xml:space='preserve'> <value>Luo Painter</value> </data>
-  <data name='Version' xml:space='preserve'> <value>1.3.0</value> </data>
+  <data name='Version' xml:space='preserve'> <value>1.3.1</value> </data>
   <data name='Log' xml:space='preserve'> <value>Version changelog</value> </data>
   <data name='InputText' xml:space='preserve'> <value>Please input the text</value> </data>
   <data name='Untitled' xml:space='preserve'> <value>Untitled</value> </data>
@@ -382,6 +382,7 @@
   <data name='SubTip_SaveFailed' xml:space='preserve'> <value>Try again?</value> </data>
   <data name='SubTip_NoCompatible' xml:space='preserve'> <value>Not compatible with the GPU capabilities.</value> </data>
   <!--Separator 9-->
+  <data name='V131Error' xml:space='preserve'> <value>[Error: Duplicate Key]</value> </data>
   <data name='Layer_Property' xml:space='preserve'> <value>Property</value> </data>
   <data name='Layer_Opacity' xml:space='preserve'> <value>Opacity</value> </data>
   <data name='Layer_BlendMode' xml:space='preserve'> <value>Blend Mode</value> </data>
@@ -595,6 +596,11 @@
   <data name='PatternSpotted_Span' xml:space='preserve'> <value>Span</value> </data>
   <data name='PatternSpotted_Fade' xml:space='preserve'> <value>Fade</value> </data>
   <!--Separator 14-->
+  <data name='V131' xml:space='preserve'> <value>"1. Solucionado el problema de no poder abrir el proyecto, causado por la aparición de dos capas idénticas en el panel de capas
+2. Antes de la versión V1.3.1: al hacer clic en el proyecto, si aparecían dos capas idénticas, aparecía una ventana emergente con el contenido Windows.UI.Xaml.Controls.Frame.NavigationFailed no manejado
+3. Versión V1.3.1: al hacer clic en el proyecto y abrir la página de dibujo, si aparecen dos capas idénticas, el color de fondo de la capa se volverá rojo y el nombre de la capa cambiará a [Error: clave duplicada]
+4. Crecer
+5. Encogerse"</value> </data>
   <data name='V130' xml:space='preserve'> <value>"1. The hexadecimal color picker supports three digits
 2. Fixed the issue that clicking on the brush selector caused a crash
 3. Fixed the icon error when renaming a project

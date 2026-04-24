@@ -60,7 +60,7 @@
   </resheader>
   <!--Separator 0-->
   <data name='Name' xml:space='preserve'> <value>Luo Painter</value> </data>
-  <data name='Version' xml:space='preserve'> <value>1.3.0</value> </data>
+  <data name='Version' xml:space='preserve'> <value>1.3.1</value> </data>
   <data name='Log' xml:space='preserve'> <value>Список изменений версий</value> </data>
   <data name='InputText' xml:space='preserve'> <value>Пожалуйста, введите текст</value> </data>
   <data name='Untitled' xml:space='preserve'> <value>Без названия</value> </data>
@@ -382,6 +382,7 @@
   <data name='SubTip_SaveFailed' xml:space='preserve'> <value>Повторить?</value> </data>
   <data name='SubTip_NoCompatible' xml:space='preserve'> <value>Не совместим с функциями графического процессора.</value> </data>
   <!--Separator 9-->
+  <data name='V131Error' xml:space='preserve'> <value>[Ошибка: Дублирующий ключ]</value> </data>
   <data name='Layer_Property' xml:space='preserve'> <value>атрибут</value> </data>
   <data name='Layer_Opacity' xml:space='preserve'> <value>Непрозрачность</value> </data>
   <data name='Layer_BlendMode' xml:space='preserve'> <value>Режим наложения</value> </data>
@@ -595,6 +596,11 @@
   <data name='PatternSpotted_Span' xml:space='preserve'> <value>Пядь</value> </data>
   <data name='PatternSpotted_Fade' xml:space='preserve'> <value>Вянуть</value> </data>
   <!--Separator 14-->
+  <data name='V131' xml:space='preserve'> <value>"1. Исправлена проблема с невозможностью открытия проекта, вызванная появлением двух одинаковых слоев в панели слоев.
+2. До версии V1.3.1: При нажатии на проект, если появлялись два одинаковых слоя, появлялось всплывающее окно с содержимым Windows.UI.Xaml.Controls.Frame.NavigationFailed не обработано.
+3. Версия V1.3.1: При нажатии на проект для открытия страницы чертежа, если появляются два одинаковых слоя, цвет фона слоев становится красным, а имена слоев изменяются на [Ошибка: Дублирующий ключ].
+4. Расти
+5. Сжиматься"</value> </data>
   <data name='V130' xml:space='preserve'> <value>"1. Шестнадцатеричная палитра цветов поддерживает три цифры
 2. Исправлена ошибка, из-за которой нажатие на селектор кисти приводило к сбою
 3. Исправлена ошибка иконки при переименовании проекта

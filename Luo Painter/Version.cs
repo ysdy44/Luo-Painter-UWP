@@ -6,6 +6,15 @@ namespace Luo_Painter
     public enum VersionType
     {
         /*
+        1.3.1
+        2025/02/24
+        1. 修复无法打开项目的问题，原因是图层面板里出现两个相同的图层
+        2. V1.3.1版本之前：点击项目，如果出现两个相同的图层，出现弹窗，弹窗内容为 Windows.UI.Xaml.Controls.Frame.NavigationFailed was unhandled
+        3. V1.3.1版本：点击项目，打开绘画页面，如果出现两个相同的图层，图层的背景颜色将变成红色，图层的名字会变成 [错误：重复键]
+        */
+        V131,
+
+        /*
         1.3.0
         2025/02/06
         1. 十六进制颜色选择器支持三位数
@@ -68,6 +77,13 @@ namespace Luo_Painter
         {
             switch (type)
             {
+                case VersionType.V131:
+                    return new Version
+                    {
+                        VersionTitle = "1.3.1",
+                        UpdateTime = new DateTime(2026, 4, 24),
+                        Description = type.GetString()
+                    };
                 case VersionType.V130:
                     return new Version
                     {

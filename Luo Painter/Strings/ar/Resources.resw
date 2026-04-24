@@ -60,7 +60,7 @@
   </resheader>
   <!--Separator 0-->
   <data name='Name' xml:space='preserve'> <value>Luo Painter</value> </data>
-  <data name='Version' xml:space='preserve'> <value>1.3.0</value> </data>
+  <data name='Version' xml:space='preserve'> <value>1.3.1</value> </data>
   <data name='Log' xml:space='preserve'> <value>سجل تغيير الإصدار</value> </data>
   <data name='InputText' xml:space='preserve'> <value>الرجاء إدخال النص</value> </data>
   <data name='Untitled' xml:space='preserve'> <value>بدون عنوان</value> </data>
@@ -382,6 +382,7 @@
   <data name='SubTip_SaveFailed' xml:space='preserve'> <value>حاول مرة أخرى؟</value> </data>
   <data name='SubTip_NoCompatible' xml:space='preserve'> <value>غير متوافق مع ميزات وحدة معالجة الرسومات.</value> </data>
   <!--Separator 9-->
+  <data name='V131Error' xml:space='preserve'> <value>[غلط: المفتاح مكرر]</value> </data>
   <data name='Layer_Property' xml:space='preserve'> <value>صفة</value> </data>
   <data name='Layer_Opacity' xml:space='preserve'> <value>العتامه</value> </data>
   <data name='Layer_BlendMode' xml:space='preserve'> <value>وضع المزج</value> </data>
@@ -595,6 +596,11 @@
   <data name='PatternSpotted_Span' xml:space='preserve'> <value>تمتد</value> </data>
   <data name='PatternSpotted_Fade' xml:space='preserve'> <value>تتلاشي</value> </data>
   <!--Separator 14-->
+  <data name='V131' xml:space='preserve'> <value>"1. نوع العلامة1. تصليح المشكلة ديال ماكيقدرش المشروع يتحل، السبب هو ظهور جوش طبقات نفسهم فالبانيل ديال الطبقات
+2. قبل نسخة V1.3.1: ملي كتضغط على مشروع، إلى ظهر جوش طبقات نفسهم، كيبان نافذة منبثقة، والنافذة كتبين Windows.UI.Xaml.Controls.Frame.NavigationFailed ما تْعاملاش معاه
+3. نسخة V1.3.1: ملي كتضغط على مشروع، وكتحل صفحة الرسم، إلى ظهر جوش طبقات نفسهم، اللون ديال الخلفية ديال الطبقة غيولي أحمر، والاسم ديال الطبقة غايولي [خطأ: المفتاح مكرر]
+4. رب
+5. تقليص"</value> </data>
   <data name='V130' xml:space='preserve'> <value>"1. منتقي الألوان السداسي العشري يدعم ثلاثة أرقام
 2. تم إصلاح مشكلة النقر فوق محدد الفرشاة في حدوث عطل
 3. إصلاح خطأ الرمز عند إعادة تسمية مشروع

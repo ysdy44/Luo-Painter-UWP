@@ -60,7 +60,7 @@
   </resheader>
   <!--Separator 0-->
   <data name='Name' xml:space='preserve'> <value>Luo Painter</value> </data>
-  <data name='Version' xml:space='preserve'> <value>1.3.0</value> </data>
+  <data name='Version' xml:space='preserve'> <value>1.3.1</value> </data>
   <data name='Log' xml:space='preserve'> <value>Registro de cambios de versión</value> </data>
   <data name='InputText' xml:space='preserve'> <value>Introduce el texto</value> </data>
   <data name='Untitled' xml:space='preserve'> <value>Intitulado</value> </data>
@@ -382,6 +382,7 @@
   <data name='SubTip_SaveFailed' xml:space='preserve'> <value>¿Vuelve a intentarlo?</value> </data>
   <data name='SubTip_NoCompatible' xml:space='preserve'> <value>No es compatible con las funciones de GPU.</value> </data>
   <!--Separator 9-->
+  <data name='V131Error' xml:space='preserve'> <value>[Error: clave duplicada]</value> </data>
   <data name='Layer_Property' xml:space='preserve'> <value>atributo</value> </data>
   <data name='Layer_Opacity' xml:space='preserve'> <value>Opacidad</value> </data>
   <data name='Layer_BlendMode' xml:space='preserve'> <value>Modo de mezcla</value> </data>
@@ -595,6 +596,11 @@
   <data name='PatternSpotted_Span' xml:space='preserve'> <value>Envergadura</value> </data>
   <data name='PatternSpotted_Fade' xml:space='preserve'> <value>Desvanecerse</value> </data>
   <!--Separator 14-->
+  <data name='V131' xml:space='preserve'> <value>"1. Solucionado el problema de no poder abrir el proyecto, causado por la aparición de dos capas idénticas en el panel de capas
+2. Antes de la versión V1.3.1: al hacer clic en el proyecto, si aparecían dos capas idénticas, aparecía una ventana emergente con el contenido Windows.UI.Xaml.Controls.Frame.NavigationFailed no manejado
+3. Versión V1.3.1: al hacer clic en el proyecto y abrir la página de dibujo, si aparecen dos capas idénticas, el color de fondo de la capa se volverá rojo y el nombre de la capa cambiará a [Error: clave duplicada]
+4. Crecer
+5. Encogerse"</value> </data>
   <data name='V130' xml:space='preserve'> <value>"1. El selector de color hexadecimal admite tres dígitos
 2. Se solucionó el problema de que al hacer clic en el selector de pincel se bloqueaba
 3. Se corrigió el error del icono al cambiar el nombre de un proyecto

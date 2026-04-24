@@ -60,7 +60,7 @@
   </resheader>
   <!--Separator 0-->
   <data name='Name' xml:space='preserve'> <value>Luo Painter</value> </data>
-  <data name='Version' xml:space='preserve'> <value>1.3.0</value> </data>
+  <data name='Version' xml:space='preserve'> <value>1.3.1</value> </data>
   <data name='Log' xml:space='preserve'> <value>バージョン変更履歴</value> </data>
   <data name='InputText' xml:space='preserve'> <value>テキストを入力してください</value> </data>
   <data name='Untitled' xml:space='preserve'> <value>無題</value> </data>
@@ -382,6 +382,7 @@
   <data name='SubTip_SaveFailed' xml:space='preserve'> <value>もう一度やり直してください。</value> </data>
   <data name='SubTip_NoCompatible' xml:space='preserve'> <value>GPU 機能とは互換性がありません。</value> </data>
   <!--Separator 9-->
+  <data name='V131Error' xml:space='preserve'> <value>[エラー：重複キー]</value> </data>
   <data name='Layer_Property' xml:space='preserve'> <value>属性</value> </data>
   <data name='Layer_Opacity' xml:space='preserve'> <value>不透明</value> </data>
   <data name='Layer_BlendMode' xml:space='preserve'> <value>ブレンドモード</value> </data>
@@ -595,6 +596,11 @@
   <data name='PatternSpotted_Span' xml:space='preserve'> <value>全長</value> </data>
   <data name='PatternSpotted_Fade' xml:space='preserve'> <value>剥げる</value> </data>
   <!--Separator 14-->
+  <data name='V131' xml:space='preserve'> <value>"1. プロジェクトを開けない問題を修正しました。原因はレイヤーパネルに同じレイヤーが2つ表示されることです。
+2. V1.3.1以前のバージョン：プロジェクトをクリックすると、同じレイヤーが2つある場合、ポップアップが表示され、内容は Windows.UI.Xaml.Controls.Frame.NavigationFailed was unhandled となります。
+3. V1.3.1バージョン：プロジェクトをクリックして描画ページを開くと、同じレイヤーが2つある場合、レイヤーの背景色が赤になり、レイヤーの名前が [エラー：重複キー] に変わります。
+4. 育つ
+5. 縮む"</value> </data>
   <data name='V130' xml:space='preserve'> <value>"1. 16進数カラーピッカーは3桁をサポートしています
 2. ブラシセレクターをクリックするとクラッシュする問題を修正しました
 3. プロジェクトの名前を変更する際のアイコンエラーを修正しました

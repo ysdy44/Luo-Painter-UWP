@@ -60,7 +60,7 @@
   </resheader>
   <!--Separator 0-->
   <data name='Name' xml:space='preserve'> <value>Luo Painter</value> </data>
-  <data name='Version' xml:space='preserve'> <value>1.3.0</value> </data>
+  <data name='Version' xml:space='preserve'> <value>1.3.1</value> </data>
   <data name='Log' xml:space='preserve'> <value>Registro de alterações de versão</value> </data>
   <data name='InputText' xml:space='preserve'> <value>Introduza o texto</value> </data>
   <data name='Untitled' xml:space='preserve'> <value>Sem título</value> </data>
@@ -382,6 +382,7 @@
   <data name='SubTip_SaveFailed' xml:space='preserve'> <value>Tentar novamente?</value> </data>
   <data name='SubTip_NoCompatible' xml:space='preserve'> <value>Não é compatível com recursos de GPU.</value> </data>
   <!--Separator 9-->
+  <data name='V131Error' xml:space='preserve'> <value>[Erro: Chave Duplicada]</value> </data>
   <data name='Layer_Property' xml:space='preserve'> <value>atributo</value> </data>
   <data name='Layer_Opacity' xml:space='preserve'> <value>Opacidade</value> </data>
   <data name='Layer_BlendMode' xml:space='preserve'> <value>Modo de mesclagem</value> </data>
@@ -595,6 +596,11 @@
   <data name='PatternSpotted_Span' xml:space='preserve'> <value>Palmo</value> </data>
   <data name='PatternSpotted_Fade' xml:space='preserve'> <value>Desvanecer</value> </data>
   <!--Separator 14-->
+  <data name='V131' xml:space='preserve'> <value>"1. Corrigido o problema de não ser possível abrir um projeto, causado pelo aparecimento de duas camadas idênticas no painel de Camadas.
+2. Antes da versão V1.3.1: Ao clicar em um projeto, se duas camadas idênticas aparecerem, um popup será exibido com o conteúdo Windows.UI.Xaml.Controls.Frame.NavigationFailed não manipulado.
+3. Versão V1.3.1: Ao clicar em um projeto para abrir a página de desenho, se duas camadas idênticas aparecerem, a cor de fundo das camadas ficará vermelha, e os nomes das camadas mudarão para [Erro: Chave Duplicada].
+4. Crescer
+5. Encolher"</value> </data>
   <data name='V130' xml:space='preserve'> <value>"1. O seletor de cores hexadecimal suporta três dígitos
 2. Corrigido o problema em que clicar no seletor de pincel causava uma falha
 3. Corrigido o erro de ícone ao renomear um projeto

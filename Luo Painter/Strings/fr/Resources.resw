@@ -60,7 +60,7 @@
   </resheader>
   <!--Separator 0-->
   <data name='Name' xml:space='preserve'> <value>Luo Painter</value> </data>
-  <data name='Version' xml:space='preserve'> <value>1.3.0</value> </data>
+  <data name='Version' xml:space='preserve'> <value>1.3.1</value> </data>
   <data name='Log' xml:space='preserve'> <value>Journal des modifications de version</value> </data>
   <data name='InputText' xml:space='preserve'> <value>Veuillez saisir le texte</value> </data>
   <data name='Untitled' xml:space='preserve'> <value>Sans titre</value> </data>
@@ -382,6 +382,7 @@
   <data name='SubTip_SaveFailed' xml:space='preserve'> <value>Réessayez?</value> </data>
   <data name='SubTip_NoCompatible' xml:space='preserve'> <value>Non compatible avec les fonctionnalités GPU.</value> </data>
   <!--Separator 9-->
+  <data name='V131Error' xml:space='preserve'> <value>[Erreur : clé dupliquée]</value> </data>
   <data name='Layer_Property' xml:space='preserve'> <value>attribut</value> </data>
   <data name='Layer_Opacity' xml:space='preserve'> <value>Opacité</value> </data>
   <data name='Layer_BlendMode' xml:space='preserve'> <value>Mode de fusion</value> </data>
@@ -595,6 +596,11 @@
   <data name='PatternSpotted_Span' xml:space='preserve'> <value>Empan</value> </data>
   <data name='PatternSpotted_Fade' xml:space='preserve'> <value>Se faner</value> </data>
   <!--Separator 14-->
+  <data name='V131' xml:space='preserve'> <value>"1. Résolution du problème d'impossibilité d'ouvrir le projet, causé par la présence de deux calques identiques dans le panneau des calques
+2. Versions avant V1.3.1 : en cliquant sur le projet, si deux calques identiques apparaissent, une fenêtre contextuelle apparaît, contenant le message Windows.UI.Xaml.Controls.Frame.NavigationFailed n'a pas été géré
+3. Version V1.3.1 : en cliquant sur le projet pour ouvrir la page de dessin, si deux calques identiques apparaissent, la couleur de fond du calque devient rouge et le nom du calque devient [Erreur : clé dupliquée]
+4. Grandir
+5. Rétrécir"</value> </data>
   <data name='V130' xml:space='preserve'> <value>"1. Le sélecteur de couleurs hexadécimal prend en charge trois chiffres
 2. Correction du problème qui provoquait un plantage en cliquant sur le sélecteur de pinceau.
 3. Correction de l’erreur d’icône lors du renommage d’un projet

@@ -1,6 +1,7 @@
 ﻿using Luo_Painter.Layers;
 using Luo_Painter.Layers.Models;
 using Luo_Painter.Models;
+using Luo_Painter.Strings;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using System;
@@ -26,7 +27,7 @@ namespace Luo_Painter
         {
             int index = -1;
 
-            for (int i = 0; i < ObservableCollection.Count; i++)
+            for (int i = 0; i < this.ObservableCollection.Count; i++)
             {
                 ILayer item = this.ObservableCollection[i];
 
@@ -135,7 +136,6 @@ namespace Luo_Painter
             if (hasPhotos)
                 using (IRandomAccessStream stream = await ApplicationData.Current.TemporaryFolder.OpenAsync("Photos.xml"))
                 {
-
                     new XDocument(new XElement("Root",
                         from p
                         in photos
@@ -310,7 +310,7 @@ namespace Luo_Painter
 
                         if (isDuplicate)
                         {
-                            string error = "[Error: Duplicate Key]";
+                            string error = UIType.V131Error.GetString();
                             string name = layer.Name;
 
                             layer.TagType = TagType.Red;

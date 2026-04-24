@@ -60,7 +60,7 @@
   </resheader>
   <!--Separator 0-->
   <data name='Name' xml:space='preserve'> <value>Luo Painter</value> </data>
-  <data name='Version' xml:space='preserve'> <value>1.3.0</value> </data>
+  <data name='Version' xml:space='preserve'> <value>1.3.1</value> </data>
   <data name='Log' xml:space='preserve'> <value>Registro delle modifiche della versione</value> </data>
   <data name='InputText' xml:space='preserve'> <value>Inserisci il testo</value> </data>
   <data name='Untitled' xml:space='preserve'> <value>Senza titolo</value> </data>
@@ -382,6 +382,7 @@
   <data name='SubTip_SaveFailed' xml:space='preserve'> <value>Riprova?</value> </data>
   <data name='SubTip_NoCompatible' xml:space='preserve'> <value>Non compatibile con le funzionalità della GPU.</value> </data>
   <!--Separator 9-->
+  <data name='V131Error' xml:space='preserve'> <value>[Errore: chiave duplicata]</value> </data>
   <data name='Layer_Property' xml:space='preserve'> <value>attributo</value> </data>
   <data name='Layer_Opacity' xml:space='preserve'> <value>Opacità</value> </data>
   <data name='Layer_BlendMode' xml:space='preserve'> <value>Metodo Blend</value> </data>
@@ -595,6 +596,11 @@
   <data name='PatternSpotted_Span' xml:space='preserve'> <value>Rotazione</value> </data>
   <data name='PatternSpotted_Fade' xml:space='preserve'> <value>Sbiadire</value> </data>
   <!--Separator 14-->
+  <data name='V131' xml:space='preserve'> <value>"1. Risolvere il problema che impedisce l'apertura del progetto, causato dalla presenza di due livelli identici nel pannello dei livelli
+2. Versioni precedenti alla V1.3.1: facendo clic sul progetto, se compaiono due livelli identici, apparirà un popup con il contenuto Windows.UI.Xaml.Controls.Frame.NavigationFailed non gestito
+3. Versione V1.3.1: facendo clic sul progetto e aprendo la pagina di disegno, se compaiono due livelli identici, il colore di sfondo del livello diventerà rosso e il nome del livello diventerà [Errore: chiave duplicata]
+4. Crescere
+5. Restringersi"</value> </data>
   <data name='V130' xml:space='preserve'> <value>"1. Il selettore di colori esadecimali supporta tre cifre
 2. Risolto il problema per cui facendo clic sul selettore del pennello si verificava un arresto anomalo
 3. Risolto l'errore dell'icona durante la ridenominazione di un progetto

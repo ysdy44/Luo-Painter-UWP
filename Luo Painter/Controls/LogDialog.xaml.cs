@@ -15,6 +15,7 @@ namespace Luo_Painter.Controls
 
                 this.StackPanel.Children.Add(new TextBlock
                 {
+                    TextWrapping = Windows.UI.Xaml.TextWrapping.Wrap,
                     IsTextSelectionEnabled = true,
                     Inlines =
                     {
