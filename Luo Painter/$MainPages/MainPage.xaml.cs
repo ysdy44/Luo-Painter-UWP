@@ -50,6 +50,24 @@ namespace Luo_Painter
             if (path is null)
             {
                 this.ObservableCollection.Load(await ApplicationData.Current.LocalFolder.GetFoldersAsync());
+
+                if (this.LocalSettings.Values.ContainsKey("Order"))
+                {
+                    if (this.LocalSettings.Values["Order"] is int order)
+                    {
+                        switch (order)
+                        {
+                            case OrderByType: this.ObservableCollection.OrderByType(); break;
+                            case OrderByTime: this.ObservableCollection.OrderByTime(); break;
+                            case OrderByName: this.ObservableCollection.OrderByName(); break;
+                            default: this.ObservableCollection.OrderByType(); break;
+                        }
+                    }
+                }
+                else
+                {
+                    this.ObservableCollection.OrderByType();
+                }
                 return;
             }
 
@@ -70,6 +88,24 @@ namespace Luo_Painter
             }
 
             this.ObservableCollection.Load(await folder.GetFoldersAsync());
+
+            if (this.LocalSettings.Values.ContainsKey("Order"))
+            {
+                if (this.LocalSettings.Values["Order"] is int order)
+                {
+                    switch (order)
+                    {
+                        case OrderByType: this.ObservableCollection.OrderByType(); break;
+                        case OrderByTime: this.ObservableCollection.OrderByTime(); break;
+                        case OrderByName: this.ObservableCollection.OrderByName(); break;
+                        default: this.ObservableCollection.OrderByType(); break;
+                    }
+                }
+            }
+            else
+            {
+                this.ObservableCollection.OrderByType();
+            }
         }
 
         public MainPage()
@@ -143,6 +179,23 @@ namespace Luo_Painter
                 }
             };
 
+            if (this.LocalSettings.Values.ContainsKey("Order"))
+            {
+                if (this.LocalSettings.Values["Order"] is int order)
+                {
+                    switch (order)
+                    {
+                        case OrderByType: this.OrderListBox.SelectedIndex = OrderByType; break;
+                        case OrderByTime: this.OrderListBox.SelectedIndex = OrderByTime; break;
+                        case OrderByName: this.OrderListBox.SelectedIndex = OrderByName; break;
+                        default: this.OrderListBox.SelectedIndex = OrderByType; break;
+                    }
+                }
+            }
+            else
+            {
+                this.OrderListBox.SelectedIndex = OrderByType;
+            }
             this.OrderListBox.SelectionChanged += (s, e) =>
             {
                 if (this.Disabler) return;
@@ -150,12 +203,15 @@ namespace Luo_Painter
                 switch (this.OrderListBox.SelectedIndex)
                 {
                     case OrderByType:
+                        this.LocalSettings.Values["Order"] = OrderByType;
                         this.ObservableCollection.OrderByType();
                         break;
                     case OrderByTime:
+                        this.LocalSettings.Values["Order"] = OrderByTime;
                         this.ObservableCollection.OrderByTime();
                         break;
                     case OrderByName:
+                        this.LocalSettings.Values["Order"] = OrderByName;
                         this.ObservableCollection.OrderByName();
                         break;
                     default:
