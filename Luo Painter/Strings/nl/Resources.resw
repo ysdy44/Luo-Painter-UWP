@@ -382,7 +382,7 @@
   <data name='SubTip_SaveFailed' xml:space='preserve'> <value>Probeer het opnieuw?</value> </data>
   <data name='SubTip_NoCompatible' xml:space='preserve'> <value>Niet compatibel met GPU-functies.</value> </data>
   <!--Separator 9-->
-  <data name='V131Error' xml:space='preserve'> <value>[Virhe: Päällekkäinen avain]</value> </data>
+  <data name='V131Error' xml:space='preserve'> <value>[Fout: Duble Sleutel]</value> </data>
   <data name='Layer_Property' xml:space='preserve'> <value>attribuut</value> </data>
   <data name='Layer_Opacity' xml:space='preserve'> <value>Dekking</value> </data>
   <data name='Layer_BlendMode' xml:space='preserve'> <value>Overvloeimodus</value> </data>
@@ -596,9 +596,9 @@
   <data name='PatternSpotted_Span' xml:space='preserve'> <value>Span</value> </data>
   <data name='PatternSpotted_Fade' xml:space='preserve'> <value>Vervagen</value> </data>
   <!--Separator 14-->
-  <data name='V131' xml:space='preserve'> <value>"1. Korjattiin ongelma, jossa projektia ei voitu avata, mikä johtui kahden identtisen tason esiintymisestä Tasot-paneelissa.
-2. Ennen versiota V1.3.1: Klikattaessa projektia, jos kaksi identtistä tasoa esiintyy, ilmestyy ponnahdusikkuna, jossa lukee Windows.UI.Xaml.Controls.Frame.NavigationFailed käsittelemätön.
-3. Versio V1.3.1: Klikattaessa projektia piirustussivun avaamiseksi, jos kaksi identtistä tasoa esiintyy, tasojen taustaväri muuttuu punaiseksi ja tasojen nimet muuttuvat muotoon [Virhe: Päällekkäinen avain].
+  <data name='V131' xml:space='preserve'> <value>"1. Het probleem opgelost waarbij een project niet geopend kon worden, veroorzaakt door het verschijnen van twee identieke lagen in het Lagen-paneel.
+2. Voor versie V1.3.1: Bij het klikken op een project, als er twee identieke lagen verschijnen, verschijnt er een pop-up met de inhoud Windows.UI.Xaml.Controls.Frame.NavigationFailed was unhandled.
+3. Versie V1.3.1: Bij het klikken op een project om de tekeningpagina te openen, als er twee identieke lagen verschijnen, wordt de achtergrondkleur van de lagen rood en veranderen de laagnamen in [Fout: Duble Sleutel].
 4. Groeien
 5. Krimpen"</value> </data>
   <data name='V130' xml:space='preserve'> <value>"1. De hexadecimale kleurkiezer ondersteunt drie cijfers

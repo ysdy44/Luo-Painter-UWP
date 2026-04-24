@@ -596,11 +596,11 @@
   <data name='PatternSpotted_Span' xml:space='preserve'> <value>Span</value> </data>
   <data name='PatternSpotted_Fade' xml:space='preserve'> <value>Fade</value> </data>
   <!--Separator 14-->
-  <data name='V131' xml:space='preserve'> <value>"1. Solucionado el problema de no poder abrir el proyecto, causado por la aparición de dos capas idénticas en el panel de capas
-2. Antes de la versión V1.3.1: al hacer clic en el proyecto, si aparecían dos capas idénticas, aparecía una ventana emergente con el contenido Windows.UI.Xaml.Controls.Frame.NavigationFailed no manejado
-3. Versión V1.3.1: al hacer clic en el proyecto y abrir la página de dibujo, si aparecen dos capas idénticas, el color de fondo de la capa se volverá rojo y el nombre de la capa cambiará a [Error: clave duplicada]
-4. Crecer
-5. Encogerse"</value> </data>
+  <data name='V131' xml:space='preserve'> <value>"1. Fixed the issue of being unable to open a project, caused by the appearance of two identical layers in the Layers panel.
+2. Before version V1.3.1: Clicking on a project, if two identical layers appear, a popup will show up with the content Windows.UI.Xaml.Controls.Frame.NavigationFailed was unhandled.
+3. Version V1.3.1: Clicking on a project to open the drawing page, if two identical layers appear, the background color of the layers will turn red, and the layer names will change to [Error: Duplicate Key].
+4. Grow
+5. Shrink"</value> </data>
   <data name='V130' xml:space='preserve'> <value>"1. The hexadecimal color picker supports three digits
 2. Fixed the issue that clicking on the brush selector caused a crash
 3. Fixed the icon error when renaming a project

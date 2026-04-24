@@ -596,11 +596,11 @@
   <data name='PatternSpotted_Span' xml:space='preserve'> <value>Spannweite</value> </data>
   <data name='PatternSpotted_Fade' xml:space='preserve'> <value>Verblassen</value> </data>
   <!--Separator 14-->
-  <data name='V131' xml:space='preserve'> <value>"1. Solucionado el problema de no poder abrir el proyecto, causado por la aparición de dos capas idénticas en el panel de capas
-2. Antes de la versión V1.3.1: al hacer clic en el proyecto, si aparecían dos capas idénticas, aparecía una ventana emergente con el contenido Windows.UI.Xaml.Controls.Frame.NavigationFailed no manejado
-3. Versión V1.3.1: al hacer clic en el proyecto y abrir la página de dibujo, si aparecen dos capas idénticas, el color de fondo de la capa se volverá rojo y el nombre de la capa cambiará a [Error: clave duplicada]
-4. Crecer
-5. Encogerse"</value> </data>
+  <data name='V131' xml:space='preserve'> <value>"1. Behebt das Problem, dass Projekte nicht geöffnet werden können, verursacht durch das Vorhandensein von zwei identischen Ebenen im Ebenen-Panel
+2. Vor Version V1.3.1: Beim Klicken auf ein Projekt, wenn zwei identische Ebenen vorhanden sind, erscheint ein Popup, dessen Inhalt lautet Windows.UI.Xaml.Controls.Frame.NavigationFailed wurde nicht behandelt
+3. Version V1.3.1: Beim Klicken auf ein Projekt und Öffnen der Zeichenfläche, wenn zwei identische Ebenen vorhanden sind, wird die Hintergrundfarbe der Ebene rot und der Name der Ebene wird zu [Fehler: doppelter Schlüssel]
+4. Wachsen
+5. Schrumpfen"</value> </data>
   <data name='V130' xml:space='preserve'> <value>"1. Der hexadezimale Farbwähler unterstützt drei Ziffern
 2. Es wurde das Problem behoben, dass das Klicken auf den Pinselwähler einen Absturz verursachte.
 3. Der Icon-Fehler beim Umbenennen eines Projekts wurde behoben
